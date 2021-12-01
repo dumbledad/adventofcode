@@ -8,5 +8,5 @@ end
 
 puts "Depth increase count: #{num_increases depth_readings}"
 
-three_sum_depth_readings = depth_readings.each_cons(3).to_a.map(&:sum)
+three_sum_depth_readings = depth_readings.each_cons(3).map(&:sum)
 puts "3-sum depth increase count: #{num_increases three_sum_depth_readings}"
