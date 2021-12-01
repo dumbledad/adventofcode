@@ -3,10 +3,7 @@
 depth_readings = File.readlines('day01-input-01.txt').map(&:to_i)
 
 def num_increases(input_array)
-  accumulated = input_array.reduce([0, 0]) do |accumulator, value|
-    [accumulator[0] + (value > accumulator[1] ? 1 : 0), value]
-  end
-  accumulated[0] - 1
+  input_array.each_cons(2).reduce(0) { |count, values| count + (values[1] > values[0] ? 1 : 0) }
 end
 
 puts "Depth increase count: #{num_increases depth_readings}"
