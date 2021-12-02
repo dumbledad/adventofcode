@@ -12,8 +12,8 @@ def sum_commands(command, input_array)
 end
 
 forward = sum_commands('forward', course_readings)
-down= sum_commands('down', course_readings)
-up= sum_commands('up', course_readings)
+down = sum_commands('down', course_readings)
+up = sum_commands('up', course_readings)
 depth = down - up
 
 puts "Our new position is #{forward} forward at #{depth} depth, which multiply to give #{forward * depth}"
