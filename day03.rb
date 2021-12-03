@@ -42,3 +42,39 @@ puts "the power consumption of the submarine is #{gamma_str.to_i(2) * epsilon_st
 ##########
 # PART 2 #
 ##########
+
+counts = digit_counts
+oxygen_candidates = diagnostics
+(0...DIAGNOSTIC_LENGTH).each do |i|
+  if counts.one_counts[i] >= counts.zero_counts[i]
+    oxygen_candidates = oxygen_candidates.select do |diagnostic|
+      diagnostic & (((2**(DIAGNOSTIC_LENGTH - i)) - 1)) >= (2**(DIAGNOSTIC_LENGTH - (i + 1)))
+    end
+  else
+    oxygen_candidates = oxygen_candidates.select do |diagnostic|
+      diagnostic & (((2**(DIAGNOSTIC_LENGTH - i)) - 1)) < (2**(DIAGNOSTIC_LENGTH - (i + 1)))
+    end
+  end
+  break if oxygen_candidates.length == 1
+
+  counts = count_digits(oxygen_candidates)
+end
+
+counts = digit_counts
+scrubber_candidates = diagnostics
+(0...DIAGNOSTIC_LENGTH).each do |i|
+  if counts.one_counts[i] < counts.zero_counts[i]
+    scrubber_candidates = scrubber_candidates.select do |diagnostic|
+      diagnostic & (((2**(DIAGNOSTIC_LENGTH - i)) - 1)) >= (2**(DIAGNOSTIC_LENGTH - (i + 1)))
+    end
+  else
+    scrubber_candidates = scrubber_candidates.select do |diagnostic|
+      diagnostic & (((2**(DIAGNOSTIC_LENGTH - i)) - 1)) < (2**(DIAGNOSTIC_LENGTH - (i + 1)))
+    end
+  end
+  break if scrubber_candidates.length == 1
+
+  counts = count_digits(scrubber_candidates)
+end
+
+puts "oxygen (#{oxygen_candidates[0]}) * oxygen (#{scrubber_candidates[0]}) = #{oxygen_candidates[0] * scrubber_candidates[0]}"
