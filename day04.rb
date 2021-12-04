@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
-##########
-# PART 1 #
-##########
-
 # https://adventofcode.com/2021/day/4
 class SquidBingo
   # One bingo board
   class BingoBoard
-    attr_accessor :board, :calls
+    attr_accessor :board, :calls, :winning_call, :winning_score, :winner
 
     def initialize
       @board = []
       @calls = []
+      @winner = false
     end
 
     def load(lines)
@@ -22,10 +19,15 @@ class SquidBingo
       self
     end
 
-    def winner?
+    def add_call(call)
+      @calls << call
       rows_and_columns = @board + @board.transpose
       rows_and_columns.each do |numbers|
-        return true if (numbers - @calls).length.zero?
+        next unless (numbers - @calls).length.zero?
+
+        @winning_call = call
+        @winning_score = remaining.sum * call
+        @winner = true
       end
       false
     end
@@ -35,11 +37,11 @@ class SquidBingo
     end
   end
 
-  def run
+  def first_winner
     calls.each do |call|
       boards.each do |board|
-        board.calls << call
-        return { 'winner': board, 'score': board.remaining.sum * call } if board.winner?
+        board.add_call call
+        return { 'winner': board, 'score': board.winning_score } if board.winner
       end
     end
     { 'winner': nil, 'score': -1 }
@@ -69,4 +71,4 @@ class SquidBingo
   end
 end
 
-puts SquidBingo.new.run
+puts SquidBingo.new.first_winner[:score]
