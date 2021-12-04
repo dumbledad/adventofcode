@@ -33,11 +33,12 @@ end
 
 # https://adventofcode.com/2021/day/4
 class SquidBingo
-  attr_accessor :boards, :winners
+  attr_accessor :calls, :boards, :winners
 
   def initialize
+    @calls = File.open('day04-input-01.txt', &:readline).chomp.split(',').map(&:to_i)
+    @boards = load_boards
     @winners = []
-    @boards ||= load_boards
     calls.each do |call|
       boards.each do |board|
         next if board.winner
@@ -46,10 +47,6 @@ class SquidBingo
         winners << board if board.winner
       end
     end
-  end
-
-  def calls
-    @calls ||= File.open('day04-input-01.txt', &:readline).chomp.split(',').map(&:to_i)
   end
 
   private
