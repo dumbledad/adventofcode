@@ -31,7 +31,7 @@ class BingoBoard
   end
 
   def remaining
-    @board.flatten.reject { |number| @calls.include? number }
+    @board.flatten - @calls
   end
 end
 
