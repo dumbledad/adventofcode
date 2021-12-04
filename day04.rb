@@ -1,50 +1,54 @@
 # frozen_string_literal: true
 
-# https://adventofcode.com/2021/day/4
-class SquidBingo
-  # One bingo board
-  class BingoBoard
-    attr_accessor :board, :calls, :winning_call, :winning_score, :winner
+# One bingo board
+class BingoBoard
+  attr_accessor :board, :calls, :winning_call, :winning_score, :winner
 
-    def initialize
-      @board = []
-      @calls = []
-      @winner = false
-    end
-
-    def load(lines)
-      lines.each do |line|
-        @board << line.split.map(&:to_i)
-      end
-      self
-    end
-
-    def add_call(call)
-      @calls << call
-      rows_and_columns = @board + @board.transpose
-      rows_and_columns.each do |numbers|
-        next unless (numbers - @calls).length.zero?
-
-        @winning_call = call
-        @winning_score = remaining.sum * call
-        @winner = true
-      end
-      false
-    end
-
-    def remaining
-      @board.flatten.reject { |number| @calls.include? number }
-    end
+  def initialize
+    @board = []
+    @calls = []
+    @winner = false
   end
 
-  def first_winner
+  def load(lines)
+    lines.each do |line|
+      @board << line.split.map(&:to_i)
+    end
+    self
+  end
+
+  def add_call(call)
+    @calls << call
+    rows_and_columns = @board + @board.transpose
+    rows_and_columns.each do |numbers|
+      next unless (numbers - @calls).length.zero?
+
+      @winning_call = call
+      @winning_score = remaining.sum * call
+      @winner = true
+    end
+    false
+  end
+
+  def remaining
+    @board.flatten.reject { |number| @calls.include? number }
+  end
+end
+
+# https://adventofcode.com/2021/day/4
+class SquidBingo
+  attr_accessor :winners
+
+  def initialize
+    @winners = []
     calls.each do |call|
       boards.each do |board|
+        next if board.winner
+
         board.add_call call
-        return { 'winner': board, 'score': board.winning_score } if board.winner
+        winners << board if board.winner
       end
     end
-    { 'winner': nil, 'score': -1 }
   end
 
   def calls
@@ -71,4 +75,6 @@ class SquidBingo
   end
 end
 
-puts SquidBingo.new.first_winner[:score]
+bingo_games = SquidBingo.new
+puts bingo_games.winners[0].winning_score
+puts bingo_games.winners[-1].winning_score
