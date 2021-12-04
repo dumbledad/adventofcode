@@ -33,10 +33,11 @@ end
 
 # https://adventofcode.com/2021/day/4
 class SquidBingo
-  attr_accessor :winners
+  attr_accessor :boards, :winners
 
   def initialize
     @winners = []
+    @boards ||= load_boards
     calls.each do |call|
       boards.each do |board|
         next if board.winner
@@ -49,10 +50,6 @@ class SquidBingo
 
   def calls
     @calls ||= File.open('day04-input-01.txt', &:readline).chomp.split(',').map(&:to_i)
-  end
-
-  def boards
-    @boards ||= load_boards
   end
 
   private
