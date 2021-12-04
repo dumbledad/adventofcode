@@ -24,14 +24,10 @@ class BingoBoard
       next unless (numbers - @calls).length.zero?
 
       @winning_call = call
-      @winning_score = remaining.sum * call
+      @winning_score = (@board.flatten - @calls).sum * call
       @winner = true
     end
     false
-  end
-
-  def remaining
-    @board.flatten - @calls
   end
 end
 
