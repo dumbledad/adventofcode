@@ -4,17 +4,13 @@
 class BingoBoard
   attr_accessor :board, :calls, :winning_call, :winning_score, :winner
 
-  def initialize
+  def initialize(lines)
     @board = []
     @calls = []
     @winner = false
-  end
-
-  def load(lines)
     lines.each do |line|
       @board << line.split.map(&:to_i)
     end
-    self
   end
 
   def add_call(call)
@@ -55,7 +51,7 @@ class SquidBingo
     accumulator = File.readlines('day04-input-01.txt').drop(2).map(&:chomp)\
                       .each_with_object({ 'lines': [], 'boards': [] }) do |line, memo|
       if line == ''
-        memo[:boards] << BingoBoard.new.load(memo[:lines])
+        memo[:boards] << BingoBoard.new(memo[:lines])
         memo[:lines] = []
       else
         memo[:lines] << line
