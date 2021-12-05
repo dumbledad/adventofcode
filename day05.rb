@@ -40,15 +40,12 @@ end
 
 # Discrete 2D map of the sea bed
 class Map
-  attr_accessor :lines
+  attr_accessor :lines, :intersections
 
   def initialize
     @lines = File.readlines('day05-input-01.txt').map(&:chomp).map { |l| Line.new l }
-  end
-
-  def intersections
-    points = @lines.map(&:points).flatten
-    points.select { |p| points.count(p) > 1 }.uniq
+    tallies = @lines.map(&:points).flatten.tally
+    @intersections = tallies.select { |_, v| v > 1 }.keys
   end
 end
 
