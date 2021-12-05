@@ -2,12 +2,13 @@
 
 # https://adventofcode.com/2021/day/5
 
-# A simple line, i.e. a list of point covered
+# A simple line, i.e. a list of points covered
 class Line
-  attr_accessor :points, :end_points
+  attr_accessor :points_string, :points, :end_points
 
   def initialize(line)
     # e.g. '427,523 -> 427,790'
+    @points_string = line
     @end_points = line.split(' -> ').reduce([]) do |acc, point_string|
       acc << point_string.split(',').map(&:to_i)
     end
@@ -44,7 +45,7 @@ class Map
 
   def initialize
     @lines = File.readlines('day05-input-01.txt').map(&:chomp).map { |l| Line.new l }
-    tallies = @lines.map(&:points).flatten.tally
+    tallies = @lines.map(&:points).flatten(1).tally
     @intersections = tallies.select { |_, v| v > 1 }.keys
   end
 end
