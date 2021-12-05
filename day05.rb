@@ -11,6 +11,30 @@ class Line
     @end_points = line.split(' -> ').reduce([]) do |acc, point_string|
       acc << point_string.split(',').map(&:to_i)
     end
+    @points = []
+    interpolate
+  end
+
+  def horizontal?
+    @end_points[0][1] == @end_points[1][1]
+  end
+
+  def vertical?
+    @end_points[0][0] == @end_points[1][0]
+  end
+
+  private
+
+  def interpolate
+    if horizontal?
+      (@end_points[0][0]..@end_points[1][0]).each do |x|
+        @points << [x, @end_points[0][1]]
+      end
+    elsif vertical?
+      (@end_points[0][1]..@end_points[1][1]).each do |y|
+        @points << [@end_points[0][0], y]
+      end
+    end
   end
 end
 
@@ -21,7 +45,12 @@ class Map
   def initialize
     @lines = File.readlines('day05-input-01.txt').map(&:chomp).map { |l| Line.new l }
   end
+
+  def intersections
+    points = @lines.map(&:points).flatten
+    points.select { |p| points.count(p) > 1 }.uniq
+  end
 end
 
 map = Map.new
-pp map.lines
+puts map.intersections.length
