@@ -33,8 +33,6 @@ class Line
       (@end_points[0][1]..@end_points[1][1]).each do |y|
         @points << [@end_points[0][0], y]
       end
-    else
-      puts "#{points_string} is neither horizontal nor vertical"
     end
   end
 end
@@ -51,4 +49,4 @@ class Map
 end
 
 map = Map.new
-puts map.intersections.length
+puts map.lines.map(&:points).flatten(1).tally
