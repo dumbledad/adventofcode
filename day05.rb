@@ -9,9 +9,7 @@ class Line
   def initialize(line)
     # e.g. '427,523 -> 427,790'
     @points_string = line
-    @end_points = line.split(' -> ').reduce([]) do |acc, point_string|
-      acc << point_string.split(',').map(&:to_i)
-    end
+    @end_points = line.split(' -> ').map { |str| str.split(',').map(&:to_i) }
     @points = []
     interpolate
   end
@@ -35,6 +33,8 @@ class Line
       (@end_points[0][1]..@end_points[1][1]).each do |y|
         @points << [@end_points[0][0], y]
       end
+    else
+      puts "#{points_string} is neither horizontal nor vertical"
     end
   end
 end
@@ -44,7 +44,7 @@ class Map
   attr_accessor :lines, :intersections
 
   def initialize
-    @lines = File.readlines('day05-input-01.txt').map(&:chomp).map { |l| Line.new l }
+    @lines = File.readlines('day05-input-test.txt').map(&:chomp).map { |l| Line.new l }
     tallies = @lines.map(&:points).flatten(1).tally
     @intersections = tallies.select { |_, v| v > 1 }.keys
   end
