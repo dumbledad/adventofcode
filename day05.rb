@@ -44,12 +44,11 @@ class Map
   attr_accessor :lines, :intersections
 
   def initialize
-    @lines = File.readlines('day05-input-test.txt').map(&:chomp).map { |l| Line.new l }
+    @lines = File.readlines('day05-input-01.txt').map(&:chomp).map { |l| Line.new l }
     tallies = @lines.map(&:points).flatten(1).tally
     @intersections = tallies.select { |_, v| v > 1 }.keys
   end
 end
 
 map = Map.new
-puts map.lines.map(&:points).flatten(1).tally
 puts map.intersections.length
