@@ -26,11 +26,13 @@ class Line
 
   def interpolate
     if horizontal?
-      (@end_points[0][0]..@end_points[1][0]).each do |x|
+      range_ponts = [@end_points[0][0], @end_points[1][0]].sort
+      (range_ponts[0]..range_ponts[1]).each do |x|
         @points << [x, @end_points[0][1]]
       end
     elsif vertical?
-      (@end_points[0][1]..@end_points[1][1]).each do |y|
+      range_ponts = [@end_points[0][1], @end_points[1][1]].sort
+      (range_ponts[0]..range_ponts[1]).each do |y|
         @points << [@end_points[0][0], y]
       end
     end
@@ -50,3 +52,4 @@ end
 
 map = Map.new
 puts map.lines.map(&:points).flatten(1).tally
+puts map.intersections.length
