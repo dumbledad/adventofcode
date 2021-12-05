@@ -6,7 +6,7 @@
 class Line
   attr_accessor :points_string, :points, :end_points, :permit_diagonals
 
-  def initialize(line, permit_diagonals = false)
+  def initialize(line, permit_diagonals)
     # e.g. '427,523 -> 427,790'
     @points_string = line
     @permit_diagonals = permit_diagonals
@@ -28,7 +28,8 @@ class Line
   end
 
   def permitted?
-    horizontal? || vertical? unless @permit_diagonals
+    return (horizontal? || vertical?) unless @permit_diagonals
+
     horizontal? || vertical? || diagonal?
   end
 
@@ -63,12 +64,17 @@ end
 class Map
   attr_accessor :lines, :intersections
 
-  def initialize
-    @lines = File.readlines('day05-input-test.txt').map(&:chomp).map { |l| Line.new l }
+  def initialize(permit_diagonals)
+    @lines = File.readlines('day05-input-01.txt').map(&:chomp).map { |l| Line.new(l, permit_diagonals) }
     tallies = @lines.map(&:points).flatten(1).tally
     @intersections = tallies.select { |_, v| v > 1 }.keys
   end
 end
 
-map = Map.new
-puts map.intersections.length
+map = Map.new(false)
+puts "Part 1 intersection count: #{map.intersections.length} (i.e. no diagonal lines)"
+
+map = Map.new(true)
+puts "Part 2 intersection count: #{map.intersections.length} (i.e. including diagonal lines)"
+
+# TODO: I couldn't get Map's initialize to work with a defaulted argument. Revise that.
