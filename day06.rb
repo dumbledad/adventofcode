@@ -24,13 +24,14 @@ class Shoal
   end
 
   def progress_one_day
-    @day += 1
     after = Hash.new(0)
     (1..(@days_to_spawn + @immaturity)).each { |d| after[d - 1] = @fisheses[d] }
     after[@days_to_spawn - 1] = after[@days_to_spawn - 1] + @fisheses[0]
     after[@days_to_spawn + @immaturity - 1] = @fisheses[0]
     @fisheses = after
-    puts "After #{@day} days the shoal contains #{@fisheses.values.sum} lanternfish" if @days_of_interest.include? @day
+    return unless @days_of_interest.include? @day += 1
+
+    puts "After #{@day} days the shoal contains #{@fisheses.values.sum} lanternfish"
   end
 end
 
