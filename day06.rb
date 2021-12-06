@@ -33,5 +33,10 @@ class Shoal
   end
 end
 
+# Test:
 shoal = Shoal.new('day06-input-test.txt', [80, 256])
+shoal.progress(256)
+
+# Real data:
+shoal = Shoal.new('day06-input-01.txt', [80, 256])
 shoal.progress(256)
