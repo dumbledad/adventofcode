@@ -10,11 +10,13 @@ class Shoal
   attr_accessor :fisheses, :days_of_interest, :days_to_spawn, :immaturity, :day
 
   def initialize(input_data_filename, days_of_interest)
-    @fisheses = File.open(input_data_filename, &:readline).chomp.split(',').map(&:to_i).tally
+    tally = File.open(input_data_filename, &:readline).chomp.split(',').map(&:to_i).tally
     @days_of_interest = days_of_interest
     @days_to_spawn = 7
     @immaturity = 2
     @day = 0
+    @fisheses = Hash.new(0)
+    (1..(@days_to_spawn + @immaturity)).each { |d| @fisheses[d] = tally.fetch(d, 0) }
   end
 
   def progress(days)
@@ -23,9 +25,8 @@ class Shoal
 
   def progress_one_day
     @day += 1
-    after = (0..@days_to_spawn + @immaturity).to_h { |i| [i, 0] }
-    (1..(@days_to_spawn + @immaturity)).each { |d| after[d - 1] = @fisheses[d] if @fisheses.key? d }
-    @fisheses[0] = 0 if @fisheses[0].nil?
+    after = Hash.new(0)
+    (1..(@days_to_spawn + @immaturity)).each { |d| after[d - 1] = @fisheses[d] }
     after[@days_to_spawn - 1] = after[@days_to_spawn - 1] + @fisheses[0]
     after[@days_to_spawn + @immaturity - 1] = @fisheses[0]
     @fisheses = after
@@ -33,10 +34,10 @@ class Shoal
   end
 end
 
-# Test:
+puts "\nTest dataset:"
 shoal = Shoal.new('day06-input-test.txt', [80, 256])
 shoal.progress(256)
-
-# Real data:
+puts "\nFull dataset:"
 shoal = Shoal.new('day06-input-01.txt', [80, 256])
 shoal.progress(256)
+puts ''
