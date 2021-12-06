@@ -43,3 +43,7 @@ shoal = Shoal.new
 days = 80
 days.times { shoal.progress }
 puts "After #{days} days the shoal contains #{shoal.fisheses.length} lanternfish"
+shoal = Shoal.new
+days = 256
+days.times { shoal.progress }
+puts "After #{days} days the shoal contains #{shoal.fisheses.length} lanternfish"
