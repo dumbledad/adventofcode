@@ -12,7 +12,7 @@ class Lanternfish
   end
 
   def progress
-    @day -= @day
+    @day -= 1
     return [self] unless @day == -1
 
     @day = @create_after - 1
@@ -25,7 +25,7 @@ class Shoal
   attr_accessor :fisheses
 
   def initialize
-    @fisheses = File.open('day06-input-test.txt', &:readline).chomp.split(',').map { |d| Lanternfish.new(d.to_i) }
+    @fisheses = File.open('day06-input-01.txt', &:readline).chomp.split(',').map { |d| Lanternfish.new(d.to_i) }
   end
 
   def progress
