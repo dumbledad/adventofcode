@@ -17,8 +17,7 @@ class Crabs
   def fuel_to(horizontal, increasing)
     return @horizontals.reduce(0) { |sum, h| sum + (horizontal - h).magnitude } unless increasing
 
-    # adding one to the magnitude in the next line makes no sense to me :-(
-    @horizontals.reduce(0) { |sum, h| sum + (1...((horizontal - h).magnitude + 1)).sum }
+    @horizontals.reduce(0) { |sum, h| sum + (1..(horizontal - h).magnitude).sum }
   end
 
   def min_fuel_cost
