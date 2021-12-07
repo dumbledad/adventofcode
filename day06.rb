@@ -24,6 +24,8 @@ class Shoal
   end
 
   def progress_one_day
+    # Patrick:
+    # Could us transform_keys or realise that a hash with continuous integer keys is better done as an array
     after = Hash.new(0)
     (1..(@days_to_spawn + @immaturity)).each { |d| after[d - 1] = @fisheses[d] }
     after[@days_to_spawn - 1] = after[@days_to_spawn - 1] + @fisheses[0]
