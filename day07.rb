@@ -30,14 +30,14 @@ puts "\nPART ONE"
 puts "\nTest dataset:"
 crabs = Crabs.new('day07-input-test.txt', false)
 puts "It would take #{crabs.min_fuel_cost[:fuel]} units of fuel to get to #{crabs.min_fuel_cost[:horizontal]}"
-puts "\nTest dataset:"
+puts "\nFull dataset:"
 crabs = Crabs.new('day07-input-01.txt', false)
 puts "It would take #{crabs.min_fuel_cost[:fuel]} units of fuel to get to #{crabs.min_fuel_cost[:horizontal]}"
 puts "\nPART TWO"
 puts "\nTest dataset:"
 crabs = Crabs.new('day07-input-test.txt', true)
 puts "It would take #{crabs.min_fuel_cost[:fuel]} units of fuel to get to #{crabs.min_fuel_cost[:horizontal]}"
-puts "\nTest dataset:"
+puts "\nFull dataset:"
 crabs = Crabs.new('day07-input-01.txt', true)
 puts "It would take #{crabs.min_fuel_cost[:fuel]} units of fuel to get to #{crabs.min_fuel_cost[:horizontal]}"
 puts ''
