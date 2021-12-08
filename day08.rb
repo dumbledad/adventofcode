@@ -2,19 +2,28 @@
 
 # https://adventofcode.com/2021/day/8
 class ObservedData
-  attr_accessor :segment_counts
-
   def initialize(input_data_filename)
-    lines = File.readlines(input_data_filename).map(&:chomp).map { |l| l.slice((l.index('|') + 1)..-1).split }
-    @segment_counts = lines.map { |l| l.map(&:length) }.flatten.tally
+    File.readlines(input_data_filename).map(&:chomp).map do |l|
+      signal_patterns = l.split('|')[0].split.map { |s| s.chars.sort.join }
+      output_values = l.split('|')[1].split.map { |s| s.chars.sort.join }
+      readings << { signal_patterns: signal_patterns, output_values: output_values }
+    end
   end
 
   def unique_segment_count_digits
     @unique_segment_count_digits ||= { 2 => 1, 3 => 7, 4 => 4, 7 => 8 }
   end
 
+  def readings
+    @readings ||= []
+  end
+
+  def segment_counts
+    @segment_counts ||= @readings.map { |r| r[:output_values].map(&:length) }.flatten.tally
+  end
+
   def uniques_count
-    @uniques_count ||= unique_segment_count_digits.keys.reduce(0) { |m, k| m + @segment_counts[k] }
+    @uniques_count ||= unique_segment_count_digits.keys.reduce(0) { |m, k| m + segment_counts[k] }
   end
 end
 
