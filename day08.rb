@@ -89,7 +89,7 @@ class ObservedData
 
   def find_b(signals, maps_to_d)
     # What signal is intended to be 'b', i.e. the one in 4 that's not 'd' nor in 1
-    (signals.find { |s| s.length == 4 } - (signals.find { |s| s.length == 2 } << maps_to_d))[0]
+    (signals.find { |s| s.length == 4 } - (signals.find { |s| s.length == 2 }.clone << maps_to_d))[0]
   end
 
   def find_c(signals, maps_to_f)
@@ -115,7 +115,7 @@ class ObservedData
 
   def find_g(signals, maps_to_a)
     # What signal is intended to be 'g', i.e. of the six segment digit containg 4 and a (9) it's the remaining segment
-    four_plus_a = (signals.find { |s| s.length == 4 } << maps_to_a)
+    four_plus_a = (signals.find { |s| s.length == 4 }.clone << maps_to_a)
     (signals.find { |s| s.length == 6 && (four_plus_a - s).empty? } - four_plus_a)[0]
   end
 end
