@@ -50,13 +50,19 @@ class ObservedData
   def derive_segment_mapping(signal_patterns)
     signals = signal_patterns.map(&:chars)
     segment_mapping = {}
-    segment_mapping[find_a signals] = 'a'
+    a_signal = find_a signals
+    segment_mapping[a_signal] = 'a'
     d_signal = find_d signals
     segment_mapping[d_signal] = 'd'
-    segment_mapping[find_b(signals, d_signal)] = 'b'
+    b_signal = find_b(signals, d_signal)
+    segment_mapping[b_signal] = 'b'
     f_signal = find_f signals
     segment_mapping[f_signal] = 'f'
-    segment_mapping[find_c(signals, f_signal)] = 'c'
+    c_signal = find_c(signals, f_signal)
+    segment_mapping[c_signal] = 'c'
+    g_signal = find_g(signals, [a_signal, b_signal, c_signal, d_signal, f_signal])
+    segment_mapping[g_signal] = 'g'
+    segment_mapping[find_e(signals, [a_signal, b_signal, c_signal, d_signal, f_signal, g_signal])] = 'e'
     segment_mapping
   end
 
@@ -83,6 +89,16 @@ class ObservedData
   def find_c(signals, maps_to_f)
     # What signal is intended to be 'c', i.e. the one in 1 that is not f
     (signals.find { |s| s.length == 2 } - maps_to_f)[0]
+  end
+
+  def find_g(signals, a_b_c_d_f)
+    # What signal is intended to be 'g', i.e. the one in the two 5 segment digits (3 and 5) that's not a, b, c, d, nor f
+    (signals.find { |s| s.length == 5 }.flatten.unique - a_b_c_d_f)[0]
+  end
+
+  def find_e(signals, a_b_c_d_f_g)
+    # What signal is intended to be 'e', i.e. the one in 8 that is not a, b, c, d, nor f
+    (signals.find { |s| s.length == 7 } - a_b_c_d_f_g)[0]
   end
 end
 
