@@ -2,11 +2,14 @@
 
 # https://adventofcode.com/2021/day/8
 class ObservedData
+  attr_accessor :readings
+
   def initialize(input_data_filename)
+    @readings = []
     File.readlines(input_data_filename).map(&:chomp).map do |l|
       signal_patterns = order_chars_in_strings l.split('|')[0]
       output_values = order_chars_in_strings l.split('|')[1]
-      readings << { signal_patterns: signal_patterns, output_values: output_values }
+      @readings << { signal_patterns: signal_patterns, output_values: output_values }
     end
   end
 
@@ -19,20 +22,16 @@ class ObservedData
   end
 
   def segments_to_digits
-    @segments_to_digits ||= { 'abcefg' => 0,
-                              'cf' => 1,
-                              'acdeg' => 2,
-                              'acdfg' => 3,
-                              'bcdf' => 4,
-                              'abdfg' => 5,
-                              'abdefg' => 6,
-                              'acf' => 7,
-                              'abcdefg' => 8,
-                              'abcdfg' => 9 }
-  end
-
-  def readings
-    @readings ||= []
+    @segments_to_digits ||= { 'abcefg' => '0',
+                              'cf' => '1',
+                              'acdeg' => '2',
+                              'acdfg' => '3',
+                              'bcdf' => '4',
+                              'abdfg' => '5',
+                              'abdefg' => '6',
+                              'acf' => '7',
+                              'abcdefg' => '8',
+                              'abcdfg' => '9' }
   end
 
   def segment_counts
@@ -45,6 +44,16 @@ class ObservedData
 
   def all_segments
     @all_segments ||= [a, b, c, d, e, f, g]
+  end
+
+  def derive_digits(reading)
+    segment_mapping = derive_segment_mapping(reading[:signal_patterns])
+    digits = reading[:output_values].map { |s| segments_to_digits[s.chars.map { |c| segment_mapping[c] }.sort.join] }
+    digits.join.to_i
+  end
+
+  def sum_derived_digits
+    readings.map { |r| derive_digits(r) }.sum
   end
 
   def derive_segment_mapping(signal_patterns)
@@ -113,7 +122,7 @@ puts "The digits 1, 4, 7, or 8 appear #{data.uniques_count} times"
 puts "\nPART TWO"
 puts "\nTest dataset:"
 data = ObservedData.new('day08-input-test.txt')
-puts "The digits 1, 4, 7, or 8 appear #{data.uniques_count} times"
+puts "The sum of decoded four-digit output values is #{data.sum_derived_digits}"
 puts "\nFull dataset:"
 data = ObservedData.new('day08-input-01.txt')
-puts "The digits 1, 4, 7, or 8 appear #{data.uniques_count} times"
+puts "The sum of decoded four-digit output values is #{data.sum_derived_digits}"
