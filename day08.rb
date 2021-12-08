@@ -89,7 +89,8 @@ class ObservedData
   end
 
   def find_d(signals, segment_mapping, a_c_f_g)
-    # What signal is intened to be 'd', i.e. 3 is only 5 segment digit containing a, c, f, and g and its remaining segment is d
+    # What signal is intened to be 'd', i.e. 3 is only 5 segment digit containing a, c, f, and g and its remaining
+    # segment is d
     three = signals.find { |s| s.length == 5 && (a_c_f_g - s).empty? }
     d_signal = (three - a_c_f_g)[0]
     segment_mapping[d_signal] = 'd'
