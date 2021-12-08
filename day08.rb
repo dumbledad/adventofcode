@@ -4,10 +4,14 @@
 class ObservedData
   def initialize(input_data_filename)
     File.readlines(input_data_filename).map(&:chomp).map do |l|
-      signal_patterns = l.split('|')[0].split.map { |s| s.chars.sort.join }
-      output_values = l.split('|')[1].split.map { |s| s.chars.sort.join }
+      signal_patterns = order_chars_in_strings l.split('|')[0]
+      output_values = order_chars_in_strings l.split('|')[1]
       readings << { signal_patterns: signal_patterns, output_values: output_values }
     end
+  end
+
+  def order_chars_in_strings(str_of_strs)
+    str_of_strs.split.map { |s| s.chars.sort.join }
   end
 
   def unique_segment_count_digits
