@@ -38,12 +38,9 @@ class ObservedData
     @segment_counts ||= @readings.map { |r| r[:output_values].map(&:length) }.flatten.tally
   end
 
+  # Solution to Part 1
   def uniques_count
     @uniques_count ||= unique_segment_count_digits.keys.reduce(0) { |m, k| m + segment_counts[k] }
-  end
-
-  def all_segments
-    @all_segments ||= [a, b, c, d, e, f, g]
   end
 
   def derive_digits(reading)
@@ -52,6 +49,7 @@ class ObservedData
     digits.join.to_i
   end
 
+  # Solution to Part 2
   def sum_derived_digits
     readings.map { |r| derive_digits(r) }.sum
   end
@@ -59,64 +57,65 @@ class ObservedData
   def derive_segment_mapping(signal_patterns)
     signals = signal_patterns.map(&:chars)
     segment_mapping = {}
-
-    a_signal = find_a signals
-    segment_mapping[a_signal] = 'a'
-
-    f_signal = find_f signals
-    segment_mapping[f_signal] = 'f'
-
-    g_signal = find_g(signals, a_signal)
-    segment_mapping[g_signal] = 'g'
-
-    c_signal = find_c(signals, f_signal)
-    segment_mapping[c_signal] = 'c'
-
-    d_signal = find_d(signals, [a_signal, c_signal, f_signal, g_signal])
-    segment_mapping[d_signal] = 'd'
-
-    b_signal = find_b(signals, d_signal)
-    segment_mapping[b_signal] = 'b'
-
-    segment_mapping[find_e(signals, [a_signal, b_signal, c_signal, d_signal, f_signal, g_signal])] = 'e'
+    a_signal = find_a(signals, segment_mapping)
+    f_signal = find_f(signals, segment_mapping)
+    g_signal = find_g(signals, segment_mapping, a_signal)
+    c_signal = find_c(signals, segment_mapping, f_signal)
+    d_signal = find_d(signals, segment_mapping, [a_signal, c_signal, f_signal, g_signal])
+    b_signal = find_b(signals, segment_mapping, d_signal)
+    find_e(signals, segment_mapping, [a_signal, b_signal, c_signal, d_signal, f_signal, g_signal])
     segment_mapping
   end
 
-  def find_a(signals)
+  def find_a(signals, segment_mapping)
     # What signal is intened to be 'a', i.e. the segment in 7 but not in 1
-    (signals.find { |s| s.length == 3 } - signals.find { |s| s.length == 2 })[0]
+    a_signal = (signals.find { |s| s.length == 3 } - signals.find { |s| s.length == 2 })[0]
+    segment_mapping[a_signal] = 'a'
+    a_signal
   end
 
-  def find_b(signals, maps_to_d)
+  def find_b(signals, segment_mapping, maps_to_d)
     # What signal is intended to be 'b', i.e. the one in 4 that's not 'd' nor in 1
-    (signals.find { |s| s.length == 4 } - (signals.find { |s| s.length == 2 }.clone << maps_to_d))[0]
+    b_signal = (signals.find { |s| s.length == 4 } - (signals.find { |s| s.length == 2 }.clone << maps_to_d))[0]
+    segment_mapping[b_signal] = 'b'
+    b_signal
   end
 
-  def find_c(signals, maps_to_f)
+  def find_c(signals, segment_mapping, maps_to_f)
     # What signal is intended to be 'c', i.e. the one in 1 that is not f
-    (signals.find { |s| s.length == 2 } - maps_to_f.chars)[0]
+    c_signal = (signals.find { |s| s.length == 2 } - maps_to_f.chars)[0]
+    segment_mapping[c_signal] = 'c'
+    c_signal
   end
 
-  def find_d(signals, a_c_f_g)
+  def find_d(signals, segment_mapping, a_c_f_g)
     # What signal is intened to be 'd', i.e. 3 is only 5 segment digit containing a, c, f, and g and its remaining segment is d
     three = signals.find { |s| s.length == 5 && (a_c_f_g - s).empty? }
-    (three - a_c_f_g)[0]
+    d_signal = (three - a_c_f_g)[0]
+    segment_mapping[d_signal] = 'd'
+    d_signal
   end
 
-  def find_e(signals, a_b_c_d_f_g)
+  def find_e(signals, segment_mapping, a_b_c_d_f_g)
     # What signal is intended to be 'e', i.e. the one in 8 that is not a, b, c, d, nor f
-    (signals.find { |s| s.length == 7 } - a_b_c_d_f_g)[0]
+    e_signal = (signals.find { |s| s.length == 7 } - a_b_c_d_f_g)[0]
+    segment_mapping[e_signal] = 'e'
+    e_signal
   end
 
-  def find_f(signals)
+  def find_f(signals, segment_mapping)
     # What signal is intended to be 'f', i.e. the one missing from only one digit
-    signals.flatten.tally.find { |_, v| v == 9 }[0]
+    f_signal = signals.flatten.tally.find { |_, v| v == 9 }[0]
+    segment_mapping[f_signal] = 'f'
+    f_signal
   end
 
-  def find_g(signals, maps_to_a)
+  def find_g(signals, segment_mapping, maps_to_a)
     # What signal is intended to be 'g', i.e. of the six segment digit containg 4 and a (9) it's the remaining segment
     four_plus_a = (signals.find { |s| s.length == 4 }.clone << maps_to_a)
-    (signals.find { |s| s.length == 6 && (four_plus_a - s).empty? } - four_plus_a)[0]
+    g_signal = (signals.find { |s| s.length == 6 && (four_plus_a - s).empty? } - four_plus_a)[0]
+    segment_mapping[g_signal] = 'g'
+    g_signal
   end
 end
 
