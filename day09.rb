@@ -44,32 +44,35 @@ class ObservedData
 
   # Part 2
   def product_of_largest_basins_sizes(count)
-    largest_basins(count).size.product
+    largest_basins(count).map(&:size).reduce(1) { |s, m| m * s }
   end
 
   def basins
-    basins = Set[]
+    basins = []
+    # readings[i].each_index not working, it's enumerating the elements of readings[i] not the j indexes
     readings.each_index do |i|
       readings[i].each_index do |j|
-        next if readings[i][j] != 9
+        next if readings[i][j] != 9 || basins.flatten.include?([i, j])
 
-        next if basins.flatten.include? [i, j]
-
-        basin = Set[]
-        add_non_nine_connecteds(i, j, basin)
-        basins << basin
+        basins << non_nine_connecteds(i, j)
       end
     end
     basins
   end
 
-  def add_non_nine_connecteds(i_index, j_index, basin)
-    adjacent_indexes(i_index, j_index).each do |a|
-      if readings[a[0], a[1]] != 9
-        basin.add([a[0], a[1]])
-        add_non_nine_connecteds(a[0], a[1], basin)
+  def non_nine_connecteds(i_index, j_index)
+    to_check = [[i_index, j_index]]
+    adjacents = []
+    until to_check.empty?
+      i_j = to_check.pop
+      next if readings[i_j[0]][i_j[1]] != 9
+
+      adjacents << i_j
+      to_check += adjacent_indexes(i_j[0], i_j[1]).reject do |adj|
+        adjacents.include?(adj) || readings[adj[0]][adj[1]] == 9
       end
     end
+    adjacents
   end
 end
 
