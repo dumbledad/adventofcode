@@ -38,22 +38,53 @@ class ObservedData
     adj
   end
 
-  # def basins
-  #   basins = Set[]
-  #   readings.each_index do |i|
-  #     readings[i].each_index do |j|
+  def largest_basins(count)
+    basins.to_a.sort { |b1, b2| b2.size <=> b1.size }.first(count)
+  end
 
-  # end
+  # Part 2
+  def product_of_largest_basins_sizes(count)
+    largest_basins(count).size.product
+  end
 
-  # def add_non_nine_connecteds(i_index, j_index, basin)
-  #   adjacents(i_index, j_index).each do |a|
-  #     if 
-  #   return [connected, checked << [i, j]] if readings[i][j] == 9
-  # end
+  def basins
+    basins = Set[]
+    readings.each_index do |i|
+      readings[i].each_index do |j|
+        next if readings[i][j] != 9
+
+        next if basins.flatten.include? [i, j]
+
+        basin = Set[]
+        add_non_nine_connecteds(i, j, basin)
+        basins << basin
+      end
+    end
+    basins
+  end
+
+  def add_non_nine_connecteds(i_index, j_index, basin)
+    adjacent_indexes(i_index, j_index).each do |a|
+      if readings[a[0], a[1]] != 9
+        basin.add([a[0], a[1]])
+        add_non_nine_connecteds(a[0], a[1], basin)
+      end
+    end
+  end
 end
 
+puts "\nPART ONE"
+puts "\nTest dataset:"
 data = ObservedData.new('day09-input-test.txt')
-puts data.risk_levels.sum
-
+puts "The sum of risk levels is #{data.risk_levels.sum}"
+puts "\nFull dataset:"
 data = ObservedData.new('day09-input-01.txt')
-puts data.risk_levels.sum
+puts "The sum of risk levels is #{data.risk_levels.sum}"
+
+puts "\nPART TWO"
+puts "\nTest dataset:"
+data = ObservedData.new('day09-input-test.txt')
+puts "The product of the three largest basin's sizes is #{data.product_of_largest_basins_sizes(3)}"
+puts "\nFull dataset:"
+data = ObservedData.new('day09-input-01.txt')
+puts "The product of the three largest basin's sizes is #{data.product_of_largest_basins_sizes(3)}"
