@@ -50,9 +50,9 @@ class ObservedData
   def basins
     basins = []
     # readings[i].each_index not working, it's enumerating the elements of readings[i] not the j indexes
-    readings.each_index do |i|
-      readings[i].each_index do |j|
-        next if readings[i][j] != 9 || basins.flatten.include?([i, j])
+    (0...size[0]).each do |i|
+      (0...size[1]).each do |j|
+        next if readings[i][j] == 9 || basins.flatten(1).include?([i, j])
 
         basins << non_nine_connecteds(i, j)
       end
@@ -65,7 +65,7 @@ class ObservedData
     adjacents = []
     until to_check.empty?
       i_j = to_check.pop
-      next if readings[i_j[0]][i_j[1]] != 9
+      next if adjacents.include?(i_j) || readings[i_j[0]][i_j[1]] == 9
 
       adjacents << i_j
       to_check += adjacent_indexes(i_j[0], i_j[1]).reject do |adj|
