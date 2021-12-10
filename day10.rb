@@ -11,7 +11,7 @@ class Checker
       ']' => 57,
       '}' => 1_197,
       '>' => 25_137,
-      nil => 0
+      false => 0
     }
     @opening_brackets = ['(', '[', '{', '<']
     @closing_brackets = [')', ']', '}', '>']
@@ -45,12 +45,18 @@ class Checker
         return c
       end
     end
-    nil
+    false
   end
 
   # Part 1
   def total_syntax_error_score
-    complete_loc.reduce(0) { |sum, line| sum + illegal_char_scores[first_illegal_closing_bracket(line)] }
+    sum = 0
+    loc.each do |line|
+      icb = first_illegal_closing_bracket(line)
+      score = illegal_char_scores[icb]
+      sum += score
+    end
+    # loc.reduce(0) { |sum, line| sum + illegal_char_scores[first_illegal_closing_bracket(line)] }
   end
 end
 
