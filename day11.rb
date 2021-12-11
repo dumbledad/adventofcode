@@ -4,11 +4,12 @@ require 'set'
 
 # https://adventofcode.com/2021/day/11
 class DumboOctopuses
-  attr_accessor :levels, :steps, :i_length, :j_length, :flash_above, :flashes_per_step
+  attr_accessor :levels, :steps, :i_length, :j_length, :octopi_count, :flash_above, :flashes_per_step
 
   def initialize(input_data_filename)
     initialize_constants
-    initialize_data(input_data_filename)
+    @levels = File.readlines(input_data_filename).map(&:chomp).map { |l| l.chars.map(&:to_i) }
+    initialize_lengths
     @flashes_per_step = []
   end
 
@@ -17,14 +18,10 @@ class DumboOctopuses
     @flash_above = 9
   end
 
-  def initialize_data(input_data_filename)
-    @levels = File.readlines(input_data_filename).map(&:chomp).map { |l| l.chars.map(&:to_i) }
+  def initialize_lengths
     @i_length = levels.length
     @j_length = levels[0].length
-  end
-
-  def octopi_count
-    @octopi_count ||= levels.length * levels[0].length
+    @octopi_count = levels.length * levels[0].length
   end
 
   def flashes
@@ -74,6 +71,7 @@ class DumboOctopuses
 
   def clear(flashed)
     @flashes_per_step << flashed.length
+    #puts "There were #{flashed.length} octopi flashing of #{@octopi_count} octopi at step #{@flashes_per_step.length}"
     flashed.each do |ij|
       @levels[ij[0]][ij[1]] = 0
     end
@@ -88,24 +86,20 @@ class DumboOctopuses
     end
     adj
   end
+
+  def all_flash_at_step
+    do_step until @flashes_per_step.include? @octopi_count
+    (flashes_per_step.find_index @octopi_count) + 1
+  end
 end
 
-puts "\nPART ONE"
 puts "\nTest dataset:"
 data = DumboOctopuses.new('day11-input-test.txt')
 data.do_steps
 puts "There were #{data.flashes} flashes after #{data.steps} steps"
+puts "All #{data.octopi_count} octopi flashed together first at step #{data.all_flash_at_step}"
 puts "\nFull dataset:"
 data = DumboOctopuses.new('day11-input-01.txt')
 data.do_steps
 puts "There were #{data.flashes} flashes after #{data.steps} steps"
-
-# puts "\nPART TWO"
-# puts "\nTest dataset:"
-# data = DumboOctopuses.new('day11-input-test.txt')
-# data.do_steps
-# puts "There were #{data.flashes} flashes after #{data.steps} steps"
-# puts "\nFull dataset:"
-# data = DumboOctopuses.new('day11-input-01.txt')
-# data.do_steps
-# puts "There were #{data.flashes} flashes after #{data.steps} steps"
+puts "All #{data.octopi_count} octopi flashed together first at step #{data.all_flash_at_step}"
