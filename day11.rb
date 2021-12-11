@@ -1,3 +1,5 @@
+require 'set'
+
 # frozen_string_literal: true
 
 # https://adventofcode.com/2021/day/11
@@ -11,6 +13,7 @@ class DumboOctopuses
     @i_length = levels.length
     @j_length = levels[0].length
     @flash_above = 9
+    do_steps
   end
 
   def print_levels
@@ -32,23 +35,32 @@ class DumboOctopuses
   def do_step
     # Now I need @levels, previous days just levels. What's that about?
     @levels = @levels.each.map { |r| r.each.map { |l| l + 1 } }
-    flashed = []
-    until (to_flash - flashed.uniq).empty?
-      (to_flash - flashed.uniq).each do |i_j|
-        flash_at(i_j)
-        flashed << i_j
+    clear(flash)
+  end
+
+  def flash
+    flashed = Set.new
+    left_to_flash = to_flash - flashed.to_a
+    until left_to_flash.empty?
+      left_to_flash.each do |ij|
+        flash_at(ij)
+        flashed << ij
       end
+      left_to_flash = to_flash - flashed.to_a
     end
-    flashed = flashed.uniq
-    @flashes += flashed.length
-    flashed.each do |i_j|
-      @levels[i_j[0]][i_j[1]] = 0
-    end
+    flashed
   end
 
   def flash_at(i_j)
     adjacents(i_j).each do |adj|
-      @level[adj[0]][adj[1]] += 1
+      @levels[adj[0]][adj[1]] += 1
+    end
+  end
+
+  def clear(flashed)
+    @flashes += flashed.length
+    flashed.each do |ij|
+      @levels[ij[0]][ij[1]] = 0
     end
   end
 
@@ -63,12 +75,10 @@ class DumboOctopuses
   end
 end
 
+puts "\nPART ONE"
+puts "\nTest dataset:"
 data = DumboOctopuses.new('day11-input-test.txt')
-data.do_steps
-# puts "\nPART ONE"
-# puts "\nTest dataset:"
-# data = DumboOctopuses.new('day11-input-test.txt')
-# puts "There were #{data.flashes} flashes after #{data.steps} steps"
-# puts "\nFull dataset:"
-# data = DumboOctopuses.new('day11-input-01.txt')
-# puts "There were #{data.flashes} flashes after #{data.steps} steps"
+puts "There were #{data.flashes} flashes after #{data.steps} steps"
+puts "\nFull dataset:"
+data = DumboOctopuses.new('day11-input-01.txt')
+puts "There were #{data.flashes} flashes after #{data.steps} steps"
