@@ -4,16 +4,31 @@ require 'set'
 
 # https://adventofcode.com/2021/day/11
 class DumboOctopuses
-  attr_accessor :levels, :steps, :flashes, :i_length, :j_length, :flash_above
+  attr_accessor :levels, :steps, :i_length, :j_length, :flash_above, :flashes_per_step
 
   def initialize(input_data_filename)
-    @levels = File.readlines(input_data_filename).map(&:chomp).map { |l| l.chars.map(&:to_i) }
+    initialize_constants
+    initialize_data(input_data_filename)
+    @flashes_per_step = []
+  end
+
+  def initialize_constants
     @steps = 100
-    @flashes = 0
+    @flash_above = 9
+  end
+
+  def initialize_data(input_data_filename)
+    @levels = File.readlines(input_data_filename).map(&:chomp).map { |l| l.chars.map(&:to_i) }
     @i_length = levels.length
     @j_length = levels[0].length
-    @flash_above = 9
-    do_steps
+  end
+
+  def octopi_count
+    @octopi_count ||= levels.length * levels[0].length
+  end
+
+  def flashes
+    @flashes_per_step.sum
   end
 
   def print_levels
@@ -58,7 +73,7 @@ class DumboOctopuses
   end
 
   def clear(flashed)
-    @flashes += flashed.length
+    @flashes_per_step << flashed.length
     flashed.each do |ij|
       @levels[ij[0]][ij[1]] = 0
     end
@@ -78,7 +93,19 @@ end
 puts "\nPART ONE"
 puts "\nTest dataset:"
 data = DumboOctopuses.new('day11-input-test.txt')
+data.do_steps
 puts "There were #{data.flashes} flashes after #{data.steps} steps"
 puts "\nFull dataset:"
 data = DumboOctopuses.new('day11-input-01.txt')
+data.do_steps
 puts "There were #{data.flashes} flashes after #{data.steps} steps"
+
+# puts "\nPART TWO"
+# puts "\nTest dataset:"
+# data = DumboOctopuses.new('day11-input-test.txt')
+# data.do_steps
+# puts "There were #{data.flashes} flashes after #{data.steps} steps"
+# puts "\nFull dataset:"
+# data = DumboOctopuses.new('day11-input-01.txt')
+# data.do_steps
+# puts "There were #{data.flashes} flashes after #{data.steps} steps"
