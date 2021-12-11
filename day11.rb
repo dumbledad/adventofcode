@@ -17,7 +17,7 @@ class DumboOctopuses
     @steps = 100
     @flash_above = 9
   end
-
+§
   def initialize_lengths
     @i_length = levels.length
     @j_length = levels[0].length
@@ -71,7 +71,6 @@ class DumboOctopuses
 
   def clear(flashed)
     @flashes_per_step << flashed.length
-    #puts "There were #{flashed.length} octopi flashing of #{@octopi_count} octopi at step #{@flashes_per_step.length}"
     flashed.each do |ij|
       @levels[ij[0]][ij[1]] = 0
     end
