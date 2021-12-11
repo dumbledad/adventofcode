@@ -17,7 +17,7 @@ class DumboOctopuses
   end
 
   def print_levels
-    @levels.each_index { |i| @levels.each_index { |j| puts("((#{i}, #{j}), #{@levels[i][j]})") } }
+    @levels.each { |row| puts row.join }
   end
 
   def to_flash
