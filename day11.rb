@@ -17,7 +17,7 @@ class DumboOctopuses
     @steps = 100
     @flash_above = 9
   end
-§
+
   def initialize_lengths
     @i_length = levels.length
     @j_length = levels[0].length
