@@ -29,39 +29,50 @@ class Caves
   def add_to_paths
     added = []
     @paths.each do |p|
-      @links[p[-1]].each do |l|
-        if valid?(p, l)
-          extended_path = p.clone << l
-          added << extended_path unless (@paths + added).include? extended_path
-        end
-      end
+      @links[p[-1]].each { |l| add_if_valid(p, l, added) }
     end
-    @paths += added
-    # puts @paths.max_by(&:length).join('-')
+    @paths = added + @paths.select { |p| p[-1] == 'end' }
+    puts "#{@paths.max_by(&:length).join('-')} longest of #{@paths.length} paths"
     added.length
+  end
+
+  def add_if_valid(path, linked, added)
+    return unless valid?(path, linked)
+
+    extended_path = path.clone << linked
+    added << extended_path unless (@paths + added).include? extended_path
   end
 
   def valid?(path, addition)
     return false if path[-1] == 'end' || addition == 'start'
+    return false unless valid_revisit?(path, addition)
+
+    true
+  end
+
+  def valid_revisit?(path, addition)
     return true if addition == addition.upcase
-    return false if @revisit_one_small && !revisits_at_most_one_small_cave(path, addition)
-    return false if !@revisit_one_small && addition == addition.downcase && path.include?(addition)
+
+    if @revisit_one_small
+      return false unless revisits_at_most_one_small_cave(path, addition)
+    elsif addition == addition.downcase && path.include?(addition)
+      return false
+    end
+    true
+  end
+
+  def revisits_at_most_one_small_cave(path, addition)
+    small_cave_tally = (path.clone << addition).select { |c| c == c.downcase }.tally
+    return false if small_cave_tally[addition] > 2
+    return false if small_cave_tally.count { |_, v| v > 1 } > 1
 
     true
   end
 end
 
-def revisits_at_most_one_small_cave(path, addition)
-  small_cave_tally = (path.clone << addition).select { |c| c == c.downcase }.tally
-  return false if small_cave_tally[addition] > 2
-  return false if small_cave_tally.count { |_, v| v > 1 } > 1
-
-  true
-end
-
 def report(filename, allow_repeat_one_small)
   data = Caves.new(filename, revisit: allow_repeat_one_small)
-  puts "#{allow_repeat_one_small ? 'PART 2:' : 'PART 1:'} #{data.num_complete_paths} complete paths from #{filename}"
+  puts "\n#{allow_repeat_one_small ? 'PART 2:' : 'PART 1:'} #{data.num_complete_paths} paths from #{filename}\n"
 end
 
 [false, true].each do |allow|
