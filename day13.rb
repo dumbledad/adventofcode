@@ -62,3 +62,11 @@ def part_one(filename)
 end
 
 ['day13-input-test.txt', 'day13-input-01.txt'].each { |f| part_one(f) }
+
+def part_two(filename)
+  data = Paper.new(filename)
+  data.folds.each { |fold| data.fold_along(fold) }
+  data.print_grid
+end
+
+['day13-input-test.txt', 'day13-input-01.txt'].each { |f| part_two(f) }
