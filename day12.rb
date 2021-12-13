@@ -72,7 +72,9 @@ end
 
 def report(filename, allow_repeat_one_small)
   data = Caves.new(filename, revisit: allow_repeat_one_small)
-  puts "\n#{allow_repeat_one_small ? 'PART 2:' : 'PART 1:'} #{data.num_complete_paths} paths from #{filename}\n"
+  before = Time.now
+  puts "\n#{allow_repeat_one_small ? 'PART 2:' : 'PART 1:'} #{data.num_complete_paths} paths from #{filename}"
+  puts "Ran in #{Time.now - before} seconds (WHY IS THIS SO WRONG?)\n\n"
 end
 
 [false, true].each do |allow|
