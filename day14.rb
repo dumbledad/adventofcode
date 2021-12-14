@@ -7,11 +7,15 @@ class OptimalPolymerFormula
   def initialize(input_data_filename)
     @polymer_template = File.open(input_data_filename, &:readline).chomp
     @polymer = @polymer_template
-    @insertions = File.readlines(input_data_filename).drop(2).map(&:chomp).map { |l| l.split(' -> ') }
+    @insertions = initialize_insertions(File.readlines(input_data_filename).drop(2).map(&:chomp).map { |l| l.split(' -> ') })
+  end
+
+  def initialize_insertions(pairs)
+    pairs.each_with_object({}) { |p, h| h[p[0]] = p[0][0] + p[1] + p[0][1] }
   end
 
   # def step
-  #   @polymer = (0...@polymer.length)
+  #   @polymer = (0...@polymer.length).map { |i| @polymer}
   # end
 end
 
