@@ -1,0 +1,20 @@
+# frozen_string_literal: true
+
+# https://adventofcode.com/2021/day/14
+class OptimalPolymerFormula
+  attr_accessor :polymer_template, :polymer, :insertions
+
+  def initialize(input_data_filename)
+    @polymer_template = File.open(input_data_filename, &:readline).chomp
+    @polymer = @polymer_template
+    @insertions = File.readlines(input_data_filename).drop(2).map(&:chomp).map { |l| l.split(' -> ') }
+  end
+
+  # def step
+  #   @polymer = (0...@polymer.length)
+  # end
+end
+
+data = OptimalPolymerFormula.new('day14-input-test.txt')
+pp data.insertions
+puts data.polymer
