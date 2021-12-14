@@ -34,12 +34,9 @@ class OptimalPolymerFormula
   end
 end
 
-data = OptimalPolymerFormula.new('day14-input-test.txt')
-puts data.mce_minus_lce_after(10)
-
 def polymer(filename, steps)
   data = OptimalPolymerFormula.new(filename)
-  puts "After #{steps} steps mce - lce = #{data.mce_minus_lce_after(10)} (from #{filename})"
+  puts "After #{steps} steps mce - lce = #{data.mce_minus_lce_after(steps)} (from #{filename})"
 end
 
-['day14-input-test.txt', 'day14-input-01.txt'].each { |f| polymer(f, 10) }
+[10, 40].each { |s| ['day14-input-test.txt', 'day14-input-01.txt'].each { |f| polymer(f, s) } }
