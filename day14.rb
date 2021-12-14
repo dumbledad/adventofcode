@@ -40,21 +40,19 @@ class OptimalPolymerFormula
   end
 
   def step
-    added = @pair_counts.keys.each_with_object([]) do |p, a|
-      (0...@pair_counts[p]).each do
-        a.concat @insertion_map[p]
+    replacement = Hash.new { 0 }
+    @pair_counts.each do |old_p, c|
+      @insertion_map[old_p].each do |new_p|
+        replacement[new_p] += c
       end
     end
-    @pair_counts = added.tally
+    @pair_counts = replacement
   end
 end
 
 def polymer(filename, steps)
   data = OptimalPolymerFormula.new(filename)
-  before = DateTime.now
   puts "\nAfter #{steps} steps mce - lce = #{data.mce_minus_lce_after(steps)} (from #{filename})"
-  after = DateTime.now
-  puts "That took from #{before} to #{after}, i.e. #{(after - before).to_i} seconds\n"
 end
 
 [10, 40].each { |s| ['day14-input-test.txt', 'day14-input-01.txt'].each { |f| polymer(f, s) } }
