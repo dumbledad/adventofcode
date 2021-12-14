@@ -1,3 +1,5 @@
+require 'date'
+
 # frozen_string_literal: true
 
 # https://adventofcode.com/2021/day/14
@@ -36,7 +38,10 @@ end
 
 def polymer(filename, steps)
   data = OptimalPolymerFormula.new(filename)
+  before = DateTime.now
   puts "After #{steps} steps mce - lce = #{data.mce_minus_lce_after(steps)} (from #{filename})"
+  after = DateTime.now
+  puts "That took from #{before} to #{after}, i.e. #{(after - before).to_i} seconds\n\n"
 end
 
 [10, 40].each { |s| ['day14-input-test.txt', 'day14-input-01.txt'].each { |f| polymer(f, s) } }
