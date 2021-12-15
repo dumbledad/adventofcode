@@ -60,7 +60,7 @@ class Chitons
         p[:risk_from_start] = revised_risk_from_start if revised_risk_from_start < p[:risk_from_start]
       end
     end
-    points[@i_length - 1][@j_length - 1][:risk_from_start]
+    points[@i_length - 1][@j_length - 1][:risk_from_start].to_i
   end
 
   def init_data_for_dijkstra
@@ -107,4 +107,14 @@ def path(filename, expand)
   puts "The lowest risk path has #{data.dijkstra} risk (#{filename})"
 end
 
-[true].each { |e| ['day15-input-test.txt', 'day15-input-01.txt'].each { |f| path(f, e) } }
+# [false, true].each { |e| ['day15-input-test.txt', 'day15-input-01.txt'].each { |f| path(f, e) } }
+
+data = Chitons.new('day15-input-test.txt', expand: true)
+data.print_risks
+risks = File.readlines('day15-expanded-test.txt').map(&:chomp).map(&:chars).map { |r| r.map(&:to_i) }
+(0...risks.length).each do |i|
+  (0...risks[0].length).each do |j|
+    puts "(#{i}, #{j}) == (#{data.risks[i][j]}, #{risks[i][j]})"
+    return if data.risks[i][j] != risks[i][j]
+  end
+end
