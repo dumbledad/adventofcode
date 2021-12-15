@@ -26,7 +26,7 @@ class Chitons
           @risks.length.times { expanded << [] }
           previous_block = expanded[(i - 1) * @risks.length, @risks.length].map { |r| r[0, @risks[0].length] }
         else
-          previous_block = expanded[i, @risks.length].map { |r| r[(j - 1) * @risks[0].length, @risks[0].length] }
+          previous_block = expanded[i * @risks.length, @risks.length].map { |r| r[(j - 1) * @risks[0].length, @risks[0].length] }
         end
         incremented = increment(previous_block)
         (0...incremented.length).each do |ii|
