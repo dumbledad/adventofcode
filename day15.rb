@@ -22,19 +22,21 @@ class Chitons
       (0...5).each do |j|
         next if i.zero? && j.zero?
 
-        if j.zero?
-          @risks.length.times { expanded << [] }
-          previous_block = expanded[(i - 1) * @risks.length, @risks.length].map { |r| r[0, @risks[0].length] }
-        else
-          previous_block = expanded[i * @risks.length, @risks.length].map { |r| r[(j - 1) * @risks[0].length, @risks[0].length] }
-        end
-        incremented = increment(previous_block)
+        @risks.length.times { expanded << [] } if j.zero?
+
+        incremented = increment(previous_block(i, j, expanded))
         (0...incremented.length).each do |ii|
           expanded[(i * @risks.length) + ii] = expanded[(i * @risks.length) + ii] + incremented[ii]
         end
       end
     end
     expanded
+  end
+
+  def previous_block(i, j, expanded)
+    return expanded[(i - 1) * @risks.length, @risks.length].map { |r| r[0, @risks[0].length] } if j.zero?
+
+    expanded[i * @risks.length, @risks.length].map { |r| r[(j - 1) * @risks[0].length, @risks[0].length] }
   end
 
   def increment(risk_map)
