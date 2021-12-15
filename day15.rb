@@ -2,11 +2,11 @@
 
 # https://adventofcode.com/2021/day/15
 class Chitons
-  attr_accessor :risks, :paths, :i_length, :j_length, :lowest_risk, :lowest_risk_path
+  attr_accessor :risks, :i_length, :j_length, :lowest_risk, :lowest_risk_path
 
   def initialize(input_data_filename)
     @risks = File.readlines(input_data_filename).map(&:chomp).map(&:chars).map { |r| r.map(&:to_i) }
-    @paths = []
+    @risks[0][0] = 0
     @i_length = @risks.length
     @j_length = @risks[0].length
     add_initial_path
@@ -24,9 +24,21 @@ class Chitons
 
   # Calculate a path's risk (omitting the top left starting point as we leave it)
   def risk(path)
-    (1...path.length).reduce(0) do |sum, i|
+    (0...path.length).reduce(0) do |sum, i|
       sum + path[i][1]
     end
+  end
+
+  # Part 1
+  def safest_path
+    # For each possible path
+      # Traverse path until risk > lowest rist thus far, when we abandon
+      # If we don't abandon, then replace lowest risk
+
+  end
+
+  def clockwise(point)
+
   end
 end
 
