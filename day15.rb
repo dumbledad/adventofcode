@@ -84,11 +84,6 @@ class Chitons
   end
 
   def adjacents(point, points)
-    # Rubocop complains:
-    #   Assignment Branch Condition size for adjacents is too high. [<1, 24, 6> 24.76/17] (convention:Metrics/AbcSize)
-    # TODO: Find out from Patrick (or any experienced Ruby programmer) how they'd respond to that Rubocop complaint
-    # about this method. To me it looks a very neat and readable method, but that may be my inexperience with Ruby.
-    # https://codereview.stackexchange.com/q/271025/11084
     adjacent_points = []
     adjacent_points << points[point[:position][0] - 1][point[:position][1]] unless point[:position][0].zero?
 
@@ -107,14 +102,14 @@ def path(filename, expand)
   puts "The lowest risk path has #{data.dijkstra} risk (#{filename})"
 end
 
-# [false, true].each { |e| ['day15-input-test.txt', 'day15-input-01.txt'].each { |f| path(f, e) } }
+[false, true].each { |e| ['day15-input-test.txt', 'day15-input-01.txt'].each { |f| path(f, e) } }
 
-data = Chitons.new('day15-input-test.txt', expand: true)
-data.print_risks
-risks = File.readlines('day15-expanded-test.txt').map(&:chomp).map(&:chars).map { |r| r.map(&:to_i) }
-(0...risks.length).each do |i|
-  (0...risks[0].length).each do |j|
-    puts "(#{i}, #{j}) == (#{data.risks[i][j]}, #{risks[i][j]})"
-    return if data.risks[i][j] != risks[i][j]
-  end
-end
+# data = Chitons.new('day15-input-test.txt', expand: true)
+# data.print_risks
+# risks = File.readlines('day15-expanded-test.txt').map(&:chomp).map(&:chars).map { |r| r.map(&:to_i) }
+# (0...risks.length).each do |i|
+#   (0...risks[0].length).each do |j|
+#     puts "(#{i}, #{j}) == (#{data.risks[i][j]}, #{risks[i][j]})"
+#     return if data.risks[i][j] != risks[i][j]
+#   end
+# end
