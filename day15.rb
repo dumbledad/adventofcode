@@ -99,7 +99,8 @@ end
 
 def path(filename, expand)
   data = Chitons.new(filename, expand: expand)
-  puts "The lowest risk path has #{data.dijkstra} risk (#{filename})"
+  msg = expand ? ' expanded' : ''
+  puts "The lowest risk path has #{data.dijkstra} risk (#{filename}#{msg})"
 end
 
 [false, true].each { |e| ['day15-input-test.txt', 'day15-input-01.txt'].each { |f| path(f, e) } }
