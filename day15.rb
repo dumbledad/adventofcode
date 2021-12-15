@@ -25,26 +25,30 @@ class Chitons
         @risks.length.times { expanded << [] } if j.zero?
 
         incremented = increment(previous_block(i, j, expanded))
-        (0...incremented.length).each do |ii|
-          expanded[(i * @risks.length) + ii] = expanded[(i * @risks.length) + ii] + incremented[ii]
-        end
+        append_incremented(expanded, incremented)
       end
     end
     expanded
   end
 
-  def previous_block(i, j, expanded)
-    return previous_block_up(i, j, expanded) if j.zero?
-
-    previous_block_left(i, j, expanded)
+  def append_incremented(expanded, incremented)
+    (0...incremented.length).each do |ii|
+      expanded[(i * @risks.length) + ii] = expanded[(i * @risks.length) + ii] + incremented[ii]
+    end
   end
 
-  def previous_block_up(i, j, expanded)
-    sub_matrix(expanded, (i - 1) * @risks.length, @risks.length, 0, @risks[0].length)
+  def previous_block(i_idx, j_idx, expanded)
+    return previous_block_up(i_idx, expanded) if j_idx.zero?
+
+    previous_block_left(i_idx, j_idx, expanded)
   end
 
-  def previous_block_left(i, j, expanded)
-    sub_matrix(expanded, i * @risks.length, @risks.length, (j - 1) * @risks[0].length, @risks[0].length)
+  def previous_block_up(i_idx, expanded)
+    sub_matrix(expanded, (i_idx - 1) * @risks.length, @risks.length, 0, @risks[0].length)
+  end
+
+  def previous_block_left(i_idx, j_idx, expanded)
+    sub_matrix(expanded, i_idx * @risks.length, @risks.length, (j_idx - 1) * @risks[0].length, @risks[0].length)
   end
 
   def sub_matrix(matrix, i_idx, i_length, j_idx, j_length)
