@@ -34,9 +34,15 @@ class Chitons
   end
 
   def previous_block(i, j, expanded)
-    return expanded[(i - 1) * @risks.length, @risks.length].map { |r| r[0, @risks[0].length] } if j.zero?
+    # return expanded[(i - 1) * @risks.length, @risks.length].map { |r| r[0, @risks[0].length] } if j.zero?
+    return sub_matrix(expanded, (i - 1) * @risks.length, @risks.length, 0, @risks[0].length) if j.zero?
 
-    expanded[i * @risks.length, @risks.length].map { |r| r[(j - 1) * @risks[0].length, @risks[0].length] }
+    # expanded[i * @risks.length, @risks.length].map { |r| r[(j - 1) * @risks[0].length, @risks[0].length] }
+    sub_matrix(expanded, i * @risks.length, @risks.length, (j - 1) * @risks[0].length, @risks[0].length)
+  end
+
+  def sub_matrix(matrix, i, i_length, j, j_length)
+    matrix[i, i_length].map { |r| r[j, j_length] }
   end
 
   def increment(risk_map)
