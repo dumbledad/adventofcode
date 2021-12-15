@@ -73,12 +73,16 @@ class Chitons
     until all_done?(points)
       start = min_risk(points)
       start[:calculated] = true
-      adjacents(start, points).reject { |p| p[:calculated] }.each do |p|
-        revised_risk_from_start = start[:risk_from_start] + p[:risk].to_f
-        p[:risk_from_start] = revised_risk_from_start if revised_risk_from_start < p[:risk_from_start]
-      end
+      revise_risk_for_adjacents(start, points)
     end
     points[@i_length - 1][@j_length - 1][:risk_from_start].to_i
+  end
+
+  def revise_risk_for_adjacents
+    adjacents(start, points).reject { |p| p[:calculated] }.each do |p|
+      revised_risk_from_start = start[:risk_from_start] + p[:risk].to_f
+      p[:risk_from_start] = revised_risk_from_start if revised_risk_from_start < p[:risk_from_start]
+    end
   end
 
   def init_data_for_dijkstra
