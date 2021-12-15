@@ -7,7 +7,6 @@ class Chitons
   def initialize(input_data_filename, expand: false)
     @risks = File.readlines(input_data_filename).map(&:chomp).map(&:chars).map { |r| r.map(&:to_i) }
     @risks = expand_risks if expand
-    # print_risks
     @i_length = @risks.length
     @j_length = @risks[0].length
   end
@@ -107,15 +106,27 @@ class Chitons
 
   def adjacents(point, points)
     adjacent_points = []
-    adjacent_points << points[point[:position][0] - 1][point[:position][1]] unless point[:position][0].zero?
-
-    adjacent_points << points[point[:position][0]][point[:position][1] + 1] unless point[:position][1] + 1 == @j_length
-
-    adjacent_points << points[point[:position][0] + 1][point[:position][1]] unless point[:position][0] + 1 == @i_length
-
-    adjacent_points << points[point[:position][0]][point[:position][1] - 1] unless point[:position][1].zero?
-
+    adjacent_up(adjacent_points, point, points)
+    adjacent_right(adjacent_points, point, points)
+    adjacent_down(adjacent_points, point, points)
+    adjacent_left(adjacent_points, point, points)
     adjacent_points
+  end
+
+  def adjacent_up(adjacent_points, point, points)
+    adjacent_points << points[point[:position][0] - 1][point[:position][1]] unless point[:position][0].zero?
+  end
+
+  def adjacent_right(adjacent_points, point, points)
+    adjacent_points << points[point[:position][0]][point[:position][1] + 1] unless point[:position][1] + 1 == @j_length
+  end
+
+  def adjacent_down(adjacent_points, point, points)
+    adjacent_points << points[point[:position][0] + 1][point[:position][1]] unless point[:position][0] + 1 == @i_length
+  end
+
+  def adjacent_left(adjacent_points, point, points)
+    adjacent_points << points[point[:position][0]][point[:position][1] - 1] unless point[:position][1].zero?
   end
 end
 
