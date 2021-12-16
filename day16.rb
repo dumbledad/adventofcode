@@ -2,13 +2,10 @@
 
 # https://adventofcode.com/2021/day/16
 class Transmission
-  attr_accessor :transmissions, :hex_to_bin
+  attr_accessor :hex_to_bin
 
-  def initialize(input_data_filename: '')
+  def initialize
     @hex_to_bin = [*'0'..'9', *'A'..'F'].zip((0..15).map { |i| format('%04b', i) }).to_h # https://stackoverflow.com/a/29857016/575530
-    return if input_data_filename.empty?
-
-    @transmissions = File.readlines(input_data_filename).map(&:chomp).map { |h| h.unpack1('H*').to_i }
   end
 
   def print_transmissions
@@ -20,7 +17,6 @@ class Transmission
   def sum_version_numbers(packet)
     version_sum = packet[:version]
     packet[:sub_packets].each do |p|
-      puts "(#{version_sum}, #{p[:version]})"
       version_sum += sum_version_numbers(p)
     end
     version_sum
@@ -90,14 +86,12 @@ class Transmission
 end
 
 def path(filename)
-  data = Transmission.new(input_data_filename: filename)
-  data.print_transmissions
-  # puts "The lowest risk path has #{data.dijkstra} risk (#{filename}#{msg})"
+  transmission = Transmission.new
+  packet_hex = File.open(filename, &:readline).chomp
+  packet_bin = transmission.packet_to_bin(packet_hex)
+  packet, = transmission.parse_packet(packet_bin)
+  sum = transmission.sum_version_numbers(packet)
+  puts "The sum of the packet values is #{sum} from the transmission in #{filename}"
 end
 
-['day16-input-test.txt', 'day16-input-01.txt'].each { |f| path(f) } if __FILE__ == $PROGRAM_NAME
-
-# 16
-# 12
-# 23
-# 31
+path('day16-input-01.txt') if __FILE__ == $PROGRAM_NAME
