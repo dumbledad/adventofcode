@@ -17,29 +17,35 @@ class Transmission
   end
 
   def sum_version_numbers(packet_hex)
-    # No-op.
+    packet = parse_packet(packet_to_int(packet_hex))
   end
 
-  def parse_packet_from(num)
-    version = num >> (num.bit_length - 3)
-    num & (1 << (num.bit_length - 3))
+  def packet_to_int(packet_hex)
+    packet_hex.unpack1('H*').to_i
+  end
+
+  def parse_packet(packet_int)
+    packet = {}
+    packet[:version] = packet_int >> (packet_int.bit_length - 3)
+    packet[:type] = (packet_int >> (packet_int.bit_length - 6)) & (((1 << 3) - 1) << 3)
+    packet[:literal_value] = packet[:type] == 4 ? parse_literal_value(drop_top_bits(6, packet_int)) : 0
+    packet
+  end
+
+  def parse_literal_value(packet_int_remainder)
+    literal_value = 0
+    loop do
+      top_five = packet_int_remainder >> (packet_int_remainder.bit_length - 5)
+      packet_int_remainder = drop_top_bits(5, packet_int_remainder)
+      literal_value = (literal_value << 4) + drop_top_bits(1, top_five)
+      break if top_five < 0b10000
+    end
+    literal_value
   end
 
   def drop_top_bits(drop_count, num)
     ones = (1 << (num.bit_length - drop_count)) - 1
     num & ones
-  end
-
-  def parse_version(bin_str)
-    parse_n(3, bin_str)
-  end
-
-  def parse_type_id(bin_str)
-    parse_n(3, bin_str)
-  end
-
-  def parse_n(n, bin_str)
-    [bin_str[0, n].to_i(2), bin_str[n..]]
   end
 end
 

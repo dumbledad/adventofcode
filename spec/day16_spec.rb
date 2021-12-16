@@ -12,6 +12,14 @@ RSpec.describe Transmission do
     end
   end
 
+  describe '#parse_literal_value' do
+    it 'correctly parses a literal value packet fragment' do
+      data = Transmission.new
+      literal_value = data.parse_literal_value(0b101111111000101000)
+      expect(literal_value).to eq(2021)
+    end
+  end
+
   describe '#sum_version_numbers' do
     it 'correctly sums the version numbers of packets in a given packet' do
       data = Transmission.new
