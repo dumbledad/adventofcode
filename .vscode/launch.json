@@ -14,12 +14,7 @@
             "name": "Run RSpec - all",
             "type": "Ruby",
             "request": "launch",
-            "cwd": "${workspaceRoot}",
             "program": "/Users/timregan/.asdf/shims/rspec",
-            "args": [
-                "--pattern",
-                "${workspaceRoot}/spec/**/*_rspec.rb"
-            ]
         },
         {
             "name": "Debug RSpec - open spec file",

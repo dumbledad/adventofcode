@@ -4,7 +4,9 @@
 class Transmission
   attr_accessor :transmissions
 
-  def initialize(input_data_filename)
+  def initialize(input_data_filename: '')
+    return if input_data_filename.empty?
+
     @transmissions = File.readlines(input_data_filename).map(&:chomp).map { |h| h.unpack1('H*').to_i }
   end
 
@@ -14,14 +16,18 @@ class Transmission
     end
   end
 
+  def sum_version_numbers(packet_hex)
+    # No-op.
+  end
+
   def parse_packet_from(num)
     version = num >> (num.bit_length - 3)
     num & (1 << (num.bit_length - 3))
   end
 
   def drop_top_bits(drop_count, num)
-    ones = (1 << drop_count) - 1
-    num & (ones << (num.bit_length - drop_count))
+    ones = (1 << (num.bit_length - drop_count)) - 1
+    num & ones
   end
 
   def parse_version(bin_str)
@@ -38,12 +44,12 @@ class Transmission
 end
 
 def path(filename)
-  data = Transmission.new(filename)
+  data = Transmission.new(input_data_filename: filename)
   data.print_transmissions
   # puts "The lowest risk path has #{data.dijkstra} risk (#{filename}#{msg})"
 end
 
-'day16-input-test.txt', 'day16-input-01.txt'].each { |f| path(f) }
+['day16-input-test.txt', 'day16-input-01.txt'].each { |f| path(f) } if __FILE__ == $PROGRAM_NAME
 
 # 16
 # 12
