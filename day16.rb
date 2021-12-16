@@ -2,9 +2,10 @@
 
 # https://adventofcode.com/2021/day/16
 class Transmission
-  attr_accessor :transmissions
+  attr_accessor :transmissions, :hex_to_bin
 
   def initialize(input_data_filename: '')
+    @hex_to_bin = [*'0'..'9', *'A'..'F'].zip((0..15).map { |i| format('%04b', i) }).to_h # https://stackoverflow.com/a/29857016/575530
     return if input_data_filename.empty?
 
     @transmissions = File.readlines(input_data_filename).map(&:chomp).map { |h| h.unpack1('H*').to_i }
@@ -16,36 +17,75 @@ class Transmission
     end
   end
 
-  def sum_version_numbers(packet_hex)
-    packet = parse_packet(packet_to_int(packet_hex))
-  end
-
-  def packet_to_int(packet_hex)
-    packet_hex.unpack1('H*').to_i
-  end
-
-  def parse_packet(packet_int)
-    packet = {}
-    packet[:version] = packet_int >> (packet_int.bit_length - 3)
-    packet[:type] = (packet_int >> (packet_int.bit_length - 6)) & (((1 << 3) - 1) << 3)
-    packet[:literal_value] = packet[:type] == 4 ? parse_literal_value(drop_top_bits(6, packet_int)) : 0
-    packet
-  end
-
-  def parse_literal_value(packet_int_remainder)
-    literal_value = 0
-    loop do
-      top_five = packet_int_remainder >> (packet_int_remainder.bit_length - 5)
-      packet_int_remainder = drop_top_bits(5, packet_int_remainder)
-      literal_value = (literal_value << 4) + drop_top_bits(1, top_five)
-      break if top_five < 0b10000
+  def sum_version_numbers(packet)
+    version_sum = packet[:version]
+    packet[:sub_packets].each do |p|
+      puts "(#{version_sum}, #{p[:version]})"
+      version_sum += sum_version_numbers(p)
     end
-    literal_value
+    version_sum
   end
 
-  def drop_top_bits(drop_count, num)
-    ones = (1 << (num.bit_length - drop_count)) - 1
-    num & ones
+  def packet_to_bin(packet_hex)
+    packet_hex.each_char.map { |h| @hex_to_bin[h] }.join
+  end
+
+  def parse_packet(packet_bin)
+    packet = {}
+    packet[:version] = packet_bin[0, 3].to_i(2)
+    packet[:type] = packet_bin[3, 3].to_i(2)
+    if packet[:type] == 4
+      packet[:literal_value], remainder = parse_literal_value(packet_bin[6..])
+      packet[:sub_packets] = []
+    else
+      packet[:literal_value] = 0
+      packet[:sub_packets], remainder = parse_operator(packet_bin[6..])
+    end
+    [packet, remainder]
+  end
+
+  def parse_literal_value(packet_bin_remainder)
+    literal_value = ''
+    loop do
+      top_five_bits = packet_bin_remainder[0, 5]
+      packet_bin_remainder = packet_bin_remainder[5..]
+      literal_value += top_five_bits[1..]
+      break if top_five_bits[0] == '0'
+    end
+    [literal_value.to_i(2), packet_bin_remainder]
+  end
+
+  def parse_operator(packet_bin_remainder)
+    length_type_id = packet_bin_remainder[0]
+    if length_type_id == '0'
+      sub_packets_length = packet_bin_remainder[1, 15].to_i(2)
+      sub_packets = parse_sub_packets(packet_bin_remainder[16, sub_packets_length])
+      remainder = packet_bin_remainder[(16 + sub_packets_length)..]
+    else
+      num_sub_packets = packet_bin_remainder[1, 11].to_i(2)
+      sub_packets, remainder = parse_n_sub_packets(num_sub_packets, packet_bin_remainder[12..])
+    end
+    [sub_packets, remainder]
+  end
+
+  def parse_sub_packets(packet_bin_fragment)
+    packets = []
+    remainder = packet_bin_fragment
+    while remainder.length.positive?
+      packet, remainder = parse_packet(remainder)
+      packets << packet
+    end
+    packets
+  end
+
+  def parse_n_sub_packets(sub_packet_count, packet_bin_remainder)
+    packets = []
+    remainder = packet_bin_remainder
+    while packets.length < sub_packet_count
+      packet, remainder = parse_packet(remainder)
+      packets << packet
+    end
+    [packets, remainder]
   end
 end
 
