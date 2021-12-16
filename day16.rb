@@ -22,6 +22,27 @@ class Transmission
     version_sum
   end
 
+  def calculate_result(packet)
+    case packet[:type]
+    when 0
+      packet[:sub_packets].reduce(0) { |sum, p| sum + calculate_result(p) }
+    when 1
+      packet[:sub_packets].reduce(1) { |prod, p| prod * calculate_result(p) }
+    when 2
+      packet[:sub_packets].map { |p| calculate_result(p) }.min
+    when 3
+      packet[:sub_packets].map { |p| calculate_result(p) }.max
+    when 4
+      packet[:literal_value]
+    when 5
+      calculate_result(packet[:sub_packets][0]) > calculate_result(packet[:sub_packets][1]) ? 1 : 0
+    when 6
+      calculate_result(packet[:sub_packets][0]) < calculate_result(packet[:sub_packets][1]) ? 1 : 0
+    when 7
+      calculate_result(packet[:sub_packets][0]) == calculate_result(packet[:sub_packets][1]) ? 1 : 0
+    end
+  end
+
   def packet_to_bin(packet_hex)
     packet_hex.each_char.map { |h| @hex_to_bin[h] }.join
   end
@@ -92,6 +113,8 @@ def path(filename)
   packet, = transmission.parse_packet(packet_bin)
   sum = transmission.sum_version_numbers(packet)
   puts "The sum of the packet values is #{sum} from the transmission in #{filename}"
+  result = transmission.calculate_result(packet)
+  puts "The result of the calculation is #{result} from the transmission in #{filename}"
 end
 
 path('day16-input-01.txt') if __FILE__ == $PROGRAM_NAME
