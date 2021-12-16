@@ -1,0 +1,48 @@
+---
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: "3.0"
+  NewCops: enable
+  Exclude:
+    - bin/bundle
+    - bin/rails
+    - bin/rake
+    - bin/setup
+    - bin/spring
+    - bin/webpack
+    - bin/webpack-dev-server
+    - bin/yarn
+    - config/puma.rb
+    # Exclude all pre-exinsting db migrations
+    - db/migrate/2020*
+    - db/migrate/202101*
+    - db/migrate/202102*
+    - db/contentful_migrations/*
+    # Exclude bundle
+    - vendor/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Style/GlobalStdStream:
+  Exclude:
+    - config/environments/production.rb
+
+Metrics/BlockLength:
+  Exclude:
+    - config/routes.rb
+    - spec/**/*_spec.rb
+    - db/contentful_migrations/*
+
+Metrics/MethodLength:
+  Exclude:
+    - db/contentful_migrations/*
+
+Metrics/ClassLength:
+  Exclude:
+    - db/contentful_migrations/*
+
+Lint/MissingSuper:
+  Exclude:
+    - 'app/components/graphql_component.rb'
