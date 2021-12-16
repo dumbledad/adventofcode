@@ -9,6 +9,43 @@
             "type": "Ruby",
             "request": "launch",
             "program": "${workspaceRoot}/day16.rb"
+        },
+        {
+            "name": "Run RSpec - all",
+            "type": "Ruby",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "program": "/Users/timregan/.asdf/shims/rspec",
+            "args": [
+                "--pattern",
+                "${workspaceRoot}/spec/**/*_rspec.rb"
+            ]
+        },
+        {
+            "name": "Debug RSpec - open spec file",
+            "type": "Ruby",
+            "request": "launch",
+            "cwd": "${workspaceRoot}",
+            "useBundler": true,
+            "pathToBundler": "/Users/timregan/.asdf/shims/bundle",
+            "pathToRDebugIDE": "/Users/timregan/.asdf/installs/ruby/3.0.1/lib/ruby/gems/3.0.0/gems/ruby-debug-ide-0.7.2",
+            "debuggerPort": "1235",
+            "program": "/Users/timregan/.asdf/shims/rspec",
+            "args": [
+                "${file}"
+            ]
+        },
+        {
+          "name": "Debug RSpec - open spec file on a certain line",
+          "type": "Ruby",
+          "request": "launch",
+          "cwd": "${workspaceRoot}",
+          "useBundler": true,
+          "pathToBundler": "/Users/timregan/.asdf/shims/bundle",
+          "pathToRDebugIDE": "/Users/timregan/.asdf/installs/ruby/3.0.1/lib/ruby/gems/3.0.0/gems/ruby-debug-ide-0.7.2",
+          "debuggerPort": "1235",
+          "program": "/Users/timregan/.asdf/shims/rspec",
+          "args": ["${file}:${lineNumber}"]
         }
     ]
 }
