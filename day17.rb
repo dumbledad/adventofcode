@@ -14,6 +14,7 @@ class ProbeLauncher
 
   # E.g. 'target area: x=20..30, y=-10..-5' becomes [20, 30, -10, -5]
   def parse_target_description(description)
+    /x=([-\d.]*).*y=([-\d.]*)/.match(description).captures.map { |e| e.split('..').map { |i| i.to_i }}.flatten(1)
   end
 
   def max_y_reached
