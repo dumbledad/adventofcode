@@ -12,6 +12,7 @@ RSpec.describe ProbeLauncher do
       expect(target).to eq([20, 30, -10, -5])
     end
   end
+
   describe '#max_y_reached' do
     it 'correctly finds the maxumum y possible while still hitting target' do
       launcher = ProbeLauncher.new
