@@ -28,7 +28,7 @@ class Probe
   end
 
   def keep_going?
-    return false if @position[0] > @target[1] || @position[1] > @target[3]
+    return false if @position[0] > @target[1] || @position[1] < @target[2]
 
     if in_target?
       @hit = true
@@ -68,13 +68,20 @@ class ProbeLauncher
   end
 
   def calculate_probes
-    # Needn't go below 45 degrees nor beyond the extent of the target
     @probes = []
-    (1..10).each do |y_mag|
-      (1..10).each do |x_mag|
+    bounds = sensible_direction_bounds
+    (bounds[0]..bounds[1]).each do |x_mag|
+      (bounds[2]..bounds[3]).each do |y_mag|
         @probes << Probe.new([0, 0], [x_mag, y_mag], @target)
       end
     end
+  end
+
+  def sensible_direction_bounds
+    (1..@target[1]).each do |x|
+      return [x, @target[1], @target[2], @target[2].magnitude] if (0..x).sum >= @target[0]
+    end
+    [1, @target[1], @target[2], @target[2].magnitude] # Defensive, should never get here.
   end
 
   # E.g. 'target area: x=20..30, y=-10..-5' becomes [20, 30, -10, -5]
@@ -88,9 +95,7 @@ class ProbeLauncher
 end
 
 def launch(description)
-  launcher = ProbeLauncher.new
-  target = launcher.parse_target_description(description)
-  launcher.target = target
+  launcher = ProbeLauncher.new(description)
   max_y = launcher.max_y_reached
   puts "The maximum reachable y is #{max_y} given the target '#{description}'"
 end

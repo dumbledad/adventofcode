@@ -12,6 +12,14 @@ RSpec.describe ProbeLauncher do
     end
   end
 
+  describe '#sensible_direction_bounds' do
+    it 'correctly finds sensible bounds for the direction' do
+      launcher = ProbeLauncher.new(description)
+      bounds = launcher.sensible_direction_bounds
+      expect(bounds).to eq([6, 30, -10, 10])
+    end
+  end
+
   describe '#max_y_reached' do
     it 'correctly finds the maxumum y possible while still hitting target' do
       launcher = ProbeLauncher.new(description)
@@ -22,6 +30,15 @@ RSpec.describe ProbeLauncher do
 end
 
 RSpec.describe Probe do
+  describe '#in_target?' do
+    it 'correctly checks that position is in target' do
+      probe = Probe.new([0, 0], [6, 9], [20, 30, -10, -5])
+      probe.position = [21, -10]
+      in_target = probe.in_target?
+      expect(in_target).to eq(true)
+    end
+  end
+
   describe '#visualize_trajectory' do
     it 'correctly draws the trajectory grid' do
       probe = Probe.new([0, 0], [1, 1], [4, 5, -3, -2])
