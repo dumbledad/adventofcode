@@ -38,8 +38,38 @@ class SnailfishNumber
       depth += 1 if e == '['
       depth -= 1 if e == ']'
       if depth > 4
-        
-
+        explode(sn_array, i)
+        return reduce(sn_array)
+      elsif /\d+/.match?(e) && e.to_i > 9
+        split(sn_array, i)
+        return reduce(sn_array)
+      end
     end
+    sn_array
+  end
+
+  def self.explode(sn_array, idx)
+    to_explode = sn_array[i, 3] # Should be ['n', ',', 'm']
+    explode_left_num = to_explode[0].to_i
+    explode_right_num = to_explode[2].to_i
+    (0...idx).reverse_each do |i|
+      break if add_and_replace_if_number(sn_array, i, explode_left_num)
+    end
+    (idx + 1...sn_array.length).reverse_each do |i|
+      break if add_and_replace_if_number(sn_array, i, explode_right_num)
+    end
+  end
+
+  def self.add_and_replace_if_number(sn_array, idx, to_add)
+    if /\d+/.match? sn_array[idx]
+      sn_array[idx] = (sn_array[idx].to_i + to_add).to_s
+      return true
+    end
+    false
+  end
+
+  def self.split(sn_array, idx)
+    replacement = [sn_array[idx].to_i / 2, (sn_array[idx] + 1) / 2]
+    sn_array[idx, 1] = replacement
   end
 end
