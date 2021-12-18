@@ -1,23 +1,25 @@
 # frozen_string_literal: true
 
-require 'json'
+# require 'json'
 
 module Refinements
-  refine Array do
-    def depth
-      map { |element| element.depth + 1 }.max
-    end
-  end
+  # refine Array do
+  #   def depth
+  #     map { |element| element.depth + 1 }.max
+  #   end
+  # end
 
-  refine Object do
-    def depth
-      0
-    end
-  end
+  # refine Object do
+  #   def depth
+  #     0
+  #   end
+  # end
 
   refine String do
     def to_sn(sn_string)
-      JSON.parse(sn_string)
+      # JSON.parse(sn_string)
+      sn_string.scan(/[\[\],]|\d*/)
+      # '[[[[1,3],[5,3]],[[1,3],[8,7]]],[[[4,9],[6,9]],[[8,2],[7,3]]]]'.scan(/[\[\],]|\d*/)
     end
   end
 end
@@ -26,17 +28,18 @@ end
 class SnailfishNumber
   using Refinements
 
-  def self.add(array_a, array_b)
-    SnailfishNumber.reduce [array_a, array_b]
+  def self.add(sn_array_a, sn_array_b)
+    SnailfishNumber.reduce ['[', *sn_array_a, ',' *sn_array_b, ']']
   end
 
-  def self.reduced(sn_array, nesting: 0)
-    return true if sn_array.depth <= 4
+  def self.reduce(sn_array)
+    depth = 0
+    sn_array.each_with_index do |e, i|
+      depth += 1 if e == '['
+      depth -= 1 if e == ']'
+      if depth > 4
+        
 
-    sn_array.each do |sna|
-      return false if sna.is_a? Numeric && sna < 10
-      if sna.is_a? Numeric
-      end
-
+    end
   end
 end
