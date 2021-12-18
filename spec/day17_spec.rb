@@ -26,6 +26,7 @@ RSpec.describe Probe do
     it 'correctly draws the trajectory grid' do
       probe = Probe.new([0, 0], [1, 1], [4, 5, -3, -2])
       probe.trajectory = [[0, 0], [1, 1], [2, 0], [3, -1], [4, -2], [5, -3]]
+      probe.max_y_reached = 1
       grid = probe.visualize_trajectory
       expected =
         [
