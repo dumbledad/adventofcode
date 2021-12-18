@@ -92,6 +92,10 @@ class ProbeLauncher
   def max_y_reached
     @probes.select(&:hit).max { |a, b| a.max_y_reached <=> b.max_y_reached }.max_y_reached
   end
+
+  def on_target_probe_count
+    @probes.select(&:hit).length
+  end
 end
 
 def launch(description)

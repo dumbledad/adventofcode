@@ -27,6 +27,14 @@ RSpec.describe ProbeLauncher do
       expect(max_y).to eq(45)
     end
   end
+
+  describe '#on_target_probe_count' do
+    it 'correctly finds the number of probes which hit the target' do
+      launcher = ProbeLauncher.new(description)
+      count = launcher.on_target_probe_count
+      expect(count).to eq(112)
+    end
+  end
 end
 
 RSpec.describe Probe do
