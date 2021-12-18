@@ -102,6 +102,8 @@ def launch(description)
   launcher = ProbeLauncher.new(description)
   max_y = launcher.max_y_reached
   puts "The maximum reachable y is #{max_y} given the target '#{description}'"
+  count = launcher.on_target_probe_count
+  puts "The number of potentially successful probes is #{count} given the target '#{description}'"
 end
 
 launch('target area: x=143..177, y=-106..-71') if __FILE__ == $PROGRAM_NAME
