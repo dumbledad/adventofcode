@@ -40,7 +40,7 @@ RSpec.describe SnailfishNumber do
   describe '#add' do
     it 'correctly adds two snailfish numbers' do
       sum = '[1,2]'.to_sn + '[[3,4],[[5,6],[7,8]]]'.to_sn
-      expect(sum.to_a).to eq([[1,2],[[3,4],[[5,6],[7,8]]]])
+      expect(sum.to_a).to eq([[1, 2], [[3, 4], [[5, 6], [7, 8]]]])
       expect(sum.left.parent).to eq(sum)
     end
   end
@@ -76,11 +76,30 @@ RSpec.describe SnailfishNumber do
 
       example = '[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]'.to_sn
       example.to_explode(0).explode
-      expect(example.to_a).to eq([[3, [2, [8, 0]]],[9, [5, [4, [3, 2]]]]])
+      expect(example.to_a).to eq([[3, [2, [8, 0]]], [9, [5, [4, [3, 2]]]]])
 
       example = '[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]'.to_sn
       example.to_explode(0).explode
       expect(example.to_a).to eq([[3, [2, [8, 0]]], [9, [5, [7, 0]]]])
+    end
+  end
+
+  describe '#magnitude' do
+    it 'correctly works out the magnitude of a snailfish number' do
+      example = '[[1,2],[[3,4],5]]'.to_sn
+      expect(example.magnitude).to eq(143)
+      example = '[[[[0,7],4],[[7,8],[6,0]]],[8,1]]'.to_sn
+      expect(example.magnitude).to eq(1384)
+      example = '[[[[1,1],[2,2]],[3,3]],[4,4]]'.to_sn
+      expect(example.magnitude).to eq(445)
+      example = '[[[[3,0],[5,3]],[4,4]],[5,5]]'.to_sn
+      expect(example.magnitude).to eq(791)
+      example = '[[[[5,0],[7,4]],[5,5]],[6,6]]'.to_sn
+      expect(example.magnitude).to eq(1137)
+      example = '[[[[8,7],[7,7]],[[8,6],[7,7]]],[[[0,7],[6,6]],[8,7]]]'.to_sn
+      expect(example.magnitude).to eq(3488)
+      example = '[[[[7,8],[6,0]],[[6,6],[7,8]]],[[[9,8],[7,8]],[[7,9],[6,6]]]]'.to_sn
+      expect(example.magnitude).to eq(4233)
     end
   end
 
@@ -90,6 +109,37 @@ RSpec.describe SnailfishNumber do
       sn2 = '[[[0,[5,8]],[[1,7],[9,6]]],[[4,[1,2]],[[1,4],2]]]'.to_sn
       # Sum reduces to [[[[7,8],[6,6]],[[6,0],[7,7]]],[[[7,8],[8,8]],[[7,9],[0,6]]]]
       expect((sn1 + sn2).magnitude).to eq(3993)
+      sn1 = '[[[7,8],[6,0]],[[6,6],[7,8]]]'.to_sn
+      sn2 = '[[[9,8],[7,8]],[[7,9],[6,6]]]'.to_sn
+      expect((sn1 + sn2).magnitude).to eq(4233)
+    end
+  end
+
+  describe 'magnitude of multiple sums' do
+    it 'gets the correct maximum for multiple sums' do
+      sn_numbers =
+        [
+          '[[[0,[5,8]],[[1,7],[9,6]]],[[4,[1,2]],[[1,4],2]]]'.to_sn,
+          '[[[5,[2,8]],4],[5,[[9,9],0]]]'.to_sn,
+          '[6,[[[6,2],[5,6]],[[7,6],[4,7]]]]'.to_sn,
+          '[[[6,[0,7]],[0,9]],[4,[9,[9,0]]]]'.to_sn,
+          '[[[7,[6,4]],[3,[1,3]]],[[[5,5],1],9]]'.to_sn,
+          '[[6,[[7,3],[3,2]]],[[[3,8],[5,7]],4]]'.to_sn,
+          '[[[[5,4],[7,7]],8],[[8,3],8]]'.to_sn,
+          '[[9,3],[[9,9],[6,[4,9]]]]'.to_sn,
+          '[[2,[[7,7],7]],[[5,8],[[9,3],[0,2]]]]'.to_sn,
+          '[[[[5,2],5],[8,[3,7]]],[[5,[7,5]],[4,4]]]'.to_sn
+        ]
+      magnitudes = []
+      sn_numbers.each do |sn1|
+        sn_numbers.each do |sn2|
+          next if sn1 == sn2
+
+          magnitudes << (sn1 + sn2).magnitude
+          magnitudes << (sn2 + sn1).magnitude
+        end
+      end
+      expect(magnitudes.max).to eq(3993)
     end
   end
 end

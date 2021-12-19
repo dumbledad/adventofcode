@@ -11,6 +11,8 @@ module Refinements
   end
 end
 
+using Refinements
+
 # https://adventofcode.com/2021/day/18
 class SnailfishNumber
   attr_accessor :left, :right, :value, :parent
@@ -43,12 +45,16 @@ class SnailfishNumber
     [@left.to_a, @right.to_a]
   end
 
+  def clone
+    to_a.to_s.to_sn
+  end
+
   def +(other)
     add(other)
   end
 
   def add(other)
-    result = SnailfishNumber.new(left: self, right: other, parent: parent)
+    result = SnailfishNumber.new(left: clone, right: other.clone, parent: parent)
     result.left.parent = result
     result.right.parent = result
     result.reduce
@@ -163,13 +169,8 @@ class SnailfishNumber
   end
 end
 
-using Refinements
-
 def homework(filename)
   sn_numbers = File.readlines(filename).map(&:chomp).map(&:to_sn)
-  # sn_numbers.each_with_index do |sn, idx|
-  #   puts "#{idx} => #{sn.to_a}"
-  # end
   added = sn_numbers.drop(1).reduce(sn_numbers[0]) { |sum, sn| sum + sn }
   result = added.magnitude
   puts "The magnitude of the sum of the snailfish numbers described in #{filename} is #{result}"
