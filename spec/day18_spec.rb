@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require './day18'
-using ToSN
+using Refinements
 
 # https://adventofcode.com/2021/day/17
 RSpec.describe String do
@@ -9,17 +9,22 @@ RSpec.describe String do
     it 'correctly parses a snailfish number string' do
       sn_string = '[[1,2],3]'
       sn = sn_string.to_sn
-      # expect(sn.pair[0].parent).to eq(sn)
-      # expect(sn.pair[1].parent).to eq(sn)
-      # expect(sn.pair[0].pair[0].parent).to eq(sn.pair[0])
-      # expect(sn.pair[0].pair[1].parent).to eq(sn.pair[0])
-      # expect(sn.pair[1].pair).to be_nil
-      # expect(sn.pair[1].number).to eq(3)
-      # expect(sn.pair[0].pair[0].pair).to be_nil
-      # expect(sn.pair[0].pair[0].number).to eq(1)
-      # expect(sn.pair[0].pair[1].pair).to be_nil
-      # expect(sn.pair[0].pair[1].number).to eq(2)
-      expect(sn).to eq(['[', '[', '1', ',', '2', ']', ',', '3', ']'])
+      expect(sn.left.parent).to eq(sn)
+      # 1
+      expect(sn.left.left.parent).to eq(sn.left)
+      expect(sn.left.left.left).to be_nil
+      expect(sn.left.left.right).to be_nil
+      expect(sn.left.left.value).to eq(1)
+      # 2
+      expect(sn.left.right.parent).to eq(sn.left)
+      expect(sn.left.right.left).to be_nil
+      expect(sn.left.right.right).to be_nil
+      expect(sn.left.right.value).to eq(2)
+      # 3
+      expect(sn.right.parent).to eq(sn)
+      expect(sn.right.left).to be_nil
+      expect(sn.right.right).to be_nil
+      expect(sn.right.value).to eq(3)
     end
   end
 end

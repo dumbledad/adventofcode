@@ -1,75 +1,147 @@
 # frozen_string_literal: true
 
-# require 'json'
+require 'json'
 
 module Refinements
-  # refine Array do
-  #   def depth
-  #     map { |element| element.depth + 1 }.max
-  #   end
-  # end
-
-  # refine Object do
-  #   def depth
-  #     0
-  #   end
-  # end
-
   refine String do
-    def to_sn(sn_string)
-      # JSON.parse(sn_string)
-      sn_string.scan(/[\[\],]|\d*/)
-      # '[[[[1,3],[5,3]],[[1,3],[8,7]]],[[[4,9],[6,9]],[[8,2],[7,3]]]]'.scan(/[\[\],]|\d*/)
+    def to_sn
+      sn_array = JSON.parse(self)
+      SnailfishNumber.from_array(sn_array)
     end
   end
 end
 
 # https://adventofcode.com/2021/day/18
 class SnailfishNumber
-  using Refinements
+  attr_accessor :left, :right, :value, :parent
 
-  def self.add(sn_array_a, sn_array_b)
-    SnailfishNumber.reduce ['[', *sn_array_a, ',' *sn_array_b, ']']
+  # Turn a suitable array into a snailfish number. N.B. as this is unwrapped a call further down the recursion chain may pass in a value and not an array.
+  def self.from_array(sn_array)
+    if sn_array.is_a? Array
+      sn_number = SnailfishNumber.new
+      sn_number.left = from_array(sn_array.first)
+      sn_number.left.parent = sn_number
+      sn_number.right = from_array(sn_array.last)
+      sn_number.right.parent = sn_number
+      return sn_number
+    end
+    return SnailfishNumber.new(value: sn_array) if sn_array.is_a? Numeric
+
+    nil
   end
 
-  def self.reduce(sn_array)
-    depth = 0
-    sn_array.each_with_index do |e, i|
-      depth += 1 if e == '['
-      depth -= 1 if e == ']'
-      if depth > 4
-        explode(sn_array, i)
-        return reduce(sn_array)
-      elsif /\d+/.match?(e) && e.to_i > 9
-        split(sn_array, i)
-        return reduce(sn_array)
+  def initialize(left: nil, right: nil, value: nil, parent: nil)
+    @left = left
+    @right = right
+    @value = value
+    @parent = parent
+  end
+
+  def +(other)
+    add(other)
+  end
+
+  def add(other)
+    other.parent = parent
+    SnailfishNumber(left: self, right: other, parent: parent).reduce
+  end
+
+  def reduce
+    to_expl = to_explode(0)
+    if to_expl.is_nil?
+      to_spl = to_split
+      unless to_spl.is_nil?
+        to_spl.split
+        reduce
       end
-    end
-    sn_array
-  end
-
-  def self.explode(sn_array, idx)
-    to_explode = sn_array[i, 3] # Should be ['n', ',', 'm']
-    explode_left_num = to_explode[0].to_i
-    explode_right_num = to_explode[2].to_i
-    (0...idx).reverse_each do |i|
-      break if add_and_replace_if_number(sn_array, i, explode_left_num)
-    end
-    (idx + 1...sn_array.length).reverse_each do |i|
-      break if add_and_replace_if_number(sn_array, i, explode_right_num)
+    else
+      to_epl.explode
+      reduce
     end
   end
 
-  def self.add_and_replace_if_number(sn_array, idx, to_add)
-    if /\d+/.match? sn_array[idx]
-      sn_array[idx] = (sn_array[idx].to_i + to_add).to_s
-      return true
+  def to_explode(depth)
+    depth += 1
+    return self if depth > 4
+
+    unless left.is_nil?
+      to_explode_from_left = left.to_explode(depth)
+      return to_explode_from_left unless to_explode_from_left.is_nil?
     end
-    false
+    unless right.is_nil?
+      to_explode_from_right = right.to_explode(depth)
+      return to_explode_from_right unless to_explode_from_right.is_nil?
+    end
+    nil
   end
 
-  def self.split(sn_array, idx)
-    replacement = [sn_array[idx].to_i / 2, (sn_array[idx] + 1) / 2]
-    sn_array[idx, 1] = replacement
+  def explode
+    raise 'It was said that "Exploding pairs will always consist of two regular numbers"' if left.value.is_nil? || right.value.is_nil?
+
+    add_to_next_left(left.value)
+    add_to_next_right(right.value)
+    @left = nil
+    @right = nil
+    @value = 0
+  end
+
+  def add_to_next_left(to_add)
+    if !parent.is_nil? && parent.right == self
+      parent.left.add_to_rightest_value(to_add)
+    else
+      parent.add_to_next_left(to_add)
+    end
+  end
+
+  def add_to_next_right(to_add)
+    if !parent.is_nil? && parent.left == self
+      parent.right.add_to_leftest_value(to_add)
+    else
+      parent.add_to_next_right(to_add)
+    end
+  end
+
+  def add_to_rightest_value(to_add)
+    if @right.is_nil?
+      @value += to_add
+    else
+      @right.add_to_rightest_value(to_add)
+    end
+  end
+
+  def add_to_leftest_value(to_add)
+    if @left.is_nil?
+      @value += to_add
+    else
+      @left.add_to_leftest_value(to_add)
+    end
+  end
+
+  def to_split
+    return self if !@value.is_nil? && @value > 9
+
+    unless left.is_nil?
+      to_split_from_left = left.to_split
+      return to_split_from_left unless to_split_from_left.is_nil?
+    end
+    unless right.is_nil?
+      to_split_from_right = right.to_split
+      return to_split_from_right unless to_split_from_right.is_nil?
+    end
+    nil
+  end
+
+  def split
+    @left = SnailfishNumber.new(value: @value / 2, parent: self)
+    @right = SnailfishNumber.new(value: (@value + 1) / 2, parent: self)
+    @value = nil
+  end
+
+  # The magnitude of a pair is 3 times the magnitude of its left element plus 2 times the magnitude of its right element. The magnitude of a regular number is just
+  # that number
+  def magnitude
+    return 3 * @left.magnitude + 2 * @right.magnitude if @value.is_nil?
+
+    @value
   end
 end
