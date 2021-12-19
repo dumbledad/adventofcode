@@ -65,14 +65,22 @@ RSpec.describe SnailfishNumber do
       example = '[[[[[9,8],1],2],3],4]'.to_sn
       example.to_explode(0).explode
       expect(example.to_a).to eq([[[[0, 9], 2], 3], 4])
-      # example = '[7,[6,[5,[4,[3,2]]]]]'.to_sn
-      # expect(example.to_explode(0).to_a).to eq([3, 2])
-      # example = '[[6,[5,[4,[3,2]]]],1]'.to_sn
-      # expect(example.to_explode(0).to_a).to eq([3, 2])
-      # example = '[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]'.to_sn
-      # expect(example.to_explode(0).to_a).to eq([7, 3])
-      # example = '[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]'.to_sn
-      # expect(example.to_explode(0).to_a).to eq([3, 2])
+
+      example = '[7,[6,[5,[4,[3,2]]]]]'.to_sn
+      example.to_explode(0).explode
+      expect(example.to_a).to eq([7, [6, [5, [7, 0]]]])
+
+      example = '[[6,[5,[4,[3,2]]]],1]'.to_sn
+      example.to_explode(0).explode
+      expect(example.to_a).to eq([[6, [5, [7, 0]]], 3])
+
+      example = '[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]'.to_sn
+      example.to_explode(0).explode
+      expect(example.to_a).to eq([[3, [2, [8, 0]]],[9, [5, [4, [3, 2]]]]])
+
+      example = '[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]'.to_sn
+      example.to_explode(0).explode
+      expect(example.to_a).to eq([[3, [2, [8, 0]]], [9, [5, [7, 0]]]])
     end
   end
 end
