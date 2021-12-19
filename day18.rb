@@ -99,7 +99,9 @@ class SnailfishNumber
   end
 
   def add_to_next_left(to_add)
-    if !parent.nil? && parent.right == self
+    return nil if parent.nil?
+
+    if parent.right == self
       parent.left.add_to_rightest_value(to_add)
     else
       parent.add_to_next_left(to_add)
