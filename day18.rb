@@ -73,11 +73,11 @@ class SnailfishNumber
     depth += 1
     return self if depth > 4
 
-    unless left.nil? || left.pair?
+    unless left.nil? || !left.pair?
       to_explode_from_left = left.to_explode(depth)
       return to_explode_from_left unless to_explode_from_left.nil?
     end
-    unless right.nil? || right.pair?
+    unless right.nil? || !right.pair?
       to_explode_from_right = right.to_explode(depth)
       return to_explode_from_right unless to_explode_from_right.nil?
     end

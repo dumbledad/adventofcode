@@ -44,4 +44,19 @@ RSpec.describe SnailfishNumber do
       expect(sum.left.parent).to eq(sum)
     end
   end
+
+  describe '#to_explode' do
+    it 'correctly picks the first pair to explode' do
+      example = '[[[[[9,8],1],2],3],4]'.to_sn
+      expect(example.to_explode(0).to_a).to eq([9, 8])
+      example = '[7,[6,[5,[4,[3,2]]]]]'.to_sn
+      expect(example.to_explode(0).to_a).to eq([3, 2])
+      example = '[[6,[5,[4,[3,2]]]],1]'.to_sn
+      expect(example.to_explode(0).to_a).to eq([3, 2])
+      example = '[[3,[2,[1,[7,3]]]],[6,[5,[4,[3,2]]]]]'.to_sn
+      expect(example.to_explode(0).to_a).to eq([7, 3])
+      example = '[[3,[2,[8,0]]],[9,[5,[4,[3,2]]]]]'.to_sn
+      expect(example.to_explode(0).to_a).to eq([3, 2])
+    end
+  end
 end
