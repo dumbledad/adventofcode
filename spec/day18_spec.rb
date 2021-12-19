@@ -30,11 +30,18 @@ RSpec.describe String do
 end
 
 RSpec.describe SnailfishNumber do
-  description = 'target area: x=20..30, y=-10..-5'
-  describe '#parse_target_description' do
-    it 'correctly parses the target description string into [x_min, x_max, y_min, y_max] array' do
-      launcher = ProbeLauncher.new(description)
-      expect(launcher.target).to eq([20, 30, -10, -5])
+  describe '#to_a' do
+    it 'correctly renders a snailfish number as an array' do
+      sn = '[[1,2],[[3,4],[5,6]]]'.to_sn
+      expect(sn.to_a).to eq([[1, 2], [[3, 4], [5, 6]]])
+    end
+  end
+
+  describe '#add' do
+    it 'correctly adds two snailfish numbers' do
+      sum = '[1,2]'.to_sn + '[[3,4],[[5,6],[7,8]]]'.to_sn
+      expect(sum.to_a).to eq([[1,2],[[3,4],[[5,6],[7,8]]]])
+      expect(sum.left.parent).to eq(sum)
     end
   end
 end
