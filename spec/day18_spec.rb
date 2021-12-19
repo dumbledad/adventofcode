@@ -83,4 +83,13 @@ RSpec.describe SnailfishNumber do
       expect(example.to_a).to eq([[3, [2, [8, 0]]], [9, [5, [7, 0]]]])
     end
   end
+
+  describe 'magnitude of sum' do
+    it 'correctly ascertains the magnitude of the sum of two snailfish numbers' do
+      sn1 = '[[2,[[7,7],7]],[[5,8],[[9,3],[0,2]]]]'.to_sn
+      sn2 = '[[[0,[5,8]],[[1,7],[9,6]]],[[4,[1,2]],[[1,4],2]]]'.to_sn
+      # Sum reduces to [[[[7,8],[6,6]],[[6,0],[7,7]]],[[[7,8],[8,8]],[[7,9],[0,6]]]]
+      expect((sn1 + sn2).magnitude).to eq(3993)
+    end
+  end
 end

@@ -165,11 +165,24 @@ end
 
 using Refinements
 
-def part_one(filename)
+def homework(filename)
   sn_numbers = File.readlines(filename).map(&:chomp).map(&:to_sn)
+  # sn_numbers.each_with_index do |sn, idx|
+  #   puts "#{idx} => #{sn.to_a}"
+  # end
   added = sn_numbers.drop(1).reduce(sn_numbers[0]) { |sum, sn| sum + sn }
   result = added.magnitude
   puts "The magnitude of the sum of the snailfish numbers described in #{filename} is #{result}"
+  magnitudes = []
+  sn_numbers.each do |sn1|
+    sn_numbers.each do |sn2|
+      next if sn1 == sn2
+
+      magnitudes << (sn1 + sn2).magnitude
+      magnitudes << (sn2 + sn1).magnitude
+    end
+  end
+  puts "The maximum magnitude of the sum of any two of the snailfish numbers described in #{filename} is #{magnitudes.max}"
 end
 
-part_one('day18-input-01.txt') if __FILE__ == $PROGRAM_NAME
+homework('day18-input-01.txt') if __FILE__ == $PROGRAM_NAME
