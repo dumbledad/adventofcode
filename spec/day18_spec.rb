@@ -3,7 +3,7 @@
 require './day18'
 using Refinements
 
-# https://adventofcode.com/2021/day/17
+# https://adventofcode.com/2021/day/18
 RSpec.describe String do
   describe '#to_sn' do
     it 'correctly parses a snailfish number string' do
