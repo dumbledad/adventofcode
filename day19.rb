@@ -23,7 +23,7 @@ end
 class Sensor
   require 'matrix'
 
-  attr_accessor :name, :beacons
+  attr_accessor :name, :beacons, :betweens
 
   # https://en.wikipedia.org/wiki/Rotation_matrix
   NINETY_AROUND_X_CCW = Matrix[[1, 0, 0], [0, 0, -1], [0, 1, 0]]
@@ -36,6 +36,7 @@ class Sensor
   def initialize(name)
     @name = name
     @beacons = { 'x0' => [] }
+    @betweens = {}
   end
 
   # We assume Scanner 0 is correct, and that each other scanner "could be in any of 24 different orientations: facing positive or negative x, y, or z, and considering
@@ -73,7 +74,9 @@ class Sensor
   end
 
   def build_vectors
-    # No-op.
+    @beacons.each_key do |k|
+      @betweens[k] = calc_betweens(@beacons[k])
+    end
   end
 end
 
