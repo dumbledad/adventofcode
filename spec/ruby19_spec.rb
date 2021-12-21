@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require './day19'
-
+§
 # https://adventofcode.com/2021/day/19
 RSpec.describe Sensor do
-  describe '#do_rotations' do
-    it 'correctly rotates a beacon around the x axis' do
+  describe '#do_all_transformations' do
+    it 'produces 24 transformations as mentioned in AOC 2021 Day 19, i.e. facing down each axis (x, -x, y, -y, z, -z) with any of the remaining 4 as up.' do
       sensor = Sensor.new('0')
       beacons =
         [
@@ -18,24 +18,22 @@ RSpec.describe Sensor do
           [0.5, -0.5, -0.5],
           [-0.5, -0.5, -0.5]
         ]
-      sensor.beacons['x0'] = beacons
-      beacons_x0_before = sensor.beacons['x0'].clone
-      sensor.do_rotations('x', Sensor::NINETY_AROUND_X_CCW, beacons)
-      expect(sensor.beacons.keys).to include(*%w[x0 x90 x180 x270])
-      expect(sensor.beacons.keys).not_to include(*%w[y0 y90 y180 y270 z0 z90 z180 z270])
-      expect(sensor.beacons['x0']).to eq(beacons_x0_before)
-      expect(sensor.beacons['x90']).to eq(
-        [
-          [0.5, -0.5, 0.5],
-          [-0.5, -0.5, 0.5],
-          [0.5, -0.5, -0.5],
-          [0.5, 0.5, 0.5],
-          [-0.5, -0.5, -0.5],
-          [-0.5, 0.5, 0.5],
-          [0.5, 0.5, -0.5],
-          [-0.5, 0.5, -0.5]
-        ]
-      )
+      sensor.do_all_transformations(beacons)
+      expect(sensor.beacons.keys.length).to eq(24)
     end
+    # it 'correctly rotates by 90 CCW around x' do
+    #   expect(sensor.beacons['0_1']).to eq(
+    #     [
+    #       [0.5, -0.5, 0.5],
+    #       [-0.5, -0.5, 0.5],
+    #       [0.5, -0.5, -0.5],
+    #       [0.5, 0.5, 0.5],
+    #       [-0.5, -0.5, -0.5],
+    #       [-0.5, 0.5, 0.5],
+    #       [0.5, 0.5, -0.5],
+    #       [-0.5, 0.5, -0.5]
+    #     ]
+    #   )
+    # end
   end
 end
