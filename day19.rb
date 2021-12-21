@@ -70,11 +70,29 @@ class Sensor
     (matrix * Vector[*beacon]).to_a
   end
 
-  # def build_vectors
-  #   @beacons.each_key do |k|
-  #     @betweens[k] = calc_betweens(@beacons[k])
-  #   end
-  # end
+  def build_vectors
+    @beacons.each_key do |k|
+      @betweens[k] = calc_betweens(@beacons[k])
+    end
+  end
+
+  def calc_betweens(beacons)
+    vectors_between = []
+    beacons.each_with_index do |b1, i|
+      beacons.each_with_index do |b2, j|
+        unless i == j
+          min_b, max_b = order(b1, b2)
+          vectors_between << [max_b[0] - min_b[0], max_b[1] - min_b[1], max_b[2] - min_b[2]]
+        end
+      end
+    end
+    vectors_between
+  end
+
+  # A stable ordering between beacons. Any ordering will do as we are only using it to make sure we do not need to store and compare both A -> B and B -> A.
+  def order(beacon1, beacon2)
+    [beacon1, beacon2].sort { |a, b| (a[0]**2 + a[1]**2 + a[2]**2) <=> (b[0]**2 + b[1]**2 + b[2]**2) }
+  end
 end
 
 def report(filename)
