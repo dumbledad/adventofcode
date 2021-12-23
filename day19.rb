@@ -97,10 +97,26 @@ class Sensor
   def order(beacon1, beacon2)
     [beacon1, beacon2].sort_by { |b| [b[0], b[1], b[2]] }
   end
+
+  def overlap(other)
+    overlaps = []
+    @betweens.each_key do |k1|
+      other.betweens.each_key do |k2|
+        overlaps << [@betweens[k1].intersection(other.betweens[k2]).size, k1, k2]
+      end
+    end
+    overlaps.max_by { |o| o[0] }
+  end
 end
 
 def report(filename)
-  Sensors.new(filename)
+  sensors = Sensors.new(filename)
+  sensors.sensors.each_with_index do |s1, i|
+    sensors.sensors.drop(i + 1).each do |s2|
+      overlap = s1.overlap(s2)
+      puts "Overlap between #{s1.name} and #{s2.name} is #{overlap[0]} between transformations #{overlap[1]} and #{overlap[1]}"
+    end
+  end
 end
 
 report('day19-input-test.txt') if __FILE__ == $PROGRAM_NAME
