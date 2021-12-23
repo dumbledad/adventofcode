@@ -29,7 +29,7 @@ end
 class Sensor
   require 'matrix'
 
-  attr_accessor :name, :beacons, :betweens
+  attr_accessor :name, :beacons, :betweens, :nc2_table
 
   # https://en.wikipedia.org/wiki/Rotation_matrix
   ZERO_AROUND_X_CCW = Matrix[[1, 0, 0], [0, 1, 0], [0, 0, 1]]
@@ -59,6 +59,7 @@ class Sensor
     @name = name
     @beacons = {}
     @betweens = {}
+    @nc2_table = {}
   end
 
   # We assume Scanner 0 is correct, and that each other scanner "could be in any of 24 different orientations: facing positive or negative x, y, or z, and considering
@@ -106,6 +107,16 @@ class Sensor
       end
     end
     overlaps.max_by { |o| o[0] }
+  end
+
+  def n_choose_2(nc2)
+    return @nc2_table[nc2] if @nc2_table.has_key? nc2
+    result = 0
+    n = 3
+    while result <= nc2
+      (3..n).prod / 
+    end
+    @nc2_table[nc2]
   end
 end
 
