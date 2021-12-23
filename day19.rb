@@ -114,7 +114,7 @@ def report(filename)
   sensors.sensors.each_with_index do |s1, i|
     sensors.sensors.drop(i + 1).each do |s2|
       overlap = s1.overlap(s2)
-      puts "Overlap between #{s1.name} and #{s2.name} is #{overlap[0]} between transformations #{overlap[1]} and #{overlap[1]}"
+      puts "Overlap between #{s1.name} and #{s2.name} is #{overlap[0]} between transformations #{overlap[1]} and #{overlap[2]}"
     end
   end
 end
