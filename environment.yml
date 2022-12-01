@@ -1,0 +1,13 @@
+name: aoc2022
+channels:
+  - defaults
+dependencies:
+  - django=4.1
+  - markdown=3.3
+  - matplotlib=3.5
+  - numpy=1.23
+  - pandas=1.5
+  - pip=22.2
+  - python=3.10
+  - pip:
+    - djangorestframework=3.14
