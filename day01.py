@@ -16,6 +16,8 @@ class Calories:
           count = 0
         else:
           count += int(row[0])
+      self.elves.append(count) # HACK: if count is 0 we don't know if that's the initial value or from the last CSV row. 
+      
           
   def sum_max(self, top_count):
     return pd.Series(self.elves).nlargest(top_count).sum()
