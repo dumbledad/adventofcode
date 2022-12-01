@@ -11,4 +11,4 @@ dependencies:
   - pylint=2.14
   - python=3.10
   - pip:
-    - djangorestframework=3.14
+    - djangorestframework==3.14
