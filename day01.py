@@ -3,9 +3,9 @@ import sys
 
 class Calories:
   """Store the calorie count of each elf"""
-  elves = []
   
   def __init__(self, filename):
+    self.elves = []
     with open(filename, newline='') as csv_file:
       count = 0
       reader = csv.reader(csv_file, quoting=csv.QUOTE_NONNUMERIC)
@@ -14,7 +14,9 @@ class Calories:
           self.elves.append(count)
           count = 0
         else:
-          count += int(row[0])           
+          count += int(row[0])
+
+  def sum_max()         
 
 def main(filename):
   calories = Calories(filename)
