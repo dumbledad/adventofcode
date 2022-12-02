@@ -41,22 +41,21 @@ class RockPaperScissors:
       'draw': 3,
       'lose': 0,
     }
-    self.my_score = 0
-    self.elf_score = 0
+    self.score = 0
     with open(filename, newline='') as csv_file:
       reader = csv.reader(csv_file, delimiter=' ')
       for row in reader:
         if len(row) > 0:
-          my_shape = elf[row[1]]
-          elf_shape = me[row[0]]
-          round_outcome = outcome[elf_shape][my_shape]
-          score += shape_score[my_shape]
-          score += outcome_score[round_outcome]
+          elf_shape = elf[row[0]]
+          my_shape = me[row[1]]
+          round_outcome = outcome[my_shape][elf_shape]
+          self.score += shape_score[my_shape]
+          self.score += outcome_score[round_outcome]
+          # print(f'{row} [{elf_shape}, {my_shape}] : {round_outcome} : {shape_score[my_shape]} + {outcome_score[round_outcome]} = {shape_score[my_shape] + outcome_score[round_outcome]}, total score is {self.score}')
           
-
 def main(filename):
   game = RockPaperScissors(filename)
-  print(f'PMy score is {game.score}')
+  print(f'My score is {game.score}')
 
 if __name__ == "__main__":
   # Call `python day_n.py <csv_file>`
