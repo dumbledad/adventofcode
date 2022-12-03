@@ -12,3 +12,7 @@ def test_rucksacks_badges():
   rucksacks = Rucksacks('day03-test.csv')
   badges = rucksacks.get_badges()
   assert badges == ['r', 'Z']
+
+def test_rucksacks_badge_priority():
+  rucksacks = Rucksacks('day03-test.csv')
+  assert rucksacks.badge_priority() == 70

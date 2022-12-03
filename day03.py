@@ -1,6 +1,4 @@
 import csv
-import sys
-import pandas as pd
 from functools import cache, reduce
 
 class Rucksack:
@@ -35,6 +33,8 @@ class Rucksacks:
       for row in reader:
         if len(row) > 0:
           self.rucksacks.append(Rucksack(row[0]))
+    self.teams = []
+    self.badges = []
     # print(f'Priorities: {[Rucksack.priority(rucksack.both) for rucksack in self.rucksacks]}')
   
   @cache
@@ -43,7 +43,8 @@ class Rucksacks:
 
   @cache
   def get_teams(self):
-    self.teams = []
+    if self.teams:
+      return self.teams
     previous = 0
     for i in range(3, len(self.rucksacks) + 1, 3):
       self.teams.append(self.rucksacks[previous:i])
@@ -52,16 +53,23 @@ class Rucksacks:
   
   @cache
   def get_badges(self):
+    if self.badges:
+      return self.badges
     teams = self.get_teams()
     self.badges = [Rucksacks.team_badge(team) for team in teams]
     return self.badges
 
+  @cache
+  def badge_priority(self):
+    badge_priorities = [Rucksack.priority(badge) for badge in self.get_badges()]
+    return sum(badge_priorities)
 
-def main(filename):
-  rucksacks = Rucksacks(filename)
+
+def main():
+  rucksacks = Rucksacks('day03.csv')
   print(f'Part 1: the sum of priorities of items in both compartments is {rucksacks.priority()}')
+  print(f'Part 2: the sum of priorities of team badges is {rucksacks.badge_priority()}')
 
 if __name__ == "__main__":
-  # Call `python day_n.py <csv_file>`
-  main(sys.argv[1])
+  main()
   
