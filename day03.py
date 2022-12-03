@@ -11,6 +11,7 @@ class Rucksack:
 
   def __init__(self, row):
     half = int(len(row)/2)
+    self.items = list(row)
     self.compartments = [
       list(row[0:half]),
       list(row[half:])
@@ -21,6 +22,12 @@ class Rucksack:
     return Rucksack.priority(self.both)
 
 class Rucksacks:
+  @classmethod
+  def team_badge(cls, team):
+    return list(
+      set(team[0].items).intersection(set(team[1].items).intersection(set(team[2].items)))
+    )[0]
+
   def __init__(self, filename):
     self.rucksacks = []
     with open(filename, newline='') as csv_file:
@@ -33,6 +40,15 @@ class Rucksacks:
   @cache
   def priority(self):
     return sum([rucksack.both_priority() for rucksack in self.rucksacks])
+
+  @cache
+  def badges(self):
+    teams = []
+    previous = 0
+    for i in range(3, len(self.rucksacks), 3):
+      teams.append(self.rucksacks[previous, i])
+      previous = i
+
 
 def main(filename):
   rucksacks = Rucksacks(filename)
