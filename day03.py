@@ -42,12 +42,19 @@ class Rucksacks:
     return sum([rucksack.both_priority() for rucksack in self.rucksacks])
 
   @cache
-  def badges(self):
-    teams = []
+  def get_teams(self):
+    self.teams = []
     previous = 0
-    for i in range(3, len(self.rucksacks), 3):
-      teams.append(self.rucksacks[previous, i])
+    for i in range(3, len(self.rucksacks) + 1, 3):
+      self.teams.append(self.rucksacks[previous:i])
       previous = i
+    return self.teams
+  
+  @cache
+  def get_badges(self):
+    teams = self.get_teams()
+    self.badges = [Rucksacks.team_badge(team) for team in teams]
+    return self.badges
 
 
 def main(filename):
