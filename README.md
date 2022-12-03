@@ -12,6 +12,9 @@ Advent of Code 2022 as part of getting back into Python https://adventofcode.com
 
 ## TODO
 
+- [ ] Write unit tests
+  - [x] For utility functions
+  - [ ] For the main functionality in parts 1 and 2
 - [ ] Have these examples and answers served by Django, VueJS, and SVG
 - [ ] Dockerize
 - [ ] Use a cloud VM rather than local
