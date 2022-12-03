@@ -29,6 +29,6 @@ def main(filename):
   print(f'Part 2: the top three elves are carrying {calories.sum_max(3)} calories')
 
 if __name__ == "__main__":
-  # Call `python day_1.py <csv_file>`
+  # Call `python day_n.py <csv_file>`
   main(sys.argv[1])
   
