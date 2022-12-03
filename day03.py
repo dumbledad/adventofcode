@@ -10,9 +10,10 @@ class Rucksack:
     return (ascii - 97) + 27 if ascii > 96 else ascii - 64
 
   def __init__(self, row):
+    half = int(len(row)/2)
     self.compartments = [
-      list(row[0:len(row)/2]),
-      list(row[len(row)/2:])
+      list(row[0:half]),
+      list(row[half:])
     ]
     self.both = set(self.compartments[0]).intersection(self.compartments[1])
 
@@ -27,11 +28,11 @@ class Rucksacks:
   
   @cache
   def priority(self):
-    return reduce(sum, self.rucksacks)
+    return reduce(lambda x, y: Rucksack.priority(x.both) + Rucksack.priority(y.both), self.rucksacks)
 
 def main(filename):
   rucksacks = Rucksacks(filename)
-  print(f'Part 1: the sum of priorities of items in both compartments is {rucksacks.priority}')
+  print(f'Part 1: the sum of priorities of items in both compartments is {rucksacks.priority()}')
 
 if __name__ == "__main__":
   # Call `python day_n.py <csv_file>`
