@@ -11,7 +11,7 @@
       "program": "${file}",
       "console": "integratedTerminal",
       "justMyCode": true,
-      "args": ["day02-test.csv"],
+      "args": ["day03-test.csv"],
     }
   ]
 }
