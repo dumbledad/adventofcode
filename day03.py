@@ -7,7 +7,7 @@ class Rucksack:
   @classmethod
   def priority(cls, item):
     ascii = ord(item)
-    return (ascii - 97) + 27 if ascii > 96 else ascii - 64
+    return ascii - 96 if ascii > 96 else (ascii - 64) + 26
 
   def __init__(self, row):
     half = int(len(row)/2)
@@ -15,7 +15,10 @@ class Rucksack:
       list(row[0:half]),
       list(row[half:])
     ]
-    self.both = set(self.compartments[0]).intersection(self.compartments[1])
+    self.both = list(set(self.compartments[0]).intersection(self.compartments[1]))[0]
+
+  def both_priority(self):
+    return Rucksack.priority(self.both)
 
 class Rucksacks:
   def __init__(self, filename):
@@ -24,11 +27,12 @@ class Rucksacks:
       reader = csv.reader(csv_file)
       for row in reader:
         if len(row) > 0:
-          self.rucksacks.append(Rucksack(row))
+          self.rucksacks.append(Rucksack(row[0]))
+    # print(f'Priorities: {[Rucksack.priority(rucksack.both) for rucksack in self.rucksacks]}')
   
   @cache
   def priority(self):
-    return reduce(lambda x, y: Rucksack.priority(x.both) + Rucksack.priority(y.both), self.rucksacks)
+    return sum([rucksack.both_priority() for rucksack in self.rucksacks])
 
 def main(filename):
   rucksacks = Rucksacks(filename)
