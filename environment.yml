@@ -9,6 +9,7 @@ dependencies:
   - pandas=1.5
   - pip=22.2
   - pylint=2.14
+  - pytest=7.1
   - python=3.10
   - pip:
     - djangorestframework==3.14
