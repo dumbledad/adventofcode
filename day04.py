@@ -1,4 +1,5 @@
 import csv
+from functools import cached_property
 
 class Assignments:
   @classmethod
@@ -16,8 +17,9 @@ class Assignments:
         if len(row) > 0:
           self.pairs.append(self._parse_row(row))
   
-  def containment_count():
-    return 1
+  @cached_property
+  def containment_count(self):
+    return sum([1 if Assignments.has_containment(ranges[0], ranges[1]) else 0 for ranges in self.pairs])
 
   def _parse_row(self, row):
     return [self._parse_range(row[0]), self._parse_range(row[1])]

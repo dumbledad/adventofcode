@@ -9,3 +9,7 @@ def test_assignments_has_containment():
   assert Assignments.has_containment(range(5, 8), range(4, 9))
   assert Assignments.has_containment(range(5, 9), range(4, 9))
   assert not Assignments.has_containment(range(5, 10), range(4, 9))
+
+def test_assignments_containment_count():
+  assignments = Assignments('day04-test.csv')
+  assert assignments.containment_count == 2
