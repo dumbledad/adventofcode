@@ -15,6 +15,16 @@ class CargoShip:
   def stack_tops(self):
     return ''.join([''.join(self.stacks[stack]).replace('[', '').replace(']', '').strip()[-1] for stack in self.stacks])
 
+  def move_crates(self):
+    return 1
+
+  def _move_crate(from_stack, to_stack):
+    return 1
+  
+  def _pop_crate(from_stack):
+    return 1
+    
+
   def _parse_row(self, row):
     move_match = re.match('move (\d+) from (\d+) to (\d+)$', row)
     if move_match:
@@ -31,7 +41,8 @@ class CargoShip:
     stacks = re.findall('   |\[[A-Z]\]', row)
     if stacks:
       for i, crate in enumerate(stacks):
-        self.stacks[str(i + 1)] = [crate] + self.stacks[str(i + 1)]
+        if len(crate.strip()) > 0:
+          self.stacks[str(i + 1)] = [crate] + self.stacks[str(i + 1)]
     
 
 def main():

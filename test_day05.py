@@ -12,7 +12,7 @@ def test_cargoship_init_moves():
 
 def test_cargoship_init_stacks():
   ship = CargoShip('day05-test.txt')
-  assert ship.stacks['1'] == ['[Z]', '[N]', '   ']
+  assert ship.stacks['1'] == ['[Z]', '[N]']
   assert '2' in ship.stacks
   assert '3' in ship.stacks
   assert '4' not in ship.stacks
