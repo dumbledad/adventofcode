@@ -12,8 +12,8 @@ class CargoShip:
         self._parse_row(line)
   
   @property
-  def cache_tops(self):
-    return [stack.join('').replace('[', '').replace(']', '').strip()[-1] for stack in self.stacks].join('')
+  def stack_tops(self):
+    return ''.join([''.join(self.stacks[stack]).replace('[', '').replace(']', '').strip()[-1] for stack in self.stacks])
 
   def _parse_row(self, row):
     move_match = re.match('move (\d+) from (\d+) to (\d+)$', row)
