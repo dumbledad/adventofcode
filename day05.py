@@ -35,7 +35,6 @@ class CargoShip:
         self._move_crate(move['from'], move['to'])
     elif crane_model == 9_001:
       self._move_crate(move['from'], move['to'], count=move['moves'])
-      
 
   def _move_crate(self, from_stack, to_stack, count=1):
     crates = self.stacks[from_stack][-1 * count:]
