@@ -32,6 +32,11 @@ def test_cargoship_move_crate():
   ship._move_crate('1', '3')
   assert CargoShip.stack_to_str(ship.stacks['3']) == 'PN'
 
+def test_cargoship_move_crate_9001():
+  ship = CargoShip('day05-test.txt')
+  ship._move_crate('1', '3', count=2)
+  assert CargoShip.stack_to_str(ship.stacks['3']) == 'PZN'
+
 def test_cargoship_do_move():
   ship = CargoShip('day05-test.txt')
   ship._do_move({
