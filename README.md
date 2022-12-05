@@ -45,3 +45,4 @@ Advent of Code 2022 as part of getting back into Python https://adventofcode.com
 
 - Edge conditions not present in test data floored me repeatedly. When I refactor it's important that tests catch new errors
 - Are regexes simpler/better than raw indexes?
+- `[::-1]` looked cryptic, but is just the `[start:stop:step]` and reverses the list
