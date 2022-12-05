@@ -25,3 +25,8 @@ def test_cargoship_init_stack_names():
 def test_cargoship_stack_tops():
   ship = CargoShip('day05-test.txt')
   assert ship.stack_tops == 'NDP'
+
+def test_cargoship_move_crate():
+  ship = CargoShip('day05-test.txt')
+  ship._move_crate('1', '3')
+  assert CargoShip.stack_to_str(ship.stacks['3']) == 'PN'

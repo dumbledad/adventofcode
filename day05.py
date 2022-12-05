@@ -3,6 +3,10 @@ from collections import defaultdict
 from functools import cached_property
 
 class CargoShip:
+  @classmethod
+  def stack_to_str(cls, stack):
+    return ''.join(stack).replace('[', '').replace(']', '').strip()
+    
   def __init__(self, filename):
     self.stacks = defaultdict(list)
     self.moves = []
@@ -13,17 +17,14 @@ class CargoShip:
   
   @property
   def stack_tops(self):
-    return ''.join([''.join(self.stacks[stack]).replace('[', '').replace(']', '').strip()[-1] for stack in self.stacks])
+    return ''.join([CargoShip.stack_to_str(self.stacks[stack])[-1] for stack in self.stacks])
 
   def move_crates(self):
     return 1
 
-  def _move_crate(from_stack, to_stack):
-    return 1
-  
-  def _pop_crate(from_stack):
-    return 1
-    
+  def _move_crate(self, from_stack, to_stack):
+    crate = self.stacks[from_stack].pop()
+    self.stacks[to_stack].append(crate)
 
   def _parse_row(self, row):
     move_match = re.match('move (\d+) from (\d+) to (\d+)$', row)
@@ -43,6 +44,8 @@ class CargoShip:
       for i, crate in enumerate(stacks):
         if len(crate.strip()) > 0:
           self.stacks[str(i + 1)] = [crate] + self.stacks[str(i + 1)]
+        else:
+          self.stacks[str(i + 1)] = self.stacks[str(i + 1)] # Create the stack
     
 
 def main():
