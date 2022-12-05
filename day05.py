@@ -21,8 +21,15 @@ class CargoShip:
 
   def move_crates(self):
     for move in self.moves:
-      for _ in range(0, move['moves']):
-        self._move_crate(move['from'], move['to'])
+      self._do_move(move)
+  
+  def print_stacks(self):
+    for stack_name in self.stack_names:
+      print(f'{stack_name}: {CargoShip.stack_to_str(self.stacks[stack_name])}')
+
+  def _do_move(self, move):
+    for _ in range(0, move['moves']):
+      self._move_crate(move['from'], move['to'])
 
   def _move_crate(self, from_stack, to_stack):
     crate = self.stacks[from_stack].pop()
