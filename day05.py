@@ -20,7 +20,9 @@ class CargoShip:
     return ''.join([CargoShip.stack_to_str(self.stacks[stack])[-1] for stack in self.stacks])
 
   def move_crates(self):
-    return 1
+    for move in self.moves:
+      for _ in range(0, move['moves']):
+        self._move_crate(move['from'], move['to'])
 
   def _move_crate(self, from_stack, to_stack):
     crate = self.stacks[from_stack].pop()
@@ -30,7 +32,7 @@ class CargoShip:
     move_match = re.match('move (\d+) from (\d+) to (\d+)$', row)
     if move_match:
       self.moves.append({
-        'move': int(move_match.group(1)),
+        'moves': int(move_match.group(1)),
         'from': move_match.group(2),
         'to': move_match.group(3)
       })
@@ -50,8 +52,8 @@ class CargoShip:
 
 def main():
   ship = CargoShip('day05.txt')
-  print(f'Part 1: {1}')
-  print(f'Part 2: {2}')
+  ship.move_crates()
+  print(f'Part 1: {ship.stack_tops}')
 
 if __name__ == "__main__":
   main()
