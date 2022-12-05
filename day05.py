@@ -1,6 +1,5 @@
 import re
 from collections import defaultdict
-from functools import cached_property
 
 class CargoShip:
   @classmethod
@@ -8,15 +7,15 @@ class CargoShip:
     if len(stack) > 0:
       return ''.join(stack).replace('[', '').replace(']', '').strip()
     return ''
-    
+
   def __init__(self, filename):
     self.stacks = defaultdict(list)
     self.moves = []
     self.stack_names = []
-    with open(filename) as f:
-      for line in f:
+    with open(filename) as file:
+      for line in file:
         self._parse_row(line)
-  
+
   @property
   def stack_tops(self):
     return ''.join([CargoShip.stack_to_str(self.stacks[stack])[-1] for stack in self.stacks if len(stack) > 0])
@@ -24,7 +23,7 @@ class CargoShip:
   def move_crates(self, crane_model=9_000):
     for move in self.moves:
       self._do_move(move, crane_model)
-  
+
   def print_stacks(self):
     for stack_name in self.stack_names:
       print(f'{stack_name}: {CargoShip.stack_to_str(self.stacks[stack_name])}')
@@ -61,7 +60,7 @@ class CargoShip:
           self.stacks[str(i + 1)] = [crate.strip()] + self.stacks[str(i + 1)]
         else:
           self.stacks[str(i + 1)] = self.stacks[str(i + 1)] # Create the stack
-    
+
 
 def main():
   ship = CargoShip('day05.txt')

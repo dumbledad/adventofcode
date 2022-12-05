@@ -1,11 +1,10 @@
-import pytest
 from day03 import Rucksack, Rucksacks
 
 def test_rucksacks_team_badge():
-  r1 = Rucksack('abcdec')
-  r2 = Rucksack('efghig')
-  r3 = Rucksack('jklmle')
-  team_badge = Rucksacks.team_badge([r1, r2, r3])
+  rucksack1 = Rucksack('abcdec')
+  rucksack2 = Rucksack('efghig')
+  rucksack3 = Rucksack('jklmle')
+  team_badge = Rucksacks.team_badge([rucksack1, rucksack2, rucksack3])
   assert team_badge == 'e'
 
 def test_rucksacks_badges():

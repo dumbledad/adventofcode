@@ -1,5 +1,5 @@
 import csv
-from functools import cache, reduce
+from functools import cache
 
 class Rucksack:
   @classmethod
