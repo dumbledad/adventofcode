@@ -10,6 +10,10 @@ class CargoShip:
     with open(filename) as f:
       for line in f:
         self._parse_row(line)
+  
+  @property
+  def cache_tops(self):
+    return [stack.join('').replace('[', '').replace(']', '').strip()[-1] for stack in self.stacks].join('')
 
   def _parse_row(self, row):
     move_match = re.match('move (\d+) from (\d+) to (\d+)$', row)
