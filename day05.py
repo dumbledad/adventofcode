@@ -5,7 +5,9 @@ from functools import cached_property
 class CargoShip:
   @classmethod
   def stack_to_str(cls, stack):
-    return ''.join(stack).replace('[', '').replace(']', '').strip()
+    if len(stack) > 0:
+      return ''.join(stack).replace('[', '').replace(']', '').strip()
+    return ''
     
   def __init__(self, filename):
     self.stacks = defaultdict(list)
@@ -17,7 +19,7 @@ class CargoShip:
   
   @property
   def stack_tops(self):
-    return ''.join([CargoShip.stack_to_str(self.stacks[stack])[-1] for stack in self.stacks])
+    return ''.join([CargoShip.stack_to_str(self.stacks[stack])[-1] for stack in self.stacks if len(stack) > 0])
 
   def move_crates(self):
     for move in self.moves:
@@ -48,7 +50,7 @@ class CargoShip:
     if stack_name_matches:
       self.stack_names = [stack_name.strip() for stack_name in stack_name_matches]
       return
-    stacks = re.findall('   |\[[A-Z]\]', row)
+    stacks = re.findall('    ?|\[[A-Z]\] ?', row)
     if stacks:
       for i, crate in enumerate(stacks):
         if len(crate.strip()) > 0:

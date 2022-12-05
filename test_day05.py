@@ -21,10 +21,11 @@ def test_cargoship_init_stack_names():
   ship = CargoShip('day05-test.txt')
   assert ship.stack_names == ['1', '2', '3']
   assert ship.stack_names == list(ship.stacks)
-
-def test_cargoship_stack_tops():
-  ship = CargoShip('day05-test.txt')
   assert ship.stack_tops == 'NDP'
+
+def test_cargoship_init_real_data():
+  ship = CargoShip('day05.txt')
+  assert ship.stack_tops == 'ZLFGWFJQP'
 
 def test_cargoship_move_crate():
   ship = CargoShip('day05-test.txt')
