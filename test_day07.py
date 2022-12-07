@@ -6,7 +6,7 @@ def test_filesystem_init():
 
 def test_dir_all_sub_dirs():
   fs = Filesystem('day07-test.txt')
-  assert len(fs.root.all_sub_dirs()) == 4
+  assert len(fs.root.all_sub_dirs) == 4
 
 def test_dir_sum_size_under():
   fs = Filesystem('day07-test.txt')

@@ -35,10 +35,11 @@ class Dir:
     size = sum([file.size for file in self._files]) + sum([sub_dir.size for sub_dir in self._sub_dirs])
     return size
   
-  def all_sub_dirs(self, called_by=''):
+  @property
+  def all_sub_dirs(self):
     dirs = [] + self._sub_dirs
-    for i, sub_dir in enumerate(self._sub_dirs):
-      dirs += sub_dir.all_sub_dirs(called_by + self.name)
+    for sub_dir in self._sub_dirs:
+      dirs += sub_dir.all_sub_dirs
     return dirs
 
   def sum_size_under_count_once(self, under):

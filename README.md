@@ -48,3 +48,7 @@ Advent of Code 2022 as part of getting back into Python https://adventofcode.com
 - `[::-1]` looked cryptic, but is just the `[start:stop:step]` and reverses the list
 - I needn't have kept the crate's `[` & `]`, that caused trouble printing
 - A mixture of proper debugging and printing was useful, would a _to string_ function have been used in the debugger's output?
+
+### Day 7
+
+- Use `dirs = [] + self._sub_dirs` to avoid taking a second pointer to `self._sub_dirs`
