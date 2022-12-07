@@ -1,4 +1,5 @@
 import re
+from itertools import chain
 
 class File:
   def __init__(self, name, size):
@@ -37,10 +38,7 @@ class Dir:
   
   @property
   def all_sub_dirs(self):
-    dirs = [] + self._sub_dirs
-    for sub_dir in self._sub_dirs:
-      dirs += sub_dir.all_sub_dirs
-    return dirs
+    return self._sub_dirs + list(chain.from_iterable([sub_dir.all_sub_dirs for sub_dir in self._sub_dirs]))
 
   def sum_size_under_count_once(self, under):
     files_size = sum([file.size for file in self._files])
