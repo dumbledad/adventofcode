@@ -39,7 +39,7 @@ class Dir:
   def all_sub_dirs(self):
     return self._sub_dirs + list(chain.from_iterable([sub_dir.all_sub_dirs for sub_dir in self._sub_dirs]))
 
-  def sum_size_under(self, under):
+  def sum_size(self, under):
     return sum([sub_dir.size for sub_dir in self.all_sub_dirs if sub_dir.size <= under])
   
   def smallest_sub_dir_size(self, above):
@@ -71,7 +71,7 @@ class Filesystem:
 
 def main():
   fs = Filesystem('day07.txt')
-  print(f"Part 1: {fs.root.sum_size_under(100_000)}")
+  print(f"Part 1: {fs.root.sum_size(100_000)}")
   unused = 70_000_000 - fs.root.size
   print(f"Part 2: {fs.root.smallest_sub_dir_size(30_000_000 - unused)}")
 
