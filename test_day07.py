@@ -15,3 +15,7 @@ def test_dir_sum_size_under():
 def test_dir_size():
   fs = Filesystem('day07-test.txt')
   assert fs.root.size == 48_381_165
+
+def test_dir_smallest_sub_dir_size():
+  fs = Filesystem('day07-test.txt')
+  assert fs.root.smallest_sub_dir_size(8_381_165) == 24_933_642

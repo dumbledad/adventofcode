@@ -39,8 +39,17 @@ class Dir:
   def all_sub_dirs(self):
     return self._sub_dirs + list(chain.from_iterable([sub_dir.all_sub_dirs for sub_dir in self._sub_dirs]))
 
+  def __eq__(self, other):
+    return self == other
+  
+  def __lt__(self, other):
+    return self.size < other.size
+
   def sum_size_under(self, under):
     return sum([sub_dir.size for sub_dir in self.all_sub_dirs if sub_dir.size <= under])
+  
+  def smallest_sub_dir_size(self, above):
+    return min([sub_dir.size for sub_dir in self.all_sub_dirs if sub_dir.size >= above])
 
 
 class Filesystem:
@@ -65,10 +74,13 @@ class Filesystem:
       self.data = data.read()
       self.root = Filesystem.parse_dir_tree(self.data.splitlines())
 
+  def sum_size_under(self, under):
+    return self.root.sum_size_under(under)
+
 
 def main():
   fs = Filesystem('day07.txt')
-  print(f"Part 1: {fs.file_sum(100_000)}")
+  print(f"Part 1: {fs.sum_size_under(100_000)}")
 
 if __name__ == "__main__":
   main()
