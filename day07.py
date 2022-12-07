@@ -72,7 +72,8 @@ class Filesystem:
 def main():
   fs = Filesystem('day07.txt')
   print(f"Part 1: {fs.root.sum_size_under(100_000)}")
-  print(f"Part 2: {fs.root.smallest_sub_dir_size(8_381_165)}")
+  unused = 70_000_000 - fs.root.size
+  print(f"Part 2: {fs.root.smallest_sub_dir_size(30_000_000 - unused)}")
 
 if __name__ == "__main__":
   main()
