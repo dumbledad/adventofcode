@@ -7,7 +7,6 @@ class File:
     self.size = size
 
 
-
 class Dir:
   def __init__(self, name, parent=None):
     self.name = name
@@ -39,12 +38,6 @@ class Dir:
   @property
   def all_sub_dirs(self):
     return self._sub_dirs + list(chain.from_iterable([sub_dir.all_sub_dirs for sub_dir in self._sub_dirs]))
-
-  def sum_size_under_count_once(self, under):
-    files_size = sum([file.size for file in self._files])
-    size = files_size if files_size <= under else 0
-    size += sum([sub_dir.sum_size_under_count_once(under) for sub_dir in self._sub_dirs])
-    return size
 
   def sum_size_under(self, under):
     return sum([sub_dir.size for sub_dir in self.all_sub_dirs if sub_dir.size <= under])
