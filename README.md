@@ -51,4 +51,9 @@ Advent of Code 2022 as part of getting back into Python https://adventofcode.com
 
 ### Day 7
 
-- Use `dirs = [] + self._sub_dirs` to avoid taking a second pointer to `self._sub_dirs`
+- Use `dirs = [] + self._sub_dirs` to avoid taking a second pointer to `self._sub_dirs`.
+- I can use `if file_match := re.match('(\d+) (.*)', row)` instead of `file_match = re.match('(\d+) (.*', row)` then `if file_match:`.
+- There are two edge cases that don't get exercised by the test data nor the real data. Almost everybody's solution fails the first one (mine included) and most fail the second. Should I be
+basing things on the data more than the question itself?
+  - `$ cd /` should take you back to the root from wherever you currently are
+  - Revisiting and `ls` in the same directory twice should not double its size!
