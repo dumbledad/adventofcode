@@ -21,3 +21,7 @@ def test_higher_on_a_sight_line():
 def test_visible_tree_count():
   trees = Trees('day08-test.txt')
   assert trees.visible_tree_count == 21
+
+def test_viewing_distances():
+  trees = Trees('day08-test.txt')
+  assert trees.viewing_distances(1, 2) == [1, 1, 2, 2]

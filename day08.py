@@ -23,12 +23,23 @@ class Trees:
       'east': 0,
       'west': 0
     }
-    for idx
+    for idx_j in range(j - 1, -1, -1):
+      if self.grid[i][idx_j] >= self.grid[i][j]:
+        break
+      traveling['north'] += 1
+    for idx_j in range(j + 1, len(self.grid)):
+      if self.grid[i][idx_j] >= self.grid[i][j]:
+        break
+      traveling['south'] += 1
+    for idx_i in range(i + 1, len(self.grid[i])):
+      if self.grid[idx_i][j] >= self.grid[i][j]:
+        break
+      traveling['east'] += 1
     for idx_i in range(i - 1, -1, -1):
       if self.grid[idx_i][j] >= self.grid[i][j]:
         break
       traveling['west'] += 1
-    
+    return [traveling['north'], traveling['west'], traveling['east'], traveling['south']]
 
   def _higher_than_a_neighbour(self, i, j):
     return self.grid[i][j] > self.grid[i - 1][j] or \
@@ -58,8 +69,10 @@ class Trees:
 
 
 def main():
-  tree = Trees('day08.txt')
-  print(f"Part 1: {tree.visible_tree_count}")
+  # tree = Trees('day08.txt')
+  # print(f"Part 1: {tree.visible_tree_count}")
+  trees = Trees('day08-test.txt')
+  print(f'trees.viewing_distances(1, 2): {trees.viewing_distances(1, 2)}')
 
 if __name__ == "__main__":
   main()
