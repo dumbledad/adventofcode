@@ -41,4 +41,10 @@ class Trees:
         direction_count += 1
         break
     return direction_count < 4         
-        
+
+def main():
+  tree = Trees('day08.txt')
+  print(f"Part 1: {tree.visible_tree_count}")
+
+if __name__ == "__main__":
+  main()
