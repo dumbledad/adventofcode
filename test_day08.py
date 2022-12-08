@@ -31,3 +31,7 @@ def test_viewing_distances():
   trees = Trees('day08-test.txt')
   assert trees.scenic_score(1, 2) == 4
   assert trees.scenic_score(3, 2) == 8
+
+def test_max_scenic_score():
+  trees = Trees('day08-test.txt')
+  assert trees.max_scenic_score() == 8
