@@ -1,3 +1,6 @@
+from functools import reduce
+import operator
+
 class Trees:
   def __init__(self, filename):
     with open(filename) as file:
@@ -41,6 +44,9 @@ class Trees:
         break
     return [traveling['north'], traveling['west'], traveling['east'], traveling['south']]
 
+  def scenic_score(self, i, j):
+    return reduce(operator.mul, self.viewing_distances(i, j), 1)
+
   def _higher_than_a_neighbour(self, i, j):
     return self.grid[i][j] > self.grid[i - 1][j] or \
            self.grid[i][j] > self.grid[i + 1][j] or \
@@ -72,7 +78,7 @@ def main():
   # tree = Trees('day08.txt')
   # print(f"Part 1: {tree.visible_tree_count}")
   trees = Trees('day08-test.txt')
-  print(f'trees.viewing_distances(1, 2): {trees.viewing_distances(1, 2)}')
+  print(f'trees.scenic_score(3, 2): {trees.scenic_score(3, 2)}')
 
 if __name__ == "__main__":
   main()

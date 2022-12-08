@@ -26,3 +26,8 @@ def test_viewing_distances():
   trees = Trees('day08-test.txt')
   assert trees.viewing_distances(1, 2) == [1, 1, 2, 2]
   assert trees.viewing_distances(3, 2) == [2, 2, 2, 1]
+
+def test_viewing_distances():
+  trees = Trees('day08-test.txt')
+  assert trees.scenic_score(1, 2) == 4
+  assert trees.scenic_score(3, 2) == 8
