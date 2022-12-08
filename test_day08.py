@@ -25,3 +25,4 @@ def test_visible_tree_count():
 def test_viewing_distances():
   trees = Trees('day08-test.txt')
   assert trees.viewing_distances(1, 2) == [1, 1, 2, 2]
+  assert trees.viewing_distances(3, 2) == [2, 2, 2, 1]
