@@ -16,6 +16,20 @@ class Trees:
           count += 1
     return count
 
+  def viewing_distances(self, i, j):
+    traveling = {
+      'north': 0,
+      'south': 0,
+      'east': 0,
+      'west': 0
+    }
+    for idx
+    for idx_i in range(i - 1, -1, -1):
+      if self.grid[idx_i][j] >= self.grid[i][j]:
+        break
+      traveling['west'] += 1
+    
+
   def _higher_than_a_neighbour(self, i, j):
     return self.grid[i][j] > self.grid[i - 1][j] or \
            self.grid[i][j] > self.grid[i + 1][j] or \
@@ -40,7 +54,8 @@ class Trees:
       if self.grid[i][idx_j] >= self.grid[i][j]:
         direction_count += 1
         break
-    return direction_count < 4         
+    return direction_count < 4
+
 
 def main():
   tree = Trees('day08.txt')
