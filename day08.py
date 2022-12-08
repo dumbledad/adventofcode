@@ -23,22 +23,22 @@ class Trees:
       'east': 0,
       'west': 0
     }
-    for idx_j in range(j - 1, -1, -1):
-      if self.grid[i][idx_j] >= self.grid[i][j]:
-        break
-      traveling['north'] += 1
-    for idx_j in range(j + 1, len(self.grid)):
-      if self.grid[i][idx_j] >= self.grid[i][j]:
-        break
-      traveling['south'] += 1
-    for idx_i in range(i + 1, len(self.grid[i])):
-      if self.grid[idx_i][j] >= self.grid[i][j]:
-        break
-      traveling['east'] += 1
     for idx_i in range(i - 1, -1, -1):
+      traveling['north'] += 1
       if self.grid[idx_i][j] >= self.grid[i][j]:
         break
+    for idx_i in range(i + 1, len(self.grid[i])):
+      traveling['south'] += 1
+      if self.grid[idx_i][j] >= self.grid[i][j]:
+        break
+    for idx_j in range(j + 1, len(self.grid)):
+      traveling['east'] += 1
+      if self.grid[i][idx_j] >= self.grid[i][j]:
+        break
+    for idx_j in range(j - 1, -1, -1):
       traveling['west'] += 1
+      if self.grid[i][idx_j] >= self.grid[i][j]:
+        break
     return [traveling['north'], traveling['west'], traveling['east'], traveling['south']]
 
   def _higher_than_a_neighbour(self, i, j):
