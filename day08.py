@@ -19,6 +19,10 @@ class Trees:
           count += 1
     return count
 
+  @property
+  def max_scenic_score(self):
+    return max([self.scenic_score(i, j) for i in range(0, len(self.grid)) for j in range(0, len(self.grid[0]))])
+
   def viewing_distances(self, i, j):
     traveling = {
       'north': 0,
@@ -47,15 +51,6 @@ class Trees:
   def scenic_score(self, i, j):
     return reduce(operator.mul, self.viewing_distances(i, j), 1)
 
-  def max_scenic_score(self):
-    return max([self.scenic_score(i, j) for i in range(0, len(self.grid)) for j in range(0, len(self.grid[0]))])
-
-  def _higher_than_a_neighbour(self, i, j):
-    return self.grid[i][j] > self.grid[i - 1][j] or \
-           self.grid[i][j] > self.grid[i + 1][j] or \
-           self.grid[i][j] > self.grid[i][j - 1] or \
-           self.grid[i][j] > self.grid[i][j + 1]
-
   def _higher_on_a_sight_line(self, i, j):
     direction_count = 0
     for idx_i in range(0, i):
@@ -80,7 +75,7 @@ class Trees:
 def main():
   tree = Trees('day08.txt')
   print(f'Part 1: {tree.visible_tree_count}')
-  print(f'Part 2: {tree.max_scenic_score()}')
+  print(f'Part 2: {tree.max_scenic_score}')
 
 if __name__ == "__main__":
   main()
