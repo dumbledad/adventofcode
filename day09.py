@@ -1,10 +1,11 @@
 class Bridge:
-  def __init__(self, filename):
+  def __init__(self, filename, knot_count=2):
     with open(filename) as file:
       self.data = file.read()
     self.motions = list([{ 'direction': pair[0], 'steps': int(pair[1]) } for line in self.data.splitlines() if len(pair := line.split()) == 2])
-    self.head_positions = [(0, 0)]
-    self.tail_positions = [(0, 0)]
+    self.positions = list([[(0,0)] for _ in range(0, knot_count)])
+    self.head_positions = self.positions[0]
+    self.tail_positions = self.positions[1]
     self.perform_moves()
 
   def perform_moves(self):
@@ -34,15 +35,23 @@ class Bridge:
       case 'R':
         return (position[0] + 1, position[1])
 
-  def _suggest(self, head, tail):
-    suggestion = (tail[0], tail[1])
-    far_enough = abs(head[0] - tail[0]) > 1 or abs(head[1] - tail[1]) > 1
-    if head[0] > tail[0] and far_enough:
+  def _suggest(self, leader, follower):
+    suggestion = (follower[0], follower[1])
+    far_enough = abs(leader[0] - follower[0]) > 1 or abs(leader[1] - follower[1]) > 1
+    if leader[0] > follower[0] and far_enough:
       suggestion = (suggestion[0] + 1, suggestion[1])
-    elif head[0] < tail[0] and far_enough:
+    elif leader[0] < follower[0] and far_enough:
       suggestion = (suggestion[0] - 1, suggestion[1])
-    if head[1] > tail[1] and far_enough:
+    if leader[1] > follower[1] and far_enough:
       suggestion = (suggestion[0], suggestion[1] + 1)
-    elif head[1] < tail[1] and far_enough:
+    elif leader[1] < follower[1] and far_enough:
       suggestion = (suggestion[0], suggestion[1] - 1)
     return suggestion
+
+
+def main():
+  bridge = Bridge('day09.txt')
+  print(f'Part 1: {bridge.tail_positions_count}')
+
+if __name__ == "__main__":
+  main()
