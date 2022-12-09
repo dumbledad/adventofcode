@@ -10,4 +10,6 @@ def test_init():
 def test_tail_positions_count():
   bridge = Bridge('day09-test.txt')
   assert bridge.tail_positions_count == 13
+  bridge = Bridge('day09-test.txt', 9)
+  assert bridge.tail_positions_count == 1
   

@@ -5,7 +5,7 @@ class Bridge:
     self.motions = list([{ 'direction': pair[0], 'steps': int(pair[1]) } for line in self.data.splitlines() if len(pair := line.split()) == 2])
     self.positions = list([[(0,0)] for _ in range(0, knot_count)])
     self.head_positions = self.positions[0]
-    self.tail_positions = self.positions[1]
+    self.tail_positions = self.positions[-1]
     self.perform_moves()
 
   def perform_moves(self):
@@ -18,9 +18,9 @@ class Bridge:
 
   def _perform_move(self, direction, steps):
     if (steps == 1):
-      for i in range(0, len(self.positions) - 1):
-        self.positions[i].append(self._move(self.positions[0][-1], direction))
-        self.positions[i + 1].append(self._suggest(self.positions[i][-1], self.positions[i + 1][-1]))
+      self.positions[0].append(self._move(self.positions[0][-1], direction))
+      for i in range(1, len(self.positions)):
+        self.positions[i].append(self._suggest(self.positions[i - 1][-1], self.positions[i][-1]))
     else:  
       for _ in range(0, steps):
         self._perform_move(direction, 1)
