@@ -57,3 +57,7 @@ Advent of Code 2022 as part of getting back into Python https://adventofcode.com
 basing things on the data more than the question itself?
   - `$ cd /` should take you back to the root from wherever you currently are
   - Revisiting and `ls` in the same directory twice should not double its size!
+
+### Day 9
+
+- Careful reading, e.g. H, 1, … 9 is 10 knots, not 9.
