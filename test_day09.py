@@ -6,4 +6,8 @@ def test_init():
   assert bridge.motions[3]['direction'] == 'D'
   assert bridge.motions[3]['steps'] == 1
   assert len(bridge.motions) == 8
+
+def test_tail_positions_count():
+  bridge = Bridge('day09-test.txt')
+  assert bridge.tail_positions_count == 13
   
