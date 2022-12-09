@@ -53,6 +53,8 @@ class Bridge:
 def main():
   bridge = Bridge('day09.txt')
   print(f'Part 1: {bridge.tail_positions_count}')
+  bridge = Bridge('day09.txt', 9)
+  print(f'Part 2: {bridge.tail_positions_count}')
 
 if __name__ == "__main__":
   main()
