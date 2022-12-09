@@ -18,8 +18,9 @@ class Bridge:
 
   def _perform_move(self, direction, steps):
     if (steps == 1):
-      self.head_positions.append(self._move(self.head_positions[-1], direction))
-      self.tail_positions.append(self._suggest(self.head_positions[-1], self.tail_positions[-1]))
+      for i in range(0, len(self.positions) - 1):
+        self.positions[i].append(self._move(self.positions[0][-1], direction))
+        self.positions[i + 1].append(self._suggest(self.positions[i][-1], self.positions[i + 1][-1]))
     else:  
       for _ in range(0, steps):
         self._perform_move(direction, 1)
