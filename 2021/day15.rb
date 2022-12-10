@@ -138,9 +138,9 @@ end
 
 [false, true].each { |e| ['day15-input-test.txt', 'day15-input-01.txt'].each { |f| path(f, e) } }
 
-# data = Chitons.new('day15-input-test.txt', expand: true)
+# data = Chitons.new('../inputs/2021/day15-input-test.txt', expand: true)
 # data.print_risks
-# risks = File.readlines('day15-expanded-test.txt').map(&:chomp).map(&:chars).map { |r| r.map(&:to_i) }
+# risks = File.readlines('../inputs/2021/day15-expanded-test.txt').map(&:chomp).map(&:chars).map { |r| r.map(&:to_i) }
 # (0...risks.length).each do |i|
 #   (0...risks[0].length).each do |j|
 #     puts "(#{i}, #{j}) == (#{data.risks[i][j]}, #{risks[i][j]})"

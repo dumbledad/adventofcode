@@ -2,8 +2,8 @@
 
 DigitCounts = Struct.new(:one_counts, :zero_counts)
 
-DIAGNOSTIC_LENGTH = File.open('day03-input-01.txt', &:readline).chomp().length
-diagnostics = File.readlines('day03-input-01.txt').map { |reading| reading.to_i(2) }
+DIAGNOSTIC_LENGTH = File.open('../inputs/2021/day03-input-01.txt', &:readline).chomp().length
+diagnostics = File.readlines('../inputs/2021/day03-input-01.txt').map { |reading| reading.to_i(2) }
 
 # rubocop:disable Metrics/MethodLength
 def count_digits(input_diagnostics_array)
@@ -81,7 +81,7 @@ puts "the power consumption of the submarine is #{gamma_str.to_i(2) * epsilon_st
 
 # Let me try brute force in text :-(
 
-diagnostic_strings = File.readlines('day03-input-01.txt')
+diagnostic_strings = File.readlines('../inputs/2021/day03-input-01.txt')
 oxygen_strings = scrubber_strings = diagnostic_strings
 
 (0...12).each do |i|

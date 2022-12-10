@@ -15,12 +15,12 @@ class Sensors
         @sensors << sensor
       elsif line.length.positive?
         sensor.beacons['initial'] = [] unless sensor.beacons.keys.include? 'initial'
-        sensor.beacons['initial'] << [*line.split(',').map(&:to_i)]
+        sensor.beacons['initial'] << [*line.split('../inputs/2021/,').map(&:to_i)]
       end
     end
     @sensors.each do |s|
       s.do_all_transformations(s.beacons['initial'])
-      s.beacons.delete('initial')
+      s.beacons.delete('../inputs/2021/initial')
       s.build_vectors
     end
   end
@@ -130,4 +130,4 @@ def report(filename)
   end
 end
 
-report('day19-input-test.txt') if __FILE__ == $PROGRAM_NAME
+report('../inputs/2021/day19-input-test.txt') if __FILE__ == $PROGRAM_NAME

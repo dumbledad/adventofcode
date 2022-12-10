@@ -86,7 +86,7 @@ class ProbeLauncher
 
   # E.g. 'target area: x=20..30, y=-10..-5' becomes [20, 30, -10, -5]
   def parse_target_description(description)
-    /x=([-\d.]*).*y=([-\d.]*)/.match(description).captures.map { |e| e.split('..').map(&:to_i) }.flatten(1)
+    /x=([-\d.]*).*y=([-\d.]*)/.match(description).captures.map { |e| e.split('../inputs/2021/..').map(&:to_i) }.flatten(1)
   end
 
   def max_y_reached
@@ -106,4 +106,4 @@ def launch(description)
   puts "The number of potentially successful probes is #{count} given the target '#{description}'"
 end
 
-launch('target area: x=143..177, y=-106..-71') if __FILE__ == $PROGRAM_NAME
+launch('../inputs/2021/target area: x=143..177, y=-106..-71') if __FILE__ == $PROGRAM_NAME

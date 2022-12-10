@@ -9,10 +9,10 @@ class Checker
     @loc = File.readlines(input_data_filename).map(&:chomp)
     @illegal_char_scores = { ')' => 3, ']' => 57, '}' => 1_197, '>' => 25_137, false => 0 }
     @autocomplete_char_scores = { ')' => 1, ']' => 2, '}' => 3, '>' => 4}
-    @opening_brackets = ['(', '[', '{', '<']
-    @opening_to_closing = { '(' => ')', '[' => ']', '{' => '}', '<' => '>' }
+    @opening_brackets = ['('../inputs/2021/, '[', '{', '<']
+    @opening_to_closing = { '('../inputs/2021/ => ')', '[' => ']', '{' => '}', '<' => '>' }
     @closing_brackets = [')', ']', '}', '>']
-    @closing_to_opening = { ')' => '(', ']' => '[', '}' => '{', '>' => '<' }
+    @closing_to_opening = { ')' => '('../inputs/2021/, ']' => '[', '}' => '{', '>' => '<' }
   end
 
   # Return the first illegal closing braket, if there is one
@@ -67,16 +67,16 @@ end
 
 puts "\nPART ONE"
 puts "\nTest dataset:"
-data = Checker.new('day10-input-test.txt')
+data = Checker.new('../inputs/2021/day10-input-test.txt')
 puts "The total syntax error score is #{data.total_syntax_error_score}"
 puts "\nFull dataset:"
-data = Checker.new('day10-input-01.txt')
+data = Checker.new('../inputs/2021/day10-input-01.txt')
 puts "The total syntax error score is #{data.total_syntax_error_score}"
 
 puts "\nPART TWO"
 puts "\nTest dataset:"
-data = Checker.new('day10-input-test.txt')
+data = Checker.new('../inputs/2021/day10-input-test.txt')
 puts "The middle autocomplete score is #{data.middle_autocomplete_score}"
 puts "\nFull dataset:"
-data = Checker.new('day10-input-01.txt')
+data = Checker.new('../inputs/2021/day10-input-01.txt')
 puts "The middle autocomplete score is #{data.middle_autocomplete_score}"

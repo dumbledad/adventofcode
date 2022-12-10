@@ -32,7 +32,7 @@ class SquidBingo
   attr_accessor :calls, :boards, :winners
 
   def initialize
-    @calls = File.open('day04-input-01.txt', &:readline).chomp.split(',').map(&:to_i)
+    @calls = File.open('../inputs/2021/day04-input-01.txt', &:readline).chomp.split('../inputs/2021/,').map(&:to_i)
     @boards = load_boards
     @winners = []
     calls.each do |call|
@@ -48,7 +48,7 @@ class SquidBingo
   private
 
   def load_boards
-    accumulator = File.readlines('day04-input-01.txt').drop(2).map(&:chomp)\
+    accumulator = File.readlines('../inputs/2021/day04-input-01.txt').drop(2).map(&:chomp)\
                       .each_with_object({ 'lines': [], 'boards': [] }) do |line, memo|
       if line == ''
         memo[:boards] << BingoBoard.new(memo[:lines])

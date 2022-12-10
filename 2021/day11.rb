@@ -93,12 +93,12 @@ class DumboOctopuses
 end
 
 puts "\nTest dataset:"
-data = DumboOctopuses.new('day11-input-test.txt')
+data = DumboOctopuses.new('../inputs/2021/day11-input-test.txt')
 data.do_steps
 puts "There were #{data.flashes} flashes after #{data.steps} steps"
 puts "All #{data.octopi_count} octopi flashed together first at step #{data.all_flash_at_step}"
 puts "\nFull dataset:"
-data = DumboOctopuses.new('day11-input-01.txt')
+data = DumboOctopuses.new('../inputs/2021/day11-input-01.txt')
 data.do_steps
 puts "There were #{data.flashes} flashes after #{data.steps} steps"
 puts "All #{data.octopi_count} octopi flashed together first at step #{data.all_flash_at_step}"

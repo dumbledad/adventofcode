@@ -12,11 +12,11 @@ class Paper
   end
 
   def initialize_dots(lines)
-    @dots = lines.select { |l| l =~ /^\d/ }.map { |l| l.split(',').map(&:to_i) }
+    @dots = lines.select { |l| l =~ /^\d/ }.map { |l| l.split('../inputs/2021/,').map(&:to_i) }
   end
 
   def initialize_folds(lines)
-    @folds = lines.select { |l| l.start_with?('f') }.map { |l| l.sub('fold along ', '').split('=') }.map do |f|
+    @folds = lines.select { |l| l.start_with?('../inputs/2021/f') }.map { |l| l.sub('../inputs/2021/fold along ', '').split('../inputs/2021/=') }.map do |f|
       f[0] == 'x' ? [f[1].to_i, 0] : [0, f[1].to_i]
     end
   end

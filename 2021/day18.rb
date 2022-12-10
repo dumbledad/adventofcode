@@ -186,4 +186,4 @@ def homework(filename)
   puts "The maximum magnitude of the sum of any two of the snailfish numbers described in #{filename} is #{magnitudes.max}"
 end
 
-homework('day18-input-01.txt') if __FILE__ == $PROGRAM_NAME
+homework('../inputs/2021/day18-input-01.txt') if __FILE__ == $PROGRAM_NAME

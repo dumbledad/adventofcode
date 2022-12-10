@@ -7,7 +7,7 @@ require './day19'
 RSpec.describe Sensors do
   describe '#initialize' do
     it 'Reads in 5 sensors' do
-      sensors = Sensors.new('day19-input-test.txt')
+      sensors = Sensors.new('../inputs/2021/day19-input-test.txt')
       expect(sensors.sensors.length).to eq(5)
     end
   end
@@ -15,7 +15,7 @@ end
 
 RSpec.describe Sensor do
   describe '#do_all_transformations' do
-    sensor = Sensor.new('0')
+    sensor = Sensor.new('../inputs/2021/0')
     beacons =
       [
         [0.5, 0.5, 0.5],

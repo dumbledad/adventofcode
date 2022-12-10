@@ -10,7 +10,7 @@ class OptimalPolymerFormula
     @template = File.open(input_data_filename, &:readline).chomp
     @pair_counts = (0...@template.length - 1).each_with_object(Hash.new(0)) { |i, h| h[@template[i, 2]] += 1 }
     @insertion_map = initialize_insertions(
-      File.readlines(input_data_filename).drop(2).map(&:chomp).map { |l| l.split(' -> ') }
+      File.readlines(input_data_filename).drop(2).map(&:chomp).map { |l| l.split('../inputs/2021/ -> ') }
     )
   end
 

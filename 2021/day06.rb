@@ -10,7 +10,7 @@ class Shoal
   attr_accessor :fisheses, :days_of_interest, :days_to_spawn, :immaturity, :day
 
   def initialize(input_data_filename, days_of_interest)
-    tally = File.open(input_data_filename, &:readline).chomp.split(',').map(&:to_i).tally
+    tally = File.open(input_data_filename, &:readline).chomp.split('../inputs/2021/,').map(&:to_i).tally
     @days_of_interest = days_of_interest
     @days_to_spawn = 7
     @immaturity = 2
@@ -38,9 +38,9 @@ class Shoal
 end
 
 puts "\nTest dataset:"
-shoal = Shoal.new('day06-input-test.txt', [80, 256])
+shoal = Shoal.new('../inputs/2021/day06-input-test.txt', [80, 256])
 shoal.progress(256)
 puts "\nFull dataset:"
-shoal = Shoal.new('day06-input-01.txt', [80, 256])
+shoal = Shoal.new('../inputs/2021/day06-input-01.txt', [80, 256])
 shoal.progress(256)
 puts ''

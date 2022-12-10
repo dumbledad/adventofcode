@@ -7,7 +7,7 @@ class Caves
   def initialize(input_data_filename, revisit: false)
     @revisit_one_small = revisit
     @links = Hash.new { [] }
-    File.readlines(input_data_filename).map(&:chomp).map { |l| l.split('-') }.each { |p| add_link(p) }
+    File.readlines(input_data_filename).map(&:chomp).map { |l| l.split('../inputs/2021/-') }.each { |p| add_link(p) }
     paths
   end
 
@@ -32,7 +32,7 @@ class Caves
       @links[p[-1]].each { |l| add_if_valid(p, l, added) }
     end
     @paths = added + @paths.select { |p| p[-1] == 'end' }
-    puts "#{@paths.max_by(&:length).join('-')} longest of #{@paths.length} paths"
+    puts "#{@paths.max_by(&:length).join('../inputs/2021/-')} longest of #{@paths.length} paths"
     added.length
   end
 

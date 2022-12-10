@@ -7,8 +7,8 @@ class ObservedData
   def initialize(input_data_filename)
     @readings = []
     File.readlines(input_data_filename).map(&:chomp).map do |l|
-      signal_patterns = order_chars_in_strings l.split('|')[0]
-      output_values = order_chars_in_strings l.split('|')[1]
+      signal_patterns = order_chars_in_strings l.split('../inputs/2021/|')[0]
+      output_values = order_chars_in_strings l.split('../inputs/2021/|')[1]
       @readings << { signal_patterns: signal_patterns, output_values: output_values }
     end
   end
@@ -122,16 +122,16 @@ end
 
 puts "\nPART ONE"
 puts "\nTest dataset:"
-data = ObservedData.new('day08-input-test.txt')
+data = ObservedData.new('../inputs/2021/day08-input-test.txt')
 puts "The digits 1, 4, 7, or 8 appear #{data.uniques_count} times"
 puts "\nFull dataset:"
-data = ObservedData.new('day08-input-01.txt')
+data = ObservedData.new('../inputs/2021/day08-input-01.txt')
 puts "The digits 1, 4, 7, or 8 appear #{data.uniques_count} times"
 
 puts "\nPART TWO"
 puts "\nTest dataset:"
-data = ObservedData.new('day08-input-test.txt')
+data = ObservedData.new('../inputs/2021/day08-input-test.txt')
 puts "The sum of decoded four-digit output values is #{data.sum_derived_digits}"
 puts "\nFull dataset:"
-data = ObservedData.new('day08-input-01.txt')
+data = ObservedData.new('../inputs/2021/day08-input-01.txt')
 puts "The sum of decoded four-digit output values is #{data.sum_derived_digits}"

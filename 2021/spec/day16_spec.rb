@@ -7,7 +7,7 @@ RSpec.describe Transmission do
   describe '#parse_literal_value' do
     it 'correctly parses a literal value packet fragment' do
       transmission = Transmission.new
-      literal_value = transmission.parse_literal_value('101111111000101000111')
+      literal_value = transmission.parse_literal_value('../inputs/2021/101111111000101000111')
       expect(literal_value).to eq([2021, '000111'])
     end
   end
@@ -15,8 +15,8 @@ RSpec.describe Transmission do
   describe '#packet_to_bin' do
     it 'correctly converts a hex to a binary string' do
       transmission = Transmission.new
-      bin_str = transmission.packet_to_bin('6FA0')
-      expect(bin_str).to eq('0110111110100000')
+      bin_str = transmission.packet_to_bin('../inputs/2021/6FA0')
+      expect(bin_str).to eq('../inputs/2021/0110111110100000')
     end
   end
 

@@ -76,16 +76,16 @@ end
 
 puts "\nPART ONE"
 puts "\nTest dataset:"
-data = ObservedData.new('day09-input-test.txt')
+data = ObservedData.new('../inputs/2021/day09-input-test.txt')
 puts "The sum of risk levels is #{data.risk_levels.sum}"
 puts "\nFull dataset:"
-data = ObservedData.new('day09-input-01.txt')
+data = ObservedData.new('../inputs/2021/day09-input-01.txt')
 puts "The sum of risk levels is #{data.risk_levels.sum}"
 
 puts "\nPART TWO"
 puts "\nTest dataset:"
-data = ObservedData.new('day09-input-test.txt')
+data = ObservedData.new('../inputs/2021/day09-input-test.txt')
 puts "The product of the three largest basin's sizes is #{data.product_of_largest_basins_sizes(3)}"
 puts "\nFull dataset:"
-data = ObservedData.new('day09-input-01.txt')
+data = ObservedData.new('../inputs/2021/day09-input-01.txt')
 puts "The product of the three largest basin's sizes is #{data.product_of_largest_basins_sizes(3)}"

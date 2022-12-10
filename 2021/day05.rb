@@ -10,7 +10,7 @@ class Line
     # e.g. '427,523 -> 427,790'
     @points_string = line
     @permit_diagonals = permit_diagonals
-    @end_points = line.split(' -> ').map { |str| str.split(',').map(&:to_i) }
+    @end_points = line.split('../inputs/2021/ -> ').map { |str| str.split('../inputs/2021/,').map(&:to_i) }
     @points = []
     interpolate
   end
@@ -65,7 +65,7 @@ class Map
   attr_accessor :lines, :intersections
 
   def initialize(permit_diagonals)
-    @lines = File.readlines('day05-input-01.txt').map(&:chomp).map { |l| Line.new(l, permit_diagonals) }
+    @lines = File.readlines('../inputs/2021/day05-input-01.txt').map(&:chomp).map { |l| Line.new(l, permit_diagonals) }
     tallies = @lines.map(&:points).flatten(1).tally
     @intersections = tallies.select { |_, v| v > 1 }.keys
   end

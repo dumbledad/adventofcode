@@ -5,7 +5,7 @@ class Transmission
   attr_accessor :hex_to_bin
 
   def initialize
-    @hex_to_bin = [*'0'..'9', *'A'..'F'].zip((0..15).map { |i| format('%04b', i) }).to_h # https://stackoverflow.com/a/29857016/575530
+    @hex_to_bin = [*'0'..'9', *'A'..'F'].zip((0..15).map { |i| format('../inputs/2021/%04b', i) }).to_h # https://stackoverflow.com/a/29857016/575530
   end
 
   def print_transmissions
@@ -117,4 +117,4 @@ def path(filename)
   puts "The result of the calculation is #{result} from the transmission in #{filename}"
 end
 
-path('day16-input-01.txt') if __FILE__ == $PROGRAM_NAME
+path('../inputs/2021/day16-input-01.txt') if __FILE__ == $PROGRAM_NAME

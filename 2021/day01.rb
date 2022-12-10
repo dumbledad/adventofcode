@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-depth_readings = File.readlines('day01-input-01.txt').map(&:to_i)
+depth_readings = File.readlines('../inputs/2021/day01-input-01.txt').map(&:to_i)
 
 def num_increases(input_array)
   input_array.each_cons(2).reduce(0) { |count, values| count + (values[1] > values[0] ? 1 : 0) }
