@@ -18,3 +18,8 @@ def test_perform_instructions_with_register():
   instructions = CRT.parse_instructions(simples)
   register = CRT.perform_instructions_with_register([1], instructions)
   assert register == [1, 1, 1, 4, 4, -1]
+
+def test_signal_strengths():
+  crt = CRT('day10-test.txt')
+  assert crt.signal_strengths() == [420, 1140, 1800, 2940, 2880, 3960]
+  assert sum(crt.signal_strengths()) == 13140 # Testing aoc wording not Python

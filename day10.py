@@ -33,3 +33,8 @@ class CRT:
 
   def perform_instructions(self):
     self.registers['X'] = CRT.perform_instructions_with_register(self.registers['X'], self.instructions)
+  
+  def signal_strengths(self, start=20, step=40):
+    if len(self.registers['X']) == 1:
+      self.perform_instructions()
+    return list([(i + 1) * self.registers['X'][i] for i in range(start - 1, len(self.registers['X']), step)])
