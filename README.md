@@ -12,9 +12,11 @@ Advent of Code 2022 as part of getting back into Python https://adventofcode.com
 
 ## TODO
 
-- [ ] Write unit tests
+- [x] Write unit tests
   - [x] For utility functions
   - [x] For the main functionality in parts 1 and 2
+  - [x] Add coverage (run as, for example, `coverage run -m pytest test_day10.py`)
+- [ ] Move input data to private sub-repo
 - [ ] Have these examples and answers served by Django, VueJS, and SVG
 - [ ] Dockerize
 - [ ] Use a cloud VM rather than local
@@ -61,3 +63,8 @@ basing things on the data more than the question itself?
 ### Day 9
 
 - Careful reading, e.g. H, 1, … 9 is 10 knots, not 9.
+
+### Day 10
+
+- 100% coverage is satisfying
+- Part 2 was not accessible for visually impaired programmers
