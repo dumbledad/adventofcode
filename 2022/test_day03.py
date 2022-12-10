@@ -8,10 +8,10 @@ def test_rucksacks_team_badge():
   assert team_badge == 'e'
 
 def test_rucksacks_badges():
-  rucksacks = Rucksacks('day03-test.csv')
+  rucksacks = Rucksacks('../inputs/2022/day03-test.csv')
   badges = rucksacks.get_badges()
   assert badges == ['r', 'Z']
 
 def test_rucksacks_badge_priority():
-  rucksacks = Rucksacks('day03-test.csv')
+  rucksacks = Rucksacks('../inputs/2022/day03-test.csv')
   assert rucksacks.badge_priority() == 70

@@ -9,8 +9,8 @@ class Tuning:
 
 
 def main():
-  print(f"Part 1: {Tuning.start_of_packet(open('day06.txt').read())}")
-  print(f"Part 2: {Tuning.start_of_packet(open('day06.txt').read(), marker_count=14)}")
+  print(f"Part 1: {Tuning.start_of_packet(open('../inputs/2022/day06.txt').read())}")
+  print(f"Part 2: {Tuning.start_of_packet(open('../inputs/2022/day06.txt').read(), marker_count=14)}")
 
 if __name__ == "__main__":
   main()

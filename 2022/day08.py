@@ -73,7 +73,7 @@ class Trees:
 
 
 def main():
-  tree = Trees('day08.txt')
+  tree = Trees('../inputs/2022/day08.txt')
   print(f'Part 1: {tree.visible_tree_count}')
   print(f'Part 2: {tree.max_scenic_score}')
 

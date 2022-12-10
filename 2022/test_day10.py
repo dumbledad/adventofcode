@@ -7,7 +7,7 @@ addx -5
 '''
 
 def test_crt_init():
-  crt = CRT('day10-test.txt')
+  crt = CRT('../inputs/2022/day10-test.txt')
   assert crt.data
   assert crt.registers['X'] == [1]
   assert crt.instructions[0] == ['addx', 15]
@@ -23,12 +23,12 @@ def test_perform_instructions_with_register():
   assert register == [1, 1, 1, 4, 4, -1]
 
 def test_signal_strengths():
-  crt = CRT('day10-test.txt')
+  crt = CRT('../inputs/2022/day10-test.txt')
   assert crt.signal_strengths() == [420, 1140, 1800, 2940, 2880, 3960]
   assert sum(crt.signal_strengths()) == 13140 # Testing aoc wording not Python
 
 def test_render_screen():
-  crt = CRT('day10-test.txt')
+  crt = CRT('../inputs/2022/day10-test.txt')
   crt.render_screen()
   assert ''.join(crt.screen[0]) == '##..##..##..##..##..##..##..##..##..##..'
   assert ''.join(crt.screen[1]) == '###...###...###...###...###...###...###.'
