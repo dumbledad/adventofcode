@@ -38,3 +38,11 @@ class CRT:
     if len(self.registers['X']) == 1:
       self.perform_instructions()
     return list([(i + 1) * self.registers['X'][i] for i in range(start - 1, len(self.registers['X']), step)])
+
+
+def main():
+  crt = CRT('day10.txt')
+  print(f'Part 1: {sum(crt.signal_strengths())}')
+
+if __name__ == '__main__':
+  main()
