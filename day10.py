@@ -40,6 +40,15 @@ class CRT:
       self.perform_instructions()
     return list([(i + 1) * self.registers['X'][i] for i in range(start - 1, len(self.registers['X']), step)])
 
+  def render_screen(self):
+    if len(self.registers['X']) == 1:
+      self.perform_instructions()
+    for i in range(0, 240):
+      row = int(i / 40)
+      column = i - (row * 40)
+      if abs(self.registers['X'][i] - column) <= 1:
+        self.screen[row][column] = '#'
+
 
 def main():
   crt = CRT('day10.txt')

@@ -26,3 +26,13 @@ def test_signal_strengths():
   crt = CRT('day10-test.txt')
   assert crt.signal_strengths() == [420, 1140, 1800, 2940, 2880, 3960]
   assert sum(crt.signal_strengths()) == 13140 # Testing aoc wording not Python
+
+def test_render_screen():
+  crt = CRT('day10-test.txt')
+  crt.render_screen()
+  assert ''.join(crt.screen[0]) == '##..##..##..##..##..##..##..##..##..##..'
+  assert ''.join(crt.screen[1]) == '###...###...###...###...###...###...###.'
+  assert ''.join(crt.screen[2]) == '####....####....####....####....####....'
+  assert ''.join(crt.screen[3]) == '#####.....#####.....#####.....#####.....'
+  assert ''.join(crt.screen[4]) == '######......######......######......####'
+  assert ''.join(crt.screen[5]) == '#######.......#######.......#######.....'
