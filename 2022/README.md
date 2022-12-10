@@ -16,9 +16,9 @@ Advent of Code 2022 as part of getting back into Python https://adventofcode.com
   - [x] For utility functions
   - [x] For the main functionality in parts 1 and 2
   - [x] Add coverage (run as, for example, `coverage run -m pytest test_day10.py`)
-- [ ] Git
-  - [ ] Move input data to private sub-repo
-  - [ ] Combine years into one repo
+- [x] Git
+  - [x] Move input data to private sub-repo
+  - [x] Combine years into one repo
 - [ ] Have these examples and answers served by Django, VueJS, and SVG
 - [ ] Dockerize
 - [ ] Use a cloud VM rather than local
@@ -71,3 +71,5 @@ basing things on the data more than the question itself?
 - 100% coverage is satisfying
 - Part 2 was not accessible for visually impaired programmers
 - We should **not** be committing input files ([reddit thread](https://www.reddit.com/r/adventofcode/comments/zh2hk0/2022friendly_reminder_dont_commit_your_input/)). That'll be a good excuse to look at sub-repositories
+  - Took the opportunity to combine my 2021 and 2022 repositories (following [this SO answer](https://stackoverflow.com/a/10548919/575530) using the [allow-unrelated-histories](https://git-scm.com/docs/git-merge#Documentation/git-merge.txt---allow-unrelated-histories)).
+  - Used git's [submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules#_starting_submodules) feature to move all the copied AoC inputs (test and real) to a private repository.
