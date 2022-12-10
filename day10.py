@@ -53,6 +53,9 @@ class CRT:
 def main():
   crt = CRT('day10.txt')
   print(f'Part 1: {sum(crt.signal_strengths())}')
+  crt.render_screen()
+  for i in range(0, 6):
+    print(''.join(crt.screen[i]))
 
 if __name__ == '__main__':
   main()
