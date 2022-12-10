@@ -1,7 +1,7 @@
 from day04 import Assignments
 
 def test_assignments_init():
-  assignments = Assignments('../inputs/2022/day04-test.csv')
+  assignments = Assignments('inputs/2022/day04-test.csv')
   assert assignments.pairs[0] == [range(2, 5), range(6, 9)]
 
 def test_assignments_has_containment():
@@ -11,7 +11,7 @@ def test_assignments_has_containment():
   assert not Assignments.has_containment(range(5, 10), range(4, 9))
 
 def test_assignments_containment_count():
-  assignments = Assignments('../inputs/2022/day04-test.csv')
+  assignments = Assignments('inputs/2022/day04-test.csv')
   assert assignments.containment_count == 2
 
 def test_assignments_has_overlap():
@@ -21,5 +21,5 @@ def test_assignments_has_overlap():
   assert not Assignments.has_overlap(range(5, 10), range(11, 19))
 
 def test_assignments_overlap_count():
-  assignments = Assignments('../inputs/2022/day04-test.csv')
+  assignments = Assignments('inputs/2022/day04-test.csv')
   assert assignments.overlap_count == 4

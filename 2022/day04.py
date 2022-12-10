@@ -41,7 +41,7 @@ class Assignments:
 
 
 def main():
-  assignments = Assignments('../inputs/2022/day04.csv')
+  assignments = Assignments('inputs/2022/day04.csv')
   print(f'Part 1: {assignments.containment_count}')
   print(f'Part 2: {assignments.overlap_count}')
 

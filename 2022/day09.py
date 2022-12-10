@@ -51,9 +51,9 @@ class Bridge:
 
 
 def main():
-  bridge = Bridge('../inputs/2022/day09.txt')
+  bridge = Bridge('inputs/2022/day09.txt')
   print(f'Part 1: {bridge.tail_positions_count}')
-  bridge = Bridge('../inputs/2022/day09.txt', 10)
+  bridge = Bridge('inputs/2022/day09.txt', 10)
   print(f'Part 2: {bridge.tail_positions_count}')
 
 if __name__ == "__main__":

@@ -63,10 +63,10 @@ class CargoShip:
 
 
 def main():
-  ship = CargoShip('../inputs/2022/day05.txt')
+  ship = CargoShip('inputs/2022/day05.txt')
   ship.move_crates(crane_model=9_000)
   print(f'Part 1: {ship.stack_tops}')
-  ship = CargoShip('../inputs/2022/day05.txt')
+  ship = CargoShip('inputs/2022/day05.txt')
   ship.move_crates(crane_model=9_001)
   print(f'Part 2: {ship.stack_tops}')
 

@@ -66,7 +66,7 @@ class Rucksacks:
 
 
 def main():
-  rucksacks = Rucksacks('../inputs/2022/day03.csv')
+  rucksacks = Rucksacks('inputs/2022/day03.csv')
   print(f'Part 1: the sum of priorities of items in both compartments is {rucksacks.priority()}')
   print(f'Part 2: the sum of priorities of team badges is {rucksacks.badge_priority()}')
 
