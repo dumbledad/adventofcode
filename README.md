@@ -16,7 +16,9 @@ Advent of Code 2022 as part of getting back into Python https://adventofcode.com
   - [x] For utility functions
   - [x] For the main functionality in parts 1 and 2
   - [x] Add coverage (run as, for example, `coverage run -m pytest test_day10.py`)
-- [ ] Move input data to private sub-repo
+- [ ] Git
+  - [ ] Move input data to private sub-repo
+  - [ ] Combine years into one repo
 - [ ] Have these examples and answers served by Django, VueJS, and SVG
 - [ ] Dockerize
 - [ ] Use a cloud VM rather than local
@@ -68,3 +70,4 @@ basing things on the data more than the question itself?
 
 - 100% coverage is satisfying
 - Part 2 was not accessible for visually impaired programmers
+- We should **not** be committing input files ([reddit thread](https://www.reddit.com/r/adventofcode/comments/zh2hk0/2022friendly_reminder_dont_commit_your_input/)). That'll be a good excuse to look at sub-repositories
