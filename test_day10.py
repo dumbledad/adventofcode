@@ -13,6 +13,9 @@ def test_crt_init():
   assert crt.instructions[0] == ['addx', 15]
   assert crt.instructions[9] == ['noop']
   assert len(crt.instructions) == 146
+  assert len(crt.screen) == 6
+  assert len(crt.screen[0]) == 40
+  assert crt.screen[5][21] == '.'
 
 def test_perform_instructions_with_register():
   instructions = CRT.parse_instructions(simples)

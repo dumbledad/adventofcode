@@ -30,6 +30,7 @@ class CRT:
       self.data = file.read()
     self.registers = { 'X': [1] }
     self.instructions = CRT.parse_instructions(self.data)
+    self.screen = [['.'] * 40 for _ in range(0, 6)]
 
   def perform_instructions(self):
     self.registers['X'] = CRT.perform_instructions_with_register(self.registers['X'], self.instructions)
