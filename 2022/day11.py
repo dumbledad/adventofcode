@@ -5,6 +5,7 @@ class Monkey:
 
   def __init__(self, starting_items, operation, test):
     self.items = starting_items
+    self.inspection_count = 0
     self.operation = operation
     self.test = test
 
@@ -20,6 +21,7 @@ class Monkey:
   def inspect(self, item):
     vars = { 'old': item }
     exec(self.operation, vars)
+    self.inspection_count += 1
     return vars['new']
 
   def throw_to(self, item):
@@ -59,3 +61,6 @@ class Troupe:
       for throw in throws:
         self.monkeys[throw['monkey']].items.append(throw['item'])
 
+  def perform_rounds(self, count):
+    for _ in range(0, count):
+      self.perform_round()

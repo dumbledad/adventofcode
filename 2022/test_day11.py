@@ -1,9 +1,5 @@
 from day11 import Troupe, Monkey
 
-def test_monkey_get_bored():
-  assert Monkey.bored_with(601) == 200
-  assert Monkey.bored_with(602) == 201
-
 def test_troupe_init():
   troupe = Troupe('inputs/2022/day11-test.txt')
   assert troupe.data
@@ -30,3 +26,11 @@ def test_troupe_perform_round():
   assert troupe.monkeys[1].items == [2080, 25, 167, 207, 401, 1046]
   assert troupe.monkeys[2].items == []
   assert troupe.monkeys[3].items == []
+
+def test_troupe_inspection_count():
+  troupe = Troupe('inputs/2022/day11-test.txt')
+  troupe.perform_rounds(20)
+  assert troupe.monkeys[0].inspection_count == 101
+  assert troupe.monkeys[1].inspection_count == 95
+  assert troupe.monkeys[2].inspection_count == 7
+  assert troupe.monkeys[3].inspection_count == 105
