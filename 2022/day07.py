@@ -70,7 +70,7 @@ class Filesystem:
 
 
 def main():
-  fs = Filesystem('inputs/2022/day07.txt')
+  fs = Filesystem('../inputs/2022/day07.txt')
   print(f"Part 1: {fs.root.sum_size(100_000)}")
   unused = 70_000_000 - fs.root.size
   print(f"Part 2: {fs.root.smallest_sub_dir_size(30_000_000 - unused)}")
