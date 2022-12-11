@@ -1,22 +1,18 @@
 from functools import reduce
-import operator
 
 class Monkey:
-  @classmethod
-  def bored_with(cls, item):
-    return int(item / 3)
-
-  def __init__(self, starting_items, operation, test):
+  def __init__(self, starting_items, operation, test, bored_divisor):
     self.items = starting_items
     self.inspection_count = 0
     self.operation = operation
     self.test = test
+    self.bored_divisor = bored_divisor
 
   def take_turn(self):
     thrown = []
     for item in self.items:
       worried = self.inspect(item)
-      worried = Monkey.bored_with(worried)
+      worried = worried if self.bored_divisor == 1 else int(worried / self.bored_divisor)
       thrown.append({ 'monkey': self.throw_to(worried), 'item': worried })
     self.items = []
     return thrown
@@ -32,7 +28,7 @@ class Monkey:
 
 
 class Troupe:
-  def __init__(self, filename):
+  def __init__(self, filename, bored_divisor=3):
     monkey_txt = 'Monkey '
     starting_items_txt = '  Starting items: '
     operation_txt = '  Operation: '
@@ -40,7 +36,7 @@ class Troupe:
     true_txt = '    If true: throw to monkey '
     false_txt = '    If false: throw to monkey '
     self.monkeys = []
-    current_monkey = {}
+    current_monkey = {'bored_divisor': bored_divisor}
     with open(filename) as file:
       self.data = file.read()
     for line in self.data.splitlines():
@@ -56,7 +52,7 @@ class Troupe:
         current_test['false'] = int(line.replace(false_txt, ''))
         current_monkey['test'] = current_test
         self.monkeys.append(Monkey(**current_monkey))
-        current_monkey = {}
+        current_monkey = {'bored_divisor': bored_divisor}
 
   def perform_round(self):
     for monkey in self.monkeys:
@@ -70,7 +66,8 @@ class Troupe:
 
   @property
   def monkey_business(self):
-    return reduce(operator.mul, sorted([monkey.inspection_count for monkey in self.monkeys], reverse=True)[0:2], 1)
+    largest = sorted([monkey.inspection_count for monkey in self.monkeys], reverse=True)[0:2]
+    return largest[0] * largest[1]
   
 def main():
   print(os.getcwd())
