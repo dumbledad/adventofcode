@@ -15,7 +15,7 @@ Advent of Code 2022 as part of getting back into Python https://adventofcode.com
 - [x] Write unit tests
   - [x] For utility functions
   - [x] For the main functionality in parts 1 and 2
-  - [x] Add coverage (run as, for example, `coverage run -m pytest test_day10.py`)
+  - [x] Add coverage (run as, for example, `coverage run -m pytest 2022/test_day10.py`)
 - [x] Git
   - [x] Move input data to private sub-repo
   - [x] Combine years into one repo
@@ -77,3 +77,7 @@ basing things on the data more than the question itself?
 ### Day 10
 
 - Calling `Monkey.bored_with` picks the instance method not the class method of the same name!
+
+### Day 11
+
+- Part 2 was hard. The breakthrough for me was `throw['item'] %= self.product` which was a result of me realising it was mathematical (from a comment on reddit).

@@ -12,7 +12,7 @@ class Monkey:
     thrown = []
     for item in self.items:
       worried = self.inspect(item)
-      worried = worried if self.bored_divisor == 1 else int(worried / self.bored_divisor)
+      worried = int(worried / self.bored_divisor)
       thrown.append({ 'monkey': self.throw_to(worried), 'item': worried })
     self.items = []
     return thrown
