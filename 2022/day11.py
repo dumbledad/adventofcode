@@ -1,7 +1,7 @@
 class Monkey:
   @classmethod
   def bored_with(cls, item):
-    return round(item / 3)
+    return int(item / 3)
 
   def __init__(self, starting_items, operation, test):
     self.items = starting_items
@@ -13,7 +13,7 @@ class Monkey:
     for item in self.items:
       worried = self.inspect(item)
       worried = Monkey.bored_with(worried)
-      thrown.append({ 'monkey': self.throw_to(item), 'item': worried })
+      thrown.append({ 'monkey': self.throw_to(worried), 'item': worried })
     self.items = []
     return thrown
 
