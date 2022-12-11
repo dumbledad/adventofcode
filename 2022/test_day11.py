@@ -13,3 +13,7 @@ def test_troupe_init():
   assert troupe.monkeys[1].test['divisor'] == 19
   assert troupe.monkeys[0].test['true'] == 2
   assert troupe.monkeys[0].test['false'] == 3
+
+def test_monkey_inspect():
+  troupe = Troupe('inputs/2022/day11-test.txt')
+  assert troupe.monkeys[0].inspect(10) == 190
