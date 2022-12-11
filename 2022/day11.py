@@ -43,7 +43,7 @@ class Troupe:
       if line.startswith(starting_items_txt):
         current_monkey['starting_items'] = list([int(item) for item in line.replace(starting_items_txt, '').split(',')])
       elif line.startswith(operation_txt):
-        current_monkey['operation'] = line.replace(operation_txt, '')
+        current_monkey['operation'] = compile(line.replace(operation_txt, ''), '<string>', 'exec')
       elif line.startswith(divisible_test_txt):
         current_test = { 'divisor': int(line.replace(divisible_test_txt, '')) }
       elif line.startswith(true_txt):
