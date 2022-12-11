@@ -53,11 +53,17 @@ class Troupe:
         current_monkey['test'] = current_test
         self.monkeys.append(Monkey(**current_monkey))
         current_monkey = {'bored_divisor': bored_divisor}
+      self.product = 1
+      for monkey in self.monkeys:
+        if self.product % monkey.test['divisor'] != 0:
+          self.product *= monkey.test['divisor']
 
   def perform_round(self):
     for monkey in self.monkeys:
       throws = monkey.take_turn()
       for throw in throws:
+        if throw['item'] % self.product == 0:
+          throw['item'] = 0
         self.monkeys[throw['monkey']].items.append(throw['item'])
 
   def perform_rounds(self, count):
