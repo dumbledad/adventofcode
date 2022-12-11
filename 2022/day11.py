@@ -70,10 +70,12 @@ class Troupe:
     return largest[0] * largest[1]
   
 def main():
-  print(os.getcwd())
   troupe = Troupe('../inputs/2022/day11.txt')
   troupe.perform_rounds(20)
   print(f'Part 1: {troupe.monkey_business}')
+  troupe = Troupe('../inputs/2022/day11.txt', 1)
+  troupe.perform_rounds(10_000)
+  print(f'Part 2: {troupe.monkey_business}')
 
 if __name__ == '__main__':
   main()
