@@ -39,3 +39,8 @@ def test_troupe_monkey_business():
   troupe = Troupe('inputs/2022/day11-test.txt')
   troupe.perform_rounds(20)
   assert troupe.monkey_business == 10_605
+
+def test_troupe_monkey_business_bored_divisor():
+  troupe = Troupe('inputs/2022/day11-test.txt', 1)
+  troupe.perform_rounds(10_000)
+  assert troupe.monkey_business == 2_713_310_158
