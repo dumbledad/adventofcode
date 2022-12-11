@@ -62,8 +62,7 @@ class Troupe:
     for monkey in self.monkeys:
       throws = monkey.take_turn()
       for throw in throws:
-        if throw['item'] % self.product == 0:
-          throw['item'] = 0
+        throw['item'] %= self.product
         self.monkeys[throw['monkey']].items.append(throw['item'])
 
   def perform_rounds(self, count):
