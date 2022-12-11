@@ -71,3 +71,12 @@ class Troupe:
   @property
   def monkey_business(self):
     return reduce(operator.mul, sorted([monkey.inspection_count for monkey in self.monkeys], reverse=True)[0:2], 1)
+  
+def main():
+  print(os.getcwd())
+  troupe = Troupe('../inputs/2022/day11.txt')
+  troupe.perform_rounds(20)
+  print(f'Part 1: {troupe.monkey_business}')
+
+if __name__ == '__main__':
+  main()
