@@ -17,3 +17,8 @@ def test_troupe_init():
 def test_monkey_inspect():
   troupe = Troupe('inputs/2022/day11-test.txt')
   assert troupe.monkeys[0].inspect(10) == 190
+
+def test_monkey_throw_to():
+  troupe = Troupe('inputs/2022/day11-test.txt')
+  assert troupe.monkeys[2].throw_to(26) == 1
+  assert troupe.monkeys[2].throw_to(27) == 3
