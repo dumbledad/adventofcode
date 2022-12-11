@@ -22,3 +22,11 @@ def test_monkey_throw_to():
   troupe = Troupe('inputs/2022/day11-test.txt')
   assert troupe.monkeys[2].throw_to(26) == 1
   assert troupe.monkeys[2].throw_to(27) == 3
+
+def test_troupe_perform_round():
+  troupe = Troupe('inputs/2022/day11-test.txt')
+  troupe.perform_round()
+  assert troupe.monkeys[0].items == [20, 23, 27, 26]
+  assert troupe.monkeys[1].items == [2080, 25, 167, 207, 401, 1046]
+  assert troupe.monkeys[2].items == []
+  assert troupe.monkeys[3].items == []

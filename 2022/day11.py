@@ -11,9 +11,10 @@ class Monkey:
   def take_turn(self):
     thrown = []
     for item in self.items:
-      self.inspect(item)
-      Monkey.bored_with(item)
-      thrown.append((self.throw_to(item), item))
+      worried = self.inspect(item)
+      worried = Monkey.bored_with(worried)
+      thrown.append({ 'monkey': self.throw_to(item), 'item': worried })
+    self.items = []
     return thrown
 
   def inspect(self, item):
@@ -51,3 +52,10 @@ class Troupe:
         current_monkey['test'] = current_test
         self.monkeys.append(Monkey(**current_monkey))
         current_monkey = {}
+
+  def perform_round(self):
+    for monkey in self.monkeys:
+      throws = monkey.take_turn()
+      for throw in throws:
+        self.monkeys[throw['monkey']].items.append(throw['item'])
+
