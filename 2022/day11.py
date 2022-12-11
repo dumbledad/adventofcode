@@ -1,3 +1,6 @@
+from functools import reduce
+import operator
+
 class Monkey:
   @classmethod
   def bored_with(cls, item):
@@ -64,3 +67,7 @@ class Troupe:
   def perform_rounds(self, count):
     for _ in range(0, count):
       self.perform_round()
+
+  @property
+  def monkey_business(self):
+    return reduce(operator.mul, sorted([monkey.inspection_count for monkey in self.monkeys], reverse=True)[0:2], 1)

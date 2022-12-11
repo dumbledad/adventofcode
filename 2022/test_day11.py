@@ -34,3 +34,8 @@ def test_troupe_inspection_count():
   assert troupe.monkeys[1].inspection_count == 95
   assert troupe.monkeys[2].inspection_count == 7
   assert troupe.monkeys[3].inspection_count == 105
+
+def test_troupe_monkey_business():
+  troupe = Troupe('inputs/2022/day11-test.txt')
+  troupe.perform_rounds(20)
+  assert troupe.monkey_business == 10_605
