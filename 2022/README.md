@@ -77,8 +77,13 @@ basing things on the data more than the question itself?
 
 ### Day 11
 
-- Part 2 was hard. The breakthrough for me was `throw['item'] %= self.product` which was a result of me realising it was mathematical (from a comment on reddit).
+- Part 2 was hard. The breakthrough for me was `throw['item'] %= self.product` which was a result of
+me realising it was mathematical (from a comment on reddit).
 
 ### Day 12
 
 - Remember in `or` to negate first when tacking second if needed
+- Passing logic tests and functions (e.g. `stop_test` and `neighbours_func`) would have made
+refactoring straightforward, but may have been premature complexity. Anyway it was easy to fix.
+- If Eric had not made the Part 2 data take soooo long on the naive solution I would never have
+fixed it!
