@@ -81,3 +81,7 @@ basing things on the data more than the question itself?
 ### Day 11
 
 - Part 2 was hard. The breakthrough for me was `throw['item'] %= self.product` which was a result of me realising it was mathematical (from a comment on reddit).
+
+### Day 12
+
+- Remember in `or` to negate first when tacking second if needed
