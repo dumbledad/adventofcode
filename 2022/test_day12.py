@@ -23,3 +23,8 @@ def test_hill_init():
 def test_dijkstra_init():
   dijkstra = Dijkstra(filename)
   assert dijkstra.data
+  assert len(dijkstra.unvisited) == 5 * 8
+
+# def test_dijkstra_unvisited_neighbours():
+#   dijkstra = Dijkstra(filename)
+#   dijkstra.unvisited_neighbours[]
