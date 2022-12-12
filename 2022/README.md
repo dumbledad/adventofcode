@@ -73,9 +73,6 @@ basing things on the data more than the question itself?
 - We should **not** be committing input files ([reddit thread](https://www.reddit.com/r/adventofcode/comments/zh2hk0/2022friendly_reminder_dont_commit_your_input/)). That'll be a good excuse to look at sub-repositories
   - Took the opportunity to combine my 2021 and 2022 repositories (following [this SO answer](https://stackoverflow.com/a/10548919/575530) using the [allow-unrelated-histories](https://git-scm.com/docs/git-merge#Documentation/git-merge.txt---allow-unrelated-histories)).
   - Used git's [submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules#_starting_submodules) feature to move all the copied AoC inputs (test and real) to a private repository.
-
-### Day 10
-
 - Calling `Monkey.bored_with` picks the instance method not the class method of the same name!
 
 ### Day 11
