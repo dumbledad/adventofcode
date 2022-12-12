@@ -1,7 +1,5 @@
-from functools import total_ordering
 import sys
 
-@total_ordering
 class Hill:
   def __init__(self, height, i, j):
     self.visited = False
@@ -23,11 +21,20 @@ class Hill:
         self.start = False
         self.end = False
 
-    def __eq__(self, other):
-      return self.position == other.position
+  def __eq__(self, other):
+    return self.position == other.position
 
-    def __lt__(self, other):
-      return self.tentative_distance < other.tentative_distance or (self.position[0] + self.position[1]) < (other.position[0] + other.position[1])
+  def __lt__(self, other):
+    return (self.tentative_distance < other.tentative_distance) or ((self.position[0] + self.position[1]) < (other.position[0] + other.position[1]))
+
+  def __le__(self, other):
+    return self.__lt__(other) or self.__eq__(other)
+  
+  def __gt__(self, other):
+    return (self.tentative_distance > other.tentative_distance) or ((self.position[0] + self.position[1]) > (other.position[0] + other.position[1]))
+
+  def __ge__(self, other):
+    return self.__gt__(other) or self.__eq__(other)
 
 
 class Dijkstra:
@@ -42,26 +49,25 @@ class Dijkstra:
           self.end = hill
         self.hills.append(hill)
 
-  @property
   def visited(self):
     return [hill for hill in self.hills if hill.visited]
 
-  @property
   def unvisited(self):
     return [hill for hill in self.hills if not hill.visited]
 
   def find_path(self):
-    while len(self.unvisited) > 0:
-      current = min(self.unvisited)
+    while len(self.unvisited()) > 0:
+      current = min(self.unvisited())
+      print(f'visiting {current.position}')
       self.visit(current)
       if current.end:
         return current.tentative_distance
 
   def visit(self, hill):
-    for neighbour in self.neighbours(hill, self.unvisited):
-      if neighbour.tentative_distance > self.tentative_distance + 1:
-        neighbour.tentative_distance = self.tentative_distance + 1
-    hill.visited == True
+    for neighbour in self.neighbours(hill, self.unvisited()):
+      if neighbour.tentative_distance > hill.tentative_distance + 1:
+        neighbour.tentative_distance = hill.tentative_distance + 1
+    hill.visited = True
 
   def neighbours(self, hill, hills):
     return [

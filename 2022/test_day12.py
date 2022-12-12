@@ -25,6 +25,6 @@ def test_dijkstra_init():
   assert dijkstra.data
   assert len(dijkstra.unvisited) == 5 * 8
 
-# def test_dijkstra_unvisited_neighbours():
-#   dijkstra = Dijkstra(filename)
-#   dijkstra.unvisited_neighbours[]
+def test_dijkstra_find_path():
+  dijkstra = Dijkstra(filename)
+  assert dijkstra.find_path() == 31
