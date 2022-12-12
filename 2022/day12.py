@@ -52,22 +52,23 @@ class Dijkstra:
           self.end = hill
         self.hills.append(hill)
 
+  @property
   def visited(self):
     return [hill for hill in self.hills if hill.visited]
 
+  @property
   def unvisited(self):
     return [hill for hill in self.hills if not hill.visited]
 
   def find_path(self):
-    while len(self.unvisited()) > 0:
-      current = min(self.unvisited())
-      print(f'visiting {current.position}')
+    while len(self.unvisited) > 0:
+      current = min(self.unvisited)
       self.visit(current)
       if current.end:
         return current.tentative_distance
 
   def visit(self, hill):
-    for neighbour in self.neighbours(hill, self.unvisited()):
+    for neighbour in self.neighbours(hill, self.unvisited):
       if neighbour.tentative_distance > hill.tentative_distance + 1:
         neighbour.tentative_distance = hill.tentative_distance + 1
     hill.visited = True
@@ -80,3 +81,11 @@ class Dijkstra:
         and neighbour.position != hill.position
         and neighbour.height - hill.height <= 1
     ]
+
+
+def main():
+  dijkstra = Dijkstra('inputs/2022/day12.txt')
+  print(f'Part 1: {dijkstra.find_path()}')
+
+if __name__ == '__main__':
+  main()
