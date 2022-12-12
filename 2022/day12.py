@@ -24,14 +24,17 @@ class Hill:
   def __eq__(self, other):
     return self.position == other.position
 
+  def __neq__(self, other):
+    return self.position == other.position
+  
   def __lt__(self, other):
-    return (self.tentative_distance < other.tentative_distance) or ((self.position[0] + self.position[1]) < (other.position[0] + other.position[1]))
+    return (self.tentative_distance < other.tentative_distance) or ((self.tentative_distance == other.tentative_distance) and ((self.position[0] + self.position[1]) < (other.position[0] + other.position[1])))
 
   def __le__(self, other):
     return self.__lt__(other) or self.__eq__(other)
   
   def __gt__(self, other):
-    return (self.tentative_distance > other.tentative_distance) or ((self.position[0] + self.position[1]) > (other.position[0] + other.position[1]))
+    return (self.tentative_distance > other.tentative_distance) or ((self.tentative_distance > other.tentative_distance) and ((self.position[0] + self.position[1]) > (other.position[0] + other.position[1])))
 
   def __ge__(self, other):
     return self.__gt__(other) or self.__eq__(other)
