@@ -38,6 +38,8 @@ class Dijkstra:
     for i, line in enumerate(self.data.splitlines()):
       for j, hill_char in enumerate(list(line)):
         hill = Hill(hill_char, i, j)
+        if hill.start:
+          self.start = hill
         if hill.end:
           self.end = hill
         self.hills.append(hill)
@@ -49,31 +51,26 @@ class Dijkstra:
   @property
   def unvisited(self):
     return [hill for hill in self.hills if not hill.visited]
-
-  def find_path(self):
-    while len(self.unvisited) > 0:
-      current = min(self.unvisited)
-      self.visit(current)
-      if current.end:
-        return current.tentative_distance
   
-  def find_path(self, from_hill):
+  def find_path(self, from_hill=None, neighbour_func=None, stop_test=None):
+    if not from_hill:
+      from_hill = self.start
+    if not neighbour_func:
+      neighbour_func = self.neighbours_up
+    if not stop_test:
+      stop_test = lambda x: x.end
     for hill in self.hills:
       hill.tentative_distance = sys.maxsize
+      hill.visited = False
     from_hill.tentative_distance = 0
     while len(self.unvisited) > 0:
       current = min(self.unvisited)
-      self.visit(current)
-      if current.end:
+      self.visit(current, neighbour_func)
+      if stop_test(current):
         return current.tentative_distance
-
-  def find_paths(self):
-    low_hills = list([hill for hill in self.hills if hill.height == ord('a')])
-    min(self.unvisited).tentative_distance = sys.maxsize
-    low_hills = list([hill for hill in self.hills if hill.height == ord('a')])
     
-  def visit(self, hill):
-    for neighbour in self.neighbours(hill, self.unvisited):
+  def visit(self, hill, neighbour_func):
+    for neighbour in neighbour_func(hill, self.unvisited):
       if neighbour.tentative_distance > hill.tentative_distance + 1:
         neighbour.tentative_distance = hill.tentative_distance + 1
     hill.visited = True
@@ -84,13 +81,19 @@ class Dijkstra:
       if
         abs(neighbour.position[0] - hill.position[0]) + abs(neighbour.position[1] - hill.position[1]) <= 1
         and neighbour.position != hill.position
-        and neighbour.height - hill.height <= 1
     ]
+
+  def neighbours_up(self, hill, hills):
+    return [neighbour for neighbour in self.neighbours(hill, hills) if neighbour.height - hill.height <= 1]
+
+  def neighbours_down(self, hill, hills):
+    return [neighbour for neighbour in self.neighbours(hill, hills) if hill.height - neighbour.height <= 1]
 
 
 def main():
   dijkstra = Dijkstra('inputs/2022/day12.txt')
-  print(f'Part 1: {dijkstra.find_path()}')
+  print(f'Part 1: {dijkstra.find_path(dijkstra.start)}')
+  print(f"Part 2: {dijkstra.find_path(dijkstra.end, dijkstra.neighbours_down, lambda x: x.height == ord('a'))}")
 
 if __name__ == '__main__':
   main()

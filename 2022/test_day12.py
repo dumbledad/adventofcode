@@ -27,4 +27,8 @@ def test_dijkstra_init():
 
 def test_dijkstra_find_path():
   dijkstra = Dijkstra(filename)
-  assert dijkstra.find_path() == 31
+  assert dijkstra.find_path(dijkstra.start) == 31
+
+def test_dijkstra_find_paths():
+  dijkstra = Dijkstra(filename)
+  assert dijkstra.find_path(dijkstra.end, dijkstra.neighbours_down, lambda x: x.height == ord('a')) == 29
