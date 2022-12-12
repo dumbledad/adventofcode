@@ -1,5 +1,7 @@
+from functools import total_ordering
 import sys
 
+@total_ordering
 class Hill:
   def __init__(self, height, i, j):
     self.visited = False
@@ -23,21 +25,9 @@ class Hill:
 
   def __eq__(self, other):
     return self.position == other.position
-
-  def __neq__(self, other):
-    return self.position == other.position
   
   def __lt__(self, other):
     return (self.tentative_distance < other.tentative_distance) or ((self.tentative_distance == other.tentative_distance) and ((self.position[0] + self.position[1]) < (other.position[0] + other.position[1])))
-
-  def __le__(self, other):
-    return self.__lt__(other) or self.__eq__(other)
-  
-  def __gt__(self, other):
-    return (self.tentative_distance > other.tentative_distance) or ((self.tentative_distance > other.tentative_distance) and ((self.position[0] + self.position[1]) > (other.position[0] + other.position[1])))
-
-  def __ge__(self, other):
-    return self.__gt__(other) or self.__eq__(other)
 
 
 class Dijkstra:
@@ -66,7 +56,22 @@ class Dijkstra:
       self.visit(current)
       if current.end:
         return current.tentative_distance
+  
+  def find_path(self, from_hill):
+    for hill in self.hills:
+      hill.tentative_distance = sys.maxsize
+    from_hill.tentative_distance = 0
+    while len(self.unvisited) > 0:
+      current = min(self.unvisited)
+      self.visit(current)
+      if current.end:
+        return current.tentative_distance
 
+  def find_paths(self):
+    low_hills = list([hill for hill in self.hills if hill.height == ord('a')])
+    min(self.unvisited).tentative_distance = sys.maxsize
+    low_hills = list([hill for hill in self.hills if hill.height == ord('a')])
+    
   def visit(self, hill):
     for neighbour in self.neighbours(hill, self.unvisited):
       if neighbour.tentative_distance > hill.tentative_distance + 1:
