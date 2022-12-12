@@ -34,5 +34,11 @@ class Dijkstra:
   def visit(self, hill):
     return -1
 
-  def neighbours(self, hill):
-    return -1
+  def unvisited_neighbours(self, hill):
+    return list([
+      neighbour for neighbour in self.unvisited
+      if
+        neighbour.position[0] >= 0
+        and neighbour.position[1] >= 0
+        and neighbour.height - hill.height <= 1
+    ])
