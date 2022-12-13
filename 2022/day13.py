@@ -1,6 +1,7 @@
 from functools import cmp_to_key
 import json
 import logging
+from math import prod
 
 class Packets:
   @classmethod
@@ -66,12 +67,17 @@ class Packets:
   def key_indices(self):
     return [i + 1 for i in range(len(self.sorted_packets)) if self.sorted_packets[i] in self.divider_packets]
 
+  @property
+  def key_indices_prod(self):
+    return prod(self.key_indices)
+
 
 def main():
   # logging.basicConfig(level=logging.INFO)
   # packets = Packets('inputs/2022/day13-test.txt')
   packets = Packets('inputs/2022/day13.txt')
   print(f'Part 1: {sum(packets.correct_indexes)}')
+  print(f'Part 1: {sum(packets.key_indices_prod)}')
 
 if __name__ == '__main__':
   main()

@@ -1,5 +1,4 @@
 from day13 import Packets
-from math import prod
 
 filename = 'inputs/2022/day13-test.txt'
 
@@ -20,6 +19,6 @@ def test_packets_right_indexes():
   packets = Packets(filename)
   assert list(packets.correct_indexes) == [1, 2, 4, 6]
 
-def test_packets_key_indices():
+def test_packets_key_indices_prod():
   packets = Packets(filename)
-  assert prod(packets.key_indices) == 140
+  assert packets.key_indices_prod == 140
