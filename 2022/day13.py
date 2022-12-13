@@ -64,7 +64,7 @@ class Packets:
 
   @property
   def key_indices(self):
-    return [i for i in range(self.sorted_packets) if self.sorted_packets[i] in self.divider_packets.contain]
+    return [i + 1 for i in range(len(self.sorted_packets)) if self.sorted_packets[i] in self.divider_packets]
 
 
 def main():
