@@ -1,3 +1,4 @@
+from functools import cmp_to_key
 import json
 import logging
 
@@ -33,7 +34,16 @@ class Packets:
             continue # Included for readability
     return None
 
+  @classmethod
+  def cmp(cls, left, right):
+    if Packets.compare(left, right):
+      return -1
+    elif Packets.compare(right, left):
+      return 1
+    return 0
+      
   def __init__(self, filename):
+    self.divider_packets = [[[2]], [[6]]]
     with open(filename) as file:
       self.data = file.read()
     self.potentials = []
@@ -43,6 +53,19 @@ class Packets:
   @property
   def correct_indexes(self):
     return [i + 1 for i in range(len(self.potentials)) if Packets.compare(self.potentials[i][0], self.potentials[i][1])]
+  
+  @property
+  def sorted_packets(self):
+    packets = [packet for comparison_pair in self.potentials for packet in comparison_pair]
+    packets += self.divider_packets
+    packets.sort(key=cmp_to_key(Packets.cmp))
+    # return sorted(packets, key=cmp_to_key(Packets.compare), reverse=True)
+    return packets
+
+  @property
+  def key_indices(self):
+    return [i for i in range(self.sorted_packets) if self.sorted_packets[i] in self.divider_packets.contain]
+
 
 def main():
   # logging.basicConfig(level=logging.INFO)

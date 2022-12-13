@@ -1,4 +1,5 @@
 from day13 import Packets
+from math import prod
 
 filename = 'inputs/2022/day13-test.txt'
 
@@ -12,7 +13,13 @@ def test_packets_compare():
   assert Packets.compare([[1],[2,3,4]], [[1],4])
   assert not Packets.compare([9], [[8,7,6]])
   assert Packets.compare([[4,4],4,4], [[4,4],4,4,4])
+  assert not Packets.compare([1, 1, 3, 1, 1], [])
+  assert Packets.compare([], [1, 1, 3, 1, 1])
 
 def test_packets_right_indexes():
   packets = Packets(filename)
   assert list(packets.correct_indexes) == [1, 2, 4, 6]
+
+def test_packets_key_indices():
+  packets = Packets(filename)
+  assert prod(packets.key_indices) == 140
