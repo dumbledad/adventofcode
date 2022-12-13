@@ -7,15 +7,23 @@ class Packets:
       right = [right]
     elif isinstance(left, int) and isinstance(right, list):
       left = [left]
-    if isinstance(left, int) and isinstance(right, int) and left < right:
-      return False
-    if isinstance(left, list) and isinstance(right, list):
-      if len(left) > len(right):
+    if isinstance(left, int) and isinstance(right, int):
+      if left < right:
+        return True
+      elif left > right:
         return False
-      for i in range(len(left)):
-        if not Packets.compare(left[i], right[i]):
-          return False
-    return True
+    if isinstance(left, list) and isinstance(right, list):
+      for i in range(len(right)):
+        if i >= len(left):
+          return True
+        match Packets.compare(left[i], right[i]):
+          case True:
+            return True
+          case False:
+            return False
+          case None:
+            continue # Included for readability
+    return None
 
   def __init__(self, filename):
     with open(filename) as file:
@@ -25,5 +33,12 @@ class Packets:
      self.potentials.append(tuple([json.loads(packet_str) for packet_str in pair.splitlines()]))
 
   @property
-  def right_indexes(self):
-    return [i + 1 for i in range(len(self.potentials)) if Packets.compare(self.potentials[i][0], self.potentials[i][0])]
+  def correct_indexes(self):
+    return [i + 1 for i in range(len(self.potentials)) if Packets.compare(self.potentials[i][0], self.potentials[i][1])]
+
+def main():
+  packets = Packets('inputs/2022/day13.txt')
+  print(f'Part 1: {sum(packets.correct_indexes)}')
+
+if __name__ == '__main__':
+  main()
