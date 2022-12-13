@@ -60,7 +60,6 @@ class Packets:
     packets = [packet for comparison_pair in self.potentials for packet in comparison_pair]
     packets += self.divider_packets
     packets.sort(key=cmp_to_key(Packets.cmp))
-    # return sorted(packets, key=cmp_to_key(Packets.compare), reverse=True)
     return packets
 
   @property
