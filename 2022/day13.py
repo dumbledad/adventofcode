@@ -77,7 +77,7 @@ def main():
   # packets = Packets('inputs/2022/day13-test.txt')
   packets = Packets('inputs/2022/day13.txt')
   print(f'Part 1: {sum(packets.correct_indexes)}')
-  print(f'Part 1: {sum(packets.key_indices_prod)}')
+  print(f'Part 2: {packets.key_indices_prod}')
 
 if __name__ == '__main__':
   main()
