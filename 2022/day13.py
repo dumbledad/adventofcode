@@ -38,7 +38,9 @@ class Packets:
 
 def main():
   packets = Packets('inputs/2022/day13.txt')
-  print(f'Part 1: {sum(packets.correct_indexes)}')
+  # print(f'Part 1: {sum(packets.correct_indexes)}')
+  for i in packets.correct_indexes:
+    print(f'{i - 1}: {packets.potentials[i - 1]}')
 
 if __name__ == '__main__':
   main()
