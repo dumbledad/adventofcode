@@ -78,7 +78,6 @@ class Cave:
     if with_floor:
       self._add_floor()
     while(self.drop_grain(with_floor)):
-      self.draw(with_floor=with_floor)
       continue
     return len(self.grains)
 
@@ -90,10 +89,11 @@ class Cave:
     self.grid.append(['#'] * max_x) 
 
 def main():
-  filename = 'inputs/2022/day14-test.txt'
+  filename = 'inputs/2022/day14.txt'
   cave = Cave(filename)
-  cave.keep_pouring(True)
-  #print(f'Part 1: {cave.keep_pouring(False)}')
+  print(f'Part 1: {cave.keep_pouring(False)}')
+  cave = Cave(filename)
+  print(f'Part 1: {cave.keep_pouring(True)}')
 
 if __name__ == '__main__':
   main()
