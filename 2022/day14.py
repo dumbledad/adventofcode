@@ -16,8 +16,17 @@ class Cave:
         if idx + 1 < len(coords):
           start_line = tuple([int(num) for num in coords[idx].split(',')])
           end_line = tuple([int(num) for num in coords[idx + 1].split(',')])
-          for x in range(start_line[0], end_line[0] + 1):
-            for y in range(start_line[1], end_line[1] + 1):
+
+          if start_line[0] <= end_line[0]:
+            x_range = range(start_line[0], end_line[0] + 1)
+          else:
+            x_range = range(end_line[0], start_line[0] + 1)
+          for x in x_range:
+            if start_line[1] <= end_line[1]:
+              y_range = range(start_line[1], end_line[1] + 1)
+            else:
+              y_range = range(end_line[1], start_line[1] + 1)
+            for y in y_range:
               self.grid[y][x] = '#'
     self.grid[self.start[1]][self.start[0]] = '+'
 
