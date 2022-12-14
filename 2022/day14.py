@@ -1,5 +1,5 @@
-from functools import cached_property
-import sys
+from functools import cached_property, reduce
+import operator
 import re
 
 class Cave:
@@ -30,7 +30,6 @@ class Cave:
               self.grid[y][x] = '#'
     self.grid[self.start[1]][self.start[0]] = '+'
 
-
   @cached_property
   def bounds(self):
     bounds = { 
@@ -55,3 +54,19 @@ class Cave:
     for i, row in enumerate(self.grid):
       row_number_str = f'{i} ' if row_numbers else ''
       print(f"{row_number_str}{''.join(row[self.bounds['min_x']:])}")
+
+  def drop_grain(self):
+    if self.grid[self.start[1]][self.start[0]] == 'o': # There's sand blocking the start
+      return False
+    grain_coords = self.start
+    while grain_coords[1] < self.bounds['max_y']:
+      if self.grid[grain_coords[1] + 1][grain_coords[0]] == '.':
+        grain_coords = (grain_coords[0], grain_coords[1] + 1)
+      elif self.grid[grain_coords[1] + 1][grain_coords[0] - 1] == '.':
+        grain_coords = (grain_coords[0] - 1, grain_coords[1] + 1)
+      elif self.grid[grain_coords[1] + 1][grain_coords[0] + 1] == '.':
+        grain_coords = (grain_coords[0] + 1, grain_coords[1] + 1)
+      else:
+        self.grid[grain_coords[1]][grain_coords[0]] = 'o'
+        return True
+    return False
