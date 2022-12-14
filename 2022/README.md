@@ -93,3 +93,7 @@ fixed it!
 - Writing `logging.info` statements to reproduce Eric's explanatory test is a useful additional test
 if the algorithm passes on the test data but fails on the 'real' data (see [reddit thread](https://old.reddit.com/r/adventofcode/comments/zkq7qk/2022_day_13_part_1_debugging_advice_please/))
 - Lots of my time is wasted with sloppy writing, e.g. `[i for i in range(self.sorted_packets) if self.sorted_packets[i] in self.divider_packets.contains]` instead of `[i + 1 for i in range(len(self.sorted_packets)) if self.sorted_packets[i] in self.divider_packets]`
+
+### Day 14
+
+- `extend` instead of `append` adds the items in the list. No need to worry about how to flatten.

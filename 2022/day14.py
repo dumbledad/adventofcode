@@ -16,7 +16,6 @@ class Cave:
         if idx + 1 < len(coords):
           start_line = tuple([int(num) for num in coords[idx].split(',')])
           end_line = tuple([int(num) for num in coords[idx + 1].split(',')])
-
           if start_line[0] <= end_line[0]:
             x_range = range(start_line[0], end_line[0] + 1)
           else:
@@ -51,17 +50,19 @@ class Cave:
           bounds['max_y'] = int(match.group(2))
     return bounds
 
-  def draw(self, row_numbers=False):
+  def draw(self, row_numbers=False, with_floor=False):
+    bonkers_min_x = self.start[0] - ((self.bounds['max_x'] + self.bounds['max_y']) - self.start[0])
+    min_x = bonkers_min_x if with_floor else self.bounds['min_x']
     for i, row in enumerate(self.grid):
       row_number_str = f'{i} ' if row_numbers else ''
-      print(f"{row_number_str}{''.join(row[self.bounds['min_x']:])}")
+      print(f"{row_number_str}{''.join(row[min_x:])}")
 
   def drop_grain(self, with_floor=True):
-    if self.grid[self.start[1]][self.start[0]] == 'o': # There's sand blocking the start
-      return False
     grain_coords = self.start
-    while grain_coords[1] < self.bounds['max_y']:
-      if self.grid[grain_coords[1] + 1][grain_coords[0]] == '.':
+    while (grain_coords[1] < self.bounds['max_y']) or with_floor:
+      if self.grid[self.start[1]][self.start[0]] == 'o': # There's sand blocking the start
+        return False
+      elif self.grid[grain_coords[1] + 1][grain_coords[0]] == '.':
         grain_coords = (grain_coords[0], grain_coords[1] + 1)
       elif self.grid[grain_coords[1] + 1][grain_coords[0] - 1] == '.':
         grain_coords = (grain_coords[0] - 1, grain_coords[1] + 1)
@@ -74,14 +75,25 @@ class Cave:
     return False
 
   def keep_pouring(self, with_floor=True):
+    if with_floor:
+      self._add_floor()
     while(self.drop_grain(with_floor)):
+      self.draw(with_floor=with_floor)
       continue
     return len(self.grains)
 
+  def _add_floor(self):
+    max_x = self.bounds['max_x'] + self.bounds['max_y']
+    for i, row in enumerate(self.grid):
+      row.extend(['.'] * self.bounds['max_y'])
+    self.grid.append(['.'] * max_x) # WARNING: assumes grains do not fall into -x territory
+    self.grid.append(['#'] * max_x) 
+
 def main():
-  filename = 'inputs/2022/day14.txt'
+  filename = 'inputs/2022/day14-test.txt'
   cave = Cave(filename)
-  print(f'Part 1: {cave.keep_pouring(False)}')
+  cave.keep_pouring(True)
+  #print(f'Part 1: {cave.keep_pouring(False)}')
 
 if __name__ == '__main__':
   main()

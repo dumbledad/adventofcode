@@ -16,6 +16,20 @@ initial_grid = '''0 ......+...
 9 #########.
 '''
 
+with_floor = '''............o............
+...........ooo...........
+..........ooooo..........
+.........ooooooo.........
+........oo#ooo##o........
+.......ooo#ooo#ooo.......
+......oo###ooo#oooo......
+.....oooo.oooo#ooooo.....
+....oooooooooo#oooooo....
+...ooo#########ooooooo...
+..ooooo.......ooooooooo..
+#########################
+'''
+
 def test_cave_init():
   cave = Cave(filename)
   assert cave.data
@@ -29,7 +43,13 @@ def test_cave_bounds():
     'max_y': 9
   }
 
-def test_cave_draw(capfd):
+def test_cave_draw_no_floor(capfd):
+  cave = Cave(filename)
+  cave.draw(row_numbers=True)
+  out, _ = capfd.readouterr()
+  assert out == initial_grid
+
+def test_cave_draw_floor(capfd):
   cave = Cave(filename)
   cave.draw(row_numbers=True)
   out, _ = capfd.readouterr()
@@ -51,3 +71,5 @@ def test_cave_drop_grain():
 def test_cave_keep_pouring():
   cave = Cave(filename)
   assert cave.keep_pouring(False) == 24
+  cave = Cave(filename)
+  assert cave.keep_pouring(True) == 93
