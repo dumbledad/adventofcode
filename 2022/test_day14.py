@@ -1,4 +1,6 @@
 from day14 import Cave
+import pytest
+import logging
 
 filename = 'inputs/2022/day14-test.txt'
 
@@ -14,3 +16,9 @@ def test_cave_bounds():
     'min_y': 0,
     'max_y': 9
   }
+
+def test_cave_draw(capsys):
+  cave = Cave(filename)
+  sys, _ = capsys.readouterr()
+  cave.draw()
+  assert sys == 'wibble'
