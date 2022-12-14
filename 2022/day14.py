@@ -77,3 +77,11 @@ class Cave:
     while(self.drop_grain()):
       continue
     return len(self.grains)
+
+def main():
+  filename = 'inputs/2022/day14.txt'
+  cave = Cave(filename)
+  print(f'Part 1: {cave.keep_pouring()}')
+
+if __name__ == '__main__':
+  main()
