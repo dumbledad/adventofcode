@@ -85,7 +85,7 @@ class Cave:
     max_x = self.bounds['max_x'] + self.bounds['max_y']
     for i, row in enumerate(self.grid):
       row.extend(['.'] * self.bounds['max_y'])
-    self.grid.append(['.'] * max_x) # WARNING: assumes grains do not fall into -x territory
+    self.grid.append(['.'] * max_x)
     self.grid.append(['#'] * max_x) 
 
 def main():
