@@ -56,7 +56,7 @@ class Cave:
       row_number_str = f'{i} ' if row_numbers else ''
       print(f"{row_number_str}{''.join(row[self.bounds['min_x']:])}")
 
-  def drop_grain(self):
+  def drop_grain(self, with_floor=True):
     if self.grid[self.start[1]][self.start[0]] == 'o': # There's sand blocking the start
       return False
     grain_coords = self.start
@@ -73,15 +73,15 @@ class Cave:
         return True
     return False
 
-  def keep_pouring(self):
-    while(self.drop_grain()):
+  def keep_pouring(self, with_floor=True):
+    while(self.drop_grain(with_floor)):
       continue
     return len(self.grains)
 
 def main():
   filename = 'inputs/2022/day14.txt'
   cave = Cave(filename)
-  print(f'Part 1: {cave.keep_pouring()}')
+  print(f'Part 1: {cave.keep_pouring(False)}')
 
 if __name__ == '__main__':
   main()

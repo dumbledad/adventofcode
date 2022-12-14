@@ -37,17 +37,17 @@ def test_cave_draw(capfd):
 
 def test_cave_drop_grain():
   cave = Cave(filename)
-  cave.drop_grain()
+  cave.drop_grain(False)
   assert cave.grid[8][500] == 'o'
-  cave.drop_grain()
+  cave.drop_grain(False)
   assert cave.grid[8][499] == 'o'
-  cave.drop_grain()
+  cave.drop_grain(False)
   assert cave.grid[8][501] == 'o'
-  cave.drop_grain()
+  cave.drop_grain(False)
   assert cave.grid[7][500] == 'o'
-  cave.drop_grain()
+  cave.drop_grain(False)
   assert cave.grid[8][498] == 'o'
 
 def test_cave_keep_pouring():
   cave = Cave(filename)
-  assert cave.keep_pouring() == 24
+  assert cave.keep_pouring(False) == 24
