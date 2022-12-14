@@ -29,6 +29,7 @@ class Cave:
             for y in y_range:
               self.grid[y][x] = '#'
     self.grid[self.start[1]][self.start[0]] = '+'
+    self.grains = []
 
   @cached_property
   def bounds(self):
@@ -68,5 +69,11 @@ class Cave:
         grain_coords = (grain_coords[0] + 1, grain_coords[1] + 1)
       else:
         self.grid[grain_coords[1]][grain_coords[0]] = 'o'
+        self.grains.append(grain_coords)
         return True
     return False
+
+  def keep_pouring(self):
+    while(self.drop_grain()):
+      continue
+    return len(self.grains)

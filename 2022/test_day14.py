@@ -35,7 +35,7 @@ def test_cave_draw(capfd):
   out, _ = capfd.readouterr()
   assert out == initial_grid
 
-def test_drop_grain():
+def test_cave_drop_grain():
   cave = Cave(filename)
   cave.drop_grain()
   assert cave.grid[8][500] == 'o'
@@ -47,3 +47,7 @@ def test_drop_grain():
   assert cave.grid[7][500] == 'o'
   cave.drop_grain()
   assert cave.grid[8][498] == 'o'
+
+def test_cave_keep_pouring():
+  cave = Cave(filename)
+  assert cave.keep_pouring() == 24
