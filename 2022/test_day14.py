@@ -31,6 +31,6 @@ def test_cave_bounds():
 
 def test_cave_draw(capfd):
   cave = Cave(filename)
-  cave.draw()
+  cave.draw(row_numbers=True)
   out, _ = capfd.readouterr()
   assert out == initial_grid

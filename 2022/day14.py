@@ -51,6 +51,7 @@ class Cave:
           bounds['max_y'] = int(match.group(2))
     return bounds
 
-  def draw(self):
+  def draw(self, row_numbers=False):
     for i, row in enumerate(self.grid):
-      print(f"{i} {''.join(row[self.bounds['min_x'] - 1:])}")
+      row_number_str = f'{i} ' if row_numbers else ''
+      print(f"{row_number_str}{''.join(row[self.bounds['min_x']:])}")
