@@ -104,3 +104,4 @@ to get `stdout` _after_ the `print` statements.
 
 - Note to self — do *not* forget to uses square brackets for `loc` and `iloc` in pandas, i.e.
 `self.grid.loc[y].value_counts()['#']` not `self.grid.loc(y).value_counts()['#']`
+- Cute way using double comprehension to get all pairs `[(s1, s2) for i, s1 in enumerate(self.sensors) for s2 in self.sensors[i + 1:]]`
