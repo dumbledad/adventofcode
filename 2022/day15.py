@@ -49,11 +49,16 @@ class Tunnels:
       elif (sensor['closest_beacon'][1] in possible) and (sensor['closest_beacon'][0] in possible[sensor['closest_beacon'][1]]):
         possible[sensor['closest_beacon'][1]].pop(sensor['closest_beacon'][0])
     while True:
-      first_y = next(iter(possible.keys()))
-      if len(possible) == 1 and len(possible[first_y]) == 1:
-        return (next(iter(possible[first_y])) * 4_000_000) + first_y
-
-
+      y = next(iter(possible.keys()))
+      x = next(iter(possible[y]))
+      if len(possible) == 1 and len(possible[y]) == 1:
+        return (x * 4_000_000) + y
+      for sensor in self.sensors:
+        if ((abs(sensor['coords'][0] - x) + abs(sensor['coords'][1] - y)) <= sensor['distance']
+            and ((x, y) not in [s['coords'] for s in self.sensors])
+            and ((x, y) not in [s['closest_beacon'] for s in self.sensors])):
+          possible[y].pop(x, None)
+      
 
 
 def main():
