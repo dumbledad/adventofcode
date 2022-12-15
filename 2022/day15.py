@@ -1,0 +1,18 @@
+import re
+
+class Tunnels:
+  def __init__(self, filename):
+    self.sensors = []
+    with open(filename) as file:
+      self.data = file.read()
+    for line in self.data.splitlines():
+      matches = re.match(r'Sensor at x=(-{0,1}\d+), y=(-{0,1}\d+): closest beacon is at x=(-{0,1}\d+), y=(-{0,1}\d+)', line)
+      sensor_x = int(matches.group(1))
+      sensor_y = int(matches.group(2))
+      beacon_x = int(matches.group(3))
+      beacon_y = int(matches.group(4))
+      self.sensors.append({
+        'sensor': (sensor_x, sensor_y),
+        'closest_beacon': (beacon_x, beacon_y),
+        'distance': abs(beacon_x - sensor_x) + abs(beacon_y - sensor_y)
+      })
