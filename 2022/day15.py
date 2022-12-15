@@ -12,7 +12,16 @@ class Tunnels:
       beacon_x = int(matches.group(3))
       beacon_y = int(matches.group(4))
       self.sensors.append({
-        'sensor': (sensor_x, sensor_y),
+        'coords': (sensor_x, sensor_y),
         'closest_beacon': (beacon_x, beacon_y),
         'distance': abs(beacon_x - sensor_x) + abs(beacon_y - sensor_y)
       })
+    self.bounds = {
+      'min_x': min(min([s['coords'][0] for s in self.sensors]), min([s['closest_beacon'][0] for s in self.sensors])),
+      'max_x': max(max([s['coords'][0] for s in self.sensors]), max([s['closest_beacon'][0] for s in self.sensors])),
+      'min_y': min(min([s['coords'][1] for s in self.sensors]), min([s['closest_beacon'][1] for s in self.sensors])),
+      'max_y': max(max([s['coords'][1] for s in self.sensors]), max([s['closest_beacon'][1] for s in self.sensors]))
+    }
+
+    # def impossible_count(self, y):
+
