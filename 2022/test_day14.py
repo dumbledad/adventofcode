@@ -1,6 +1,4 @@
 from day14 import Cave
-import pytest
-import logging
 
 filename = 'inputs/2022/day14-test.txt'
 
