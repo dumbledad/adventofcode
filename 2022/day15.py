@@ -1,3 +1,4 @@
+import pandas as pd
 import re
 
 class Tunnels:
@@ -24,8 +25,43 @@ class Tunnels:
       'min_distance': min([s['distance'] for s in self.sensors]),
       'max_distance': max([s['distance'] for s in self.sensors]),
     }
+    self._populate_grid()
 
-    def impossible_count(self, y):
-      impossible_x = []
+  def _populate_grid(self):
+    x_range =range(self.bounds['min_x'] - (self.bounds['max_distance'] + 1), self.bounds['max_x'] + self.bounds['max_distance'] + 2)
+    y_range =range(self.bounds['min_y'] - (self.bounds['max_distance'] + 1), self.bounds['max_y'] + self.bounds['max_distance'] + 2)
+    self.grid = pd.DataFrame('.', index=y_range, columns=x_range)
+    for sensor in self.sensors:
+      self.grid[sensor['coords'][0]][sensor['coords'][1]] = 'S'
+      self.grid[sensor['closest_beacon'][0]][sensor['closest_beacon'][1]] = 'B'
+      for y in y_range:
+        for x in x_range:
+          if self.grid[x][y] == '.':
+            if ((abs(sensor['coords'][0] - x) + abs(sensor['coords'][1] - y)) <= sensor['distance']):
+              self.grid[x][y] = '#'
+
+  def impossible_count_old(self, y):
+    impossible_x = set()
+    for x in range(self.bounds['min_x'] - (self.bounds['max_distance'] + 1), self.bounds['max_x'] + self.bounds['max_distance'] + 2):
+      for sensor in self.sensors:
+        if (((abs(sensor['coords'][0] - x) + abs(sensor['coords'][1] - y)) <= sensor['distance'])
+            and ((x, y) not in [s['coords'] for s in self.sensors])
+            and ((x, y) not in [s['closest_beacon'] for s in self.sensors])):
+          impossible_x.add(x)
+    return len(impossible_x)
+
+  def impossible_count(self, y):
+    return self.grid.loc[y].value_counts()['#']
 
 
+  # def distress_tuning(self, min=0, max=4_000_000):
+
+
+
+def main():
+  filename = 'inputs/2022/day15.txt'
+  tunnels = Tunnels(filename)
+  print(f'Part 1: {tunnels.impossible_count(2_000_000)}')
+
+if __name__ == '__main__':
+  main()

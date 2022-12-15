@@ -11,3 +11,6 @@ def test_init():
   assert tunnels.bounds['min_y'] == 0
   assert tunnels.bounds['max_y'] == 22
 
+def test_impossible_count():
+  tunnels = Tunnels(filename)
+  assert tunnels.impossible_count(10) == 26

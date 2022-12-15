@@ -99,3 +99,8 @@ if the algorithm passes on the test data but fails on the 'real' data (see [redd
 - `extend` instead of `append` adds the items in the list. No need to worry about how to flatten.
 - To use the `capfd` fixture pass it into the test function, then call `out, _ = capfd.readouterr()`
 to get `stdout` _after_ the `print` statements.
+
+### Day 15
+
+- Note to self — do *not* forget to uses square brackets for `loc` and `iloc` in pandas, i.e.
+`self.grid.loc[y].value_counts()['#']` not `self.grid.loc(y).value_counts()['#']`
