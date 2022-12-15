@@ -38,27 +38,15 @@ class Tunnels:
     return len(impossible_x)
 
   def distress_tuning(self, min=0, max=4_000_000):
-    possible = {}
     for y in range(min, max + 1):
-      possible[y] = set()
       for x in range(min, max + 1):
-        possible[y].add(x)
-    for sensor in self.sensors:
-      if (sensor['coords'][1] in possible) and (sensor['coords'][0] in possible[sensor['coords'][1]]):
-        possible[sensor['coords'][1]].pop(sensor['coords'][0])
-      elif (sensor['closest_beacon'][1] in possible) and (sensor['closest_beacon'][0] in possible[sensor['closest_beacon'][1]]):
-        possible[sensor['closest_beacon'][1]].pop(sensor['closest_beacon'][0])
-    while True:
-      y = next(iter(possible.keys()))
-      x = next(iter(possible[y]))
-      if len(possible) == 1 and len(possible[y]) == 1:
-        return (x * 4_000_000) + y
-      for sensor in self.sensors:
-        if ((abs(sensor['coords'][0] - x) + abs(sensor['coords'][1] - y)) <= sensor['distance']
-            and ((x, y) not in [s['coords'] for s in self.sensors])
-            and ((x, y) not in [s['closest_beacon'] for s in self.sensors])):
-          possible[y].pop(x, None)
-      
+        possible = True
+        for sensor in self.sensors:
+          if (abs(sensor['coords'][0] - x) + abs(sensor['coords'][1] - y)) <= sensor['distance']:
+            possible = False
+            break
+        if possible:
+          return (x * 4_000_000) + y
 
 
 def main():

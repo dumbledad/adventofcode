@@ -17,4 +17,4 @@ def test_impossible_count():
 
 def test_distress_tuning():
   tunnels = Tunnels(filename)
-  assert tunnels.distress_tuning() == 56_000_011
+  assert tunnels.distress_tuning(max=20) == 56_000_011
