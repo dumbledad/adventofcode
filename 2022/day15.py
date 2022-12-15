@@ -30,7 +30,8 @@ class Tunnels:
     impossible_x = set()
     for x in range(self.bounds['min_x'] - (self.bounds['max_distance'] + 1), self.bounds['max_x'] + self.bounds['max_distance'] + 2):
       for sensor in self.sensors:
-        if (((abs(sensor['coords'][0] - x) + abs(sensor['coords'][1] - y)) <= sensor['distance'])
+        if (x not in impossible_x
+            and ((abs(sensor['coords'][0] - x) + abs(sensor['coords'][1] - y)) <= sensor['distance'])
             and ((x, y) not in [s['coords'] for s in self.sensors])
             and ((x, y) not in [s['closest_beacon'] for s in self.sensors])):
           impossible_x.add(x)
