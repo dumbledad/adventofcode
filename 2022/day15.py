@@ -20,8 +20,12 @@ class Tunnels:
       'min_x': min(min([s['coords'][0] for s in self.sensors]), min([s['closest_beacon'][0] for s in self.sensors])),
       'max_x': max(max([s['coords'][0] for s in self.sensors]), max([s['closest_beacon'][0] for s in self.sensors])),
       'min_y': min(min([s['coords'][1] for s in self.sensors]), min([s['closest_beacon'][1] for s in self.sensors])),
-      'max_y': max(max([s['coords'][1] for s in self.sensors]), max([s['closest_beacon'][1] for s in self.sensors]))
+      'max_y': max(max([s['coords'][1] for s in self.sensors]), max([s['closest_beacon'][1] for s in self.sensors])),
+      'min_distance': min([s['distance'] for s in self.sensors]),
+      'max_distance': max([s['distance'] for s in self.sensors]),
     }
 
-    # def impossible_count(self, y):
+    def impossible_count(self, y):
+      impossible_x = []
+
 
