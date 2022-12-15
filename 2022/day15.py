@@ -53,6 +53,7 @@ def main():
   filename = 'inputs/2022/day15.txt'
   tunnels = Tunnels(filename)
   print(f'Part 1: {tunnels.impossible_count(2_000_000)}')
+  print(f'Part 2: {tunnels.distress_tuning()}')
 
 if __name__ == '__main__':
   main()
