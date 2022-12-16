@@ -105,3 +105,16 @@ to get `stdout` _after_ the `print` statements.
 - Note to self — do *not* forget to uses square brackets for `loc` and `iloc` in pandas, i.e.
 `self.grid.loc[y].value_counts()['#']` not `self.grid.loc(y).value_counts()['#']`
 - Cute way using double comprehension to get all pairs `[(s1, s2) for i, s1 in enumerate(self.sensors) for s2 in self.sensors[i + 1:]]`
+- I should have taken a geometric approach to the algorithms from the start. I may need to be more on
+top of geometric algorithms for SVG work anyway. Some interesting solutions at:
+
+  - [jakesco Part 1](https://github.com/jakesco/AOC2022/blob/main/aoc/solutions/day15.py) (GitHub)
+  - [JakubDotPy Part 2](https://github.com/JakubDotPy/aoc2022/blob/master/day15/part2.py) (GitHub)
+  - [RGodlike Comparison of different approaches](https://old.reddit.com/r/adventofcode/comments/zml8ee/2022_day_15_part_2_comparison_of_different/) (Reddit)
+  - [appus3r Can't think of an approach](https://old.reddit.com/r/adventofcode/comments/zmjcgl/2022_day_15_part_2_python_cant_think_of_an/) (Reddit)
+  - [Ayman4Eyes No search formula](https://old.reddit.com/r/adventofcode/comments/zmjzu7/2022_day_15_part_2_no_search_formula/) (reddit)
+  - [Day 15 Solutions Megathread](https://old.reddit.com/r/adventofcode/comments/zmcn64/2022_day_15_solutions/) (reddit)
+    - [codertee](https://github.com/codertee/adventofcode/blob/af3563f8993b7cad46d1f674bf8d192cd4361ff8/adventofcode/solutions/y2022/d15.py) (Github)
+    - [olliemath](https://github.com/olliemath/AdventOfCode/blob/master/2022/day_15/solution.py) rotates the coords to get squares (Github)
+    - [msschmitt](https://old.reddit.com/r/adventofcode/comments/zmcn64/2022_day_15_solutions/j0ed813/) merging ranges (Reddit)
+    - [zniperr](https://old.reddit.com/r/adventofcode/comments/zmcn64/2022_day_15_solutions/j0dvz1y/) border checking code (Reddit)
