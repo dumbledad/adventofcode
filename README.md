@@ -107,7 +107,6 @@ to get `stdout` _after_ the `print` statements.
 - Cute way using double comprehension to get all pairs `[(s1, s2) for i, s1 in enumerate(self.sensors) for s2 in self.sensors[i + 1:]]`
 - I should have taken a geometric approach to the algorithms from the start. I may need to be more on
 top of geometric algorithms for SVG work anyway. Some interesting solutions at:
-
   - [jakesco Part 1](https://github.com/jakesco/AOC2022/blob/main/aoc/solutions/day15.py) (GitHub)
   - [JakubDotPy Part 2](https://github.com/JakubDotPy/aoc2022/blob/master/day15/part2.py) (GitHub)
   - [RGodlike Comparison of different approaches](https://old.reddit.com/r/adventofcode/comments/zml8ee/2022_day_15_part_2_comparison_of_different/) (Reddit)
