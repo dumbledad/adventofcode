@@ -117,3 +117,8 @@ top of geometric algorithms for SVG work anyway. Some interesting solutions at:
     - [olliemath](https://github.com/olliemath/AdventOfCode/blob/master/2022/day_15/solution.py) rotates the coords to get squares (Github)
     - [msschmitt](https://old.reddit.com/r/adventofcode/comments/zmcn64/2022_day_15_solutions/j0ed813/) merging ranges (Reddit)
     - [zniperr](https://old.reddit.com/r/adventofcode/comments/zmcn64/2022_day_15_solutions/j0dvz1y/) border checking code (Reddit)
+
+### Day 16
+
+- [mebeim's solutions](https://github.com/mebeim/aoc/tree/master/2022) are very useful since he
+includes a walkthrough of the code and his thinking
