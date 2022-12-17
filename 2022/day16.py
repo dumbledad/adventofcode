@@ -1,7 +1,5 @@
-from functools import total_ordering
 import re
 
-@total_ordering
 class Valve:
   def __init__(self, name, flow, to_names):
     self.name = name
@@ -12,23 +10,30 @@ class Valve:
     self.flowed = 0
 
   def __eq__(self, other):
-    return self.name.__eq__(other.name)
+    return self.name == other.name
+
+  def __ne__(self, other):
+    return self.name != other.name
   
   def __lt__(self, other):
-    return self.flow.__lt__(other.flow)
+    return self.flow < other.flow
 
   def __le__(self, other):
-    return self.flow.__le__(other.flow)
+    return self.flow <= other.flow
 
   def __gt__(self, other):
-    return self.flow.__gt__(other.flow)
+    return self.flow > other.flow
 
   def __ge__(self, other):
-    return self.flow.__ge__(other.flow)
+    return self.flow >= other.flow
 
   def tick(self):
     if self.open:
       self.flowed += self.flow
+
+  def reset(self):
+    self.open = False
+    self.flowed = 0
 
 class Cave:
   def __init__(self, filename) -> None:
@@ -49,15 +54,33 @@ class Cave:
     self.current = self.valves[0]
 
   def do(self, minutes=30):
-    for _ in range(minutes):
-      for valve in self.valves:
-        valve.tick()
-      # One deep search
-      if most_promising := max(valve for valve in self.current.to if not valve.open):
-        if most_promising.flow > self.current.flow + 1 or self.current.open:
-          print(f'You move to valve {most_promising.name}.')
-          self.current = most_promising
-          continue
-      print(f'You open valve {self.current.name}.')
-      self.current.open = True
-    return sum([valve.flowed for valve in self.valves])
+    all_routes = self.routes()
+    
+
+  def routes(self, start=None, prior=[], max_depth=30):
+    if not start:
+      start = self.current
+    if max_depth == 0:
+      return prior
+    result = []
+    if f'open{start.name}' not in prior:
+      result.extend(
+        self.routes(
+          start=start,
+          prior=prior.append(f'open{start.name}'),
+          max_depth=max_depth-1
+        )
+      )
+    for valve in start.to:
+      result.extend(
+        self.routes(
+          start=valve,
+          prior=prior.append(valve.name),
+          max_depth=max_depth-1
+        )
+      )
+    return result
+
+  def score_route(self, route):
+    
+      
