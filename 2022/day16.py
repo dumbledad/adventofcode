@@ -54,8 +54,25 @@ class Cave:
     self.current = self.valves[0]
 
   def do(self, minutes=30):
-    all_routes = self.routes()
-    
+    max_score, max_route = -1, None
+    all_routes = self.routes(max_depth=minutes)
+    for route in all_routes:
+      score = self.score_route(route)
+      if score > max_score:
+        max_score = score
+        max_route = route
+    return max_score, max_route
+
+  def tick(self):
+    for valve in self.valves:
+      valve.tick()
+  
+  def flowed(self):
+    return sum([valve.flowed for valve in self.valves])
+
+  def reset(self):
+    for valve in self.valves:
+      valve.reset()
 
   def routes(self, start=None, prior=[], max_depth=30):
     if not start:
@@ -67,7 +84,7 @@ class Cave:
       result.extend(
         self.routes(
           start=start,
-          prior=prior.append(f'open{start.name}'),
+          prior=prior + [f'open{start.name}'],
           max_depth=max_depth-1
         )
       )
@@ -75,12 +92,18 @@ class Cave:
       result.extend(
         self.routes(
           start=valve,
-          prior=prior.append(valve.name),
+          prior=prior + [valve.name],
           max_depth=max_depth-1
         )
       )
     return result
 
   def score_route(self, route):
-    
+    self.reset()
+    for entry in route:
+      self.tick()
+      if entry.startswith('open'):
+        if valve := next([valve for valve in self.valves if entry.endswith(valve.name)], None):
+          valve.open = True
+    return self.flowed()
       
