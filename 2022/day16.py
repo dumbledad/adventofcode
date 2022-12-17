@@ -6,7 +6,7 @@ class Valve:
     self.flow = flow
     self.to_names = to_names
     self.to = []
-    self.open = False
+    self.open = self.flow == 0
     self.flowed = 0
 
   def __eq__(self, other):
@@ -32,7 +32,8 @@ class Valve:
       self.flowed += self.flow
 
   def reset(self):
-    self.open = False
+    if self.flow > 0:
+      self.open = False
     self.flowed = 0
 
 class Cave:
